@@ -19,8 +19,13 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static frc.robot.Utilities.Tabs.*;
+
+import java.util.Collection;
+
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Solenoid;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANPIDController;
@@ -41,6 +46,12 @@ public class Drivebase extends SubsystemBase {
   private RelativeEncoder rightDrive1Enc = Robot.hardware.rightDrive1Enc;
   private RelativeEncoder rightDrive2Enc = Robot.hardware.rightDrive2Enc;
 
+  private RelativeEncoder leftEncoders[];
+  private RelativeEncoder rightEncoders[];
+  private PowerDistribution pdp;
+  Collection<CANSparkMax> drivebaseMotors;
+  SparkMaxPIDController pidRotateMotorLeft;
+
   //Variables
   private final AHRS navX;
   private final PIDController turn_PID;
@@ -58,8 +69,30 @@ public class Drivebase extends SubsystemBase {
   private CANSparkMax rightDrive1;
   private CANSparkMax rightDrive2;
 
+  private MotorControllerGroup leftDrives;
+  private MotorControllerGroup rightDrives;
+  private DifferentialDrive allDrive;
+
+  private SparkMaxPIDController leftDrive1PidController;
+  private SparkMaxPIDController leftDrive2PidController;
+
+  private SparkMaxPIDController rightDrive1PidController;
+  private SparkMaxPIDController rightDrive2PidController;
+
   /** Creates a new Drivebase. */
-  public Drivebase() {}
+  public Drivebase() {
+    leftDrives.setInverted(true);
+    rightDrives.setInverted(false);
+  }
+
+  public void setPercentOutput(double leftPower, double rightPower) {
+    leftDrives.set(leftPower);
+    rightDrives.set(rightPower);
+    SmartDashboard.putNumber("Left Drive Output ", leftPower);
+    SmartDashboard.putNumber("Right Drive Output ", rightPower);
+  }
+
+
 
   @Override
   public void periodic() {
