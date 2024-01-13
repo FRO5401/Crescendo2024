@@ -16,6 +16,19 @@ public final class Constants {
         public static final int KP = 0;
         public static final int KI = 0;
         public static final int KD = 0; 
+
+        // Sensitivity Constants
+        public static final double PERCISION_SENSITIVITY = 0.4;
+        public static final double DEFAULT_SENSITIVTY = 1.0;
+
+        // Define stopping
+        public static final double POWER_STOP = 0;
+
+        // Inverse Direction of Drive Motor
+        public static final int INVERSE_DIRECTION = -1;
+
+        // Straight Direction
+        public static final double STRAIGHT_DIRECTION = 1.0; 
     }
 
     public static class Controls{

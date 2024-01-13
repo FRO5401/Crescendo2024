@@ -58,16 +58,16 @@ public class XboxMove extends Command {
        /*** Precision ***/
       //Hold for Precision Speed
       if(precision){
-        sensitivity = 0.4;
+        sensitivity = Constants.DriveMotors.PERCISION_SENSITIVITY;
       }
       else{
-        sensitivity = 1.0;
+        sensitivity = Constants.DriveMotors.DEFAULT_SENSITIVTY;
       }
     /*** Driving ***/
       //Braking
     if(brake){
-      left = 0;
-      right = 0;
+      left = Constants.DriveMotors.POWER_STOP;
+      right = Constants.DriveMotors.POWER_STOP;
     }
         //Pirouetting (Turn in place).
       if(rotate){
@@ -75,12 +75,12 @@ public class XboxMove extends Command {
         if(Math.abs(turn) > Constants.Controls.AXIS_THRESHOLD){
             //Sets it to spin the desired direction.
           left = Constants.Controls.SPIN_SENSITIVITY * turn;
-          right = Constants.Controls.SPIN_SENSITIVITY * (turn * -1);
+          right = Constants.Controls.SPIN_SENSITIVITY * (turn * Constants.DriveMotors.INVERSE_DIRECTION);
         }
           //If its not past the threshold stop spinning
         else if(Math.abs(turn) < Constants.Controls.AXIS_THRESHOLD){
-          left = 0;
-          right = 0;
+          left = Constants.DriveMotors.POWER_STOP;
+          right = Constants.DriveMotors.POWER_STOP;
         }
       }
         //Not pirouetting (Not turning in place).
@@ -89,12 +89,12 @@ public class XboxMove extends Command {
         if(turn > Constants.Controls.AXIS_THRESHOLD){
             //Makes left slow down by a factor of how far the axis is pushed.
           left = (throttle - reverse) * sensitivity;
-          right = (throttle - reverse) * sensitivity * (1 - turn);
+          right = (throttle - reverse) * sensitivity * (Constants.DriveMotors.STRAIGHT_DIRECTION - turn);
         }
           //Turning left
-        else if(turn < (-1 * Constants.Controls.AXIS_THRESHOLD)){
+        else if(turn < (Constants.DriveMotors.INVERSE_DIRECTION * Constants.Controls.AXIS_THRESHOLD)){
             //Makes right speed up by a factor of how far the axis is pushed.
-          left = (throttle - reverse) * sensitivity  * (1 + turn);
+          left = (throttle - reverse) * sensitivity  * (Constants.DriveMotors.STRAIGHT_DIRECTION + turn);
           right = (throttle - reverse) * sensitivity;
         }
           //Driving straight
@@ -107,7 +107,6 @@ public class XboxMove extends Command {
 
       //After speed manipulation, send to drivebase.
     drivebase.drive(left, right);
-    //drivebase.pidDrive(left, right);
   }
 
   @Override
