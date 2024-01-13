@@ -6,10 +6,21 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Commands.XboxMove;
+import frc.robot.Subsystems.Drivebase;
 
 public class RobotContainer {
+
+  // Defines the drivebase
+  private final Drivebase drivebase = new Drivebase();
+  // Tells xboxMove which drivebase it can control
+  private final XboxMove xboxMove = new XboxMove(drivebase);
+
   public RobotContainer() {
     configureBindings();
+
+    // Links controll of drivebase to xboxmove
+    drivebase.setDefaultCommand(xboxMove);
   }
 
   private void configureBindings() {}
