@@ -18,14 +18,14 @@ public class Drivebase extends SubsystemBase {
   */
 
   // Left-Side Drive Motors
-  CANSparkMax leftDrive1;
-  CANSparkMax leftDrive2;
+  private CANSparkMax leftDrive1;
+  private CANSparkMax leftDrive2;
 
   // Right-Side Drive Motors
-  CANSparkMax rightDrive1;
-  CANSparkMax rightDrive2;
+  private CANSparkMax rightDrive1;
+  private CANSparkMax rightDrive2;
 
-  DifferentialDrive allDrive;
+  private DifferentialDrive allDrive;
  
  
   /** Creates a new Drivebase. */

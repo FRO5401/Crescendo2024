@@ -5,25 +5,24 @@ import frc.robot.Constants;
 import frc.robot.Subsystems.Drivebase;
 import frc.robot.Controls;
 
-
 public class XboxMove extends Command {
   /*** Variables ***/
-    //Input Axes
-  double turn;
-  double throttle;
-  double reverse;
+  // Input Axes
+  private double turn;
+  private double throttle;
+  private double reverse;
 
-    //Input Buttons
-  boolean rotate;
-  boolean brake;
-  boolean precision;
-  boolean gearShiftHigh;
-  boolean gearShiftLow;
+  // Input Buttons
+  private boolean rotate;
+  private boolean brake;
+  private boolean precision;
+  private boolean gearShiftHigh;
+  private boolean gearShiftLow;
 
-     //Testing Buttons
+  // Testing Buttons
   boolean resetSensors;
 
-    //Instance Vars
+  // Instance Vars
   double left;
   double right;
   double sensitivity;
@@ -35,7 +34,6 @@ public class XboxMove extends Command {
     sensitivity = Constants.Controls.DEFAULT_SENSITIVTY;
     addRequirements(drivebase);
   }
-
 
   // Called just before this Command runs the first time
   @Override
@@ -54,58 +52,57 @@ public class XboxMove extends Command {
     reverse = Controls.xbox_driver.getLeftTriggerAxis();
     turn = Controls.xbox_driver.getLeftX() * 0.8;
 
-      //Braking
-       /*** Precision ***/
-      //Hold for Precision Speed
-      if(precision){
-        sensitivity = Constants.DriveMotors.PERCISION_SENSITIVITY;
-      }
-      else{
-        sensitivity = Constants.DriveMotors.DEFAULT_SENSITIVTY;
-      }
+    // Braking
+    /*** Precision ***/
+    // Hold for Precision Speed
+    if (precision) {
+      sensitivity = Constants.DriveMotors.PERCISION_SENSITIVITY;
+    } else {
+      sensitivity = Constants.DriveMotors.DEFAULT_SENSITIVTY;
+    }
     /*** Driving ***/
-      //Braking
-    if(brake){
+    // Braking
+    if (brake) {
       left = Constants.DriveMotors.POWER_STOP;
       right = Constants.DriveMotors.POWER_STOP;
     }
-        //Pirouetting (Turn in place).
-      if(rotate){
-          //If the joystick is pushed passed the threshold.
-        if(Math.abs(turn) > Constants.Controls.AXIS_THRESHOLD){
-            //Sets it to spin the desired direction.
-          left = Constants.Controls.SPIN_SENSITIVITY * turn;
-          right = Constants.Controls.SPIN_SENSITIVITY * (turn * Constants.DriveMotors.INVERSE_DIRECTION);
-        }
-          //If its not past the threshold stop spinning
-        else if(Math.abs(turn) < Constants.Controls.AXIS_THRESHOLD){
-          left = Constants.DriveMotors.POWER_STOP;
-          right = Constants.DriveMotors.POWER_STOP;
-        }
+    // Pirouetting (Turn in place).
+    if (rotate) {
+      // If the joystick is pushed passed the threshold.
+      if (Math.abs(turn) > Constants.Controls.AXIS_THRESHOLD) {
+        // Sets it to spin the desired direction.
+        left = Constants.Controls.SPIN_SENSITIVITY * turn;
+        right = Constants.Controls.SPIN_SENSITIVITY * (turn * Constants.DriveMotors.INVERSE_DIRECTION);
       }
-        //Not pirouetting (Not turning in place).
-      else{
-          //Turning right
-        if(turn > Constants.Controls.AXIS_THRESHOLD){
-            //Makes left slow down by a factor of how far the axis is pushed.
-          left = (throttle - reverse) * sensitivity;
-          right = (throttle - reverse) * sensitivity * (Constants.DriveMotors.STRAIGHT_DIRECTION - turn);
-        }
-          //Turning left
-        else if(turn < (Constants.DriveMotors.INVERSE_DIRECTION * Constants.Controls.AXIS_THRESHOLD)){
-            //Makes right speed up by a factor of how far the axis is pushed.
-          left = (throttle - reverse) * sensitivity  * (Constants.DriveMotors.STRAIGHT_DIRECTION + turn);
-          right = (throttle - reverse) * sensitivity;
-        }
-          //Driving straight
-        else{
-            //No joystick manipulation.
-          left = (throttle - reverse) * sensitivity;
-          right = (throttle - reverse) * sensitivity;
-        }
+      // If its not past the threshold stop spinning
+      else if (Math.abs(turn) < Constants.Controls.AXIS_THRESHOLD) {
+        left = Constants.DriveMotors.POWER_STOP;
+        right = Constants.DriveMotors.POWER_STOP;
       }
+    }
+    // Not pirouetting (Not turning in place).
+    else {
+      // Turning right
+      if (turn > Constants.Controls.AXIS_THRESHOLD) {
+        // Makes left slow down by a factor of how far the axis is pushed.
+        left = (throttle - reverse) * sensitivity;
+        right = (throttle - reverse) * sensitivity * (Constants.DriveMotors.STRAIGHT_DIRECTION - turn);
+      }
+      // Turning left
+      else if (turn < (Constants.DriveMotors.INVERSE_DIRECTION * Constants.Controls.AXIS_THRESHOLD)) {
+        // Makes right speed up by a factor of how far the axis is pushed.
+        left = (throttle - reverse) * sensitivity * (Constants.DriveMotors.STRAIGHT_DIRECTION + turn);
+        right = (throttle - reverse) * sensitivity;
+      }
+      // Driving straight
+      else {
+        // No joystick manipulation.
+        left = (throttle - reverse) * sensitivity;
+        right = (throttle - reverse) * sensitivity;
+      }
+    }
 
-      //After speed manipulation, send to drivebase.
+    // After speed manipulation, send to drivebase.
     drivebase.drive(left, right);
   }
 
@@ -120,7 +117,7 @@ public class XboxMove extends Command {
   }
 
   @Override
-    public boolean runsWhenDisabled() {
-      return false;
+  public boolean runsWhenDisabled() {
+    return false;
   }
 }
