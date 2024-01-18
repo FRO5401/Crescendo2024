@@ -5,18 +5,17 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Subsystems.Arm;
+import frc.robot.Subsystems.Intake;
 
-public class ArmForward extends Command {
-  Arm armForward;
+public class Pickup extends Command {
+  Intake pickup;
   boolean endCommand;
 
-  /** Creates a new ArmForward. */
-  public ArmForward(Arm m_armForward) {
+  /** Creates a new Pickup. */
+  public Pickup(Intake m_pickup) {
+    pickup = m_pickup;
     // Use addRequirements() here to declare subsystem dependencies.
-  armForward = m_armForward;
-  addRequirements(armForward);
-
+    addRequirements(pickup);
   }
 
   // Called when the command is initially scheduled.
@@ -26,9 +25,8 @@ public class ArmForward extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    armForward.armForward();
+    pickup.Pickup();
     endCommand = true;
-
   }
 
   // Called once the command ends or is interrupted.

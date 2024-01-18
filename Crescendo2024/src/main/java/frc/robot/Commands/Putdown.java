@@ -5,18 +5,17 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Subsystems.Arm;
+import frc.robot.Subsystems.Intake;
 
-public class ArmForward extends Command {
-  Arm armForward;
+public class Putdown extends Command {
+  Intake putdown;
   boolean endCommand;
-
-  /** Creates a new ArmForward. */
-  public ArmForward(Arm m_armForward) {
+  /** Creates a new Putdown. */
+  public Putdown(Intake m_putdown) {
+    //Makes putdown talk about putdown in this file
+    putdown = m_putdown;
     // Use addRequirements() here to declare subsystem dependencies.
-  armForward = m_armForward;
-  addRequirements(armForward);
-
+    addRequirements(putdown);
   }
 
   // Called when the command is initially scheduled.
@@ -26,7 +25,7 @@ public class ArmForward extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    armForward.armForward();
+    putdown.Putdown();
     endCommand = true;
 
   }

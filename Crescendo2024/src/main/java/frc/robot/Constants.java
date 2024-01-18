@@ -15,8 +15,13 @@ public static final double AXIS_THRESHOLD = 0.05;
 public static final double SPIN_SENSITIVITY = 0.8;
 
 }
+//Arm
     public static class ArmConstants{
-public static final int ARM_ID = 1;    
+public static final int ARM_ID = 5;
+
+}
+public static class IntakeConstants{
+    public static final int INTAKE_ID = 6;
 }
 }
 
