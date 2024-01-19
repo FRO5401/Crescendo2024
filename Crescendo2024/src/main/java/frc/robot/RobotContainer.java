@@ -11,6 +11,8 @@ import frc.robot.Commands.ArmBackward;
 import frc.robot.Commands.ArmForward;
 import frc.robot.Commands.Pickup;
 import frc.robot.Commands.Putdown;
+import frc.robot.Commands.StopArm;
+import frc.robot.Commands.StopIntake;
 import frc.robot.Commands.XboxMove;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Drivebase;
@@ -29,9 +31,11 @@ public class RobotContainer {
   //For pickup putdown
   private final Pickup pickup = new Pickup(intake);
   private final Putdown putdown = new Putdown(intake);
+  private final StopIntake stopintake = new StopIntake(intake);
   //for Armforward
   private final ArmForward armforward = new ArmForward(arm);
   private final ArmBackward armbackward = new ArmBackward(arm);
+  private final StopArm stoparm = new StopArm(arm);
 
 
   public RobotContainer() {
@@ -50,7 +54,10 @@ drivebase.setDefaultCommand(xboxMove);
 
     operator.x().whileTrue(armforward);
     operator.y().whileTrue(armbackward);
-  }
+
+    operator.rightBumper().whileTrue(stoparm);
+    operator.leftBumper().whileTrue(stopintake);
+  } 
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");

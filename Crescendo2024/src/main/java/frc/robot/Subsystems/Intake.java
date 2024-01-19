@@ -34,11 +34,14 @@ public class Intake extends SubsystemBase {
 
   public void Pickup(){
     //makes motor pickup cube
-    intakeMotor.set(1);
+    intakeMotor.set(.60);
   }
   public void Putdown(){
     //Makes motor remove cube
-    intakeMotor.set(-1);
+    intakeMotor.set(-.60);
+  }
+  public void StopIntake(){
+    intakeMotor.set(0);
   }
 
   @Override
