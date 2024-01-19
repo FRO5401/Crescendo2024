@@ -18,7 +18,11 @@ public static final double SPIN_SENSITIVITY = 0.8;
 //Arm
     public static class ArmConstants{
 public static final int ARM_ID = 5;
-
+public static final double armP = 0.05;
+public static final double armI = 0;
+public static final double armD = 0;
+public static final double FULLYEXTENDED = 25.5;
+public static final double FULLYIN = -3.45;
 }
 public static class IntakeConstants{
     public static final int INTAKE_ID = 6;

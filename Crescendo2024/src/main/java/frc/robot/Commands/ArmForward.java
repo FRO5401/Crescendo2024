@@ -5,6 +5,7 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.Subsystems.Arm;
 
 public class ArmForward extends Command {
@@ -26,7 +27,7 @@ public class ArmForward extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    armForward.armForward();
+    armForward.setPoint(Constants.ArmConstants.FULLYEXTENDED);
     endCommand = true;
 
   }

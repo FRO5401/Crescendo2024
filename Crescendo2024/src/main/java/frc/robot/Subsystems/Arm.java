@@ -4,11 +4,13 @@
 
 package frc.robot.Subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //Imports
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import frc.robot.Constants;
@@ -29,8 +31,14 @@ RelativeEncoder encoder;
 
     //Reset Arm
     armMotor.restoreFactoryDefaults();
+    encoder.setPosition(0);
     //Idle mode, Let's mode be
     armMotor.setIdleMode(IdleMode.kBrake);
+
+    armPID.setP(Constants.ArmConstants.armP);
+    armPID.setI(Constants.ArmConstants.armI);
+    armPID.setD(Constants.ArmConstants.armD);
+
   }
 
   public void armForward(){
@@ -44,8 +52,21 @@ RelativeEncoder encoder;
     armMotor.set(0);
   }
 
+  public double getPosition(){
+    return encoder.getPosition();
+  }
+  public double getVelocity(){
+    return encoder.getVelocity();
+  }  
+//25.5
+//-3.45
+  public void setPoint(double position){
+    armPID.setReference(position, ControlType.kPosition);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Encoder Value", getPosition());
   }
 }
