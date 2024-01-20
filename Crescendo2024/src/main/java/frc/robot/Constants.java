@@ -3,10 +3,17 @@ package frc.robot;
 public final class Constants {
 
   public static class DriveConstants {
+    // motor ids
     public static final int LEFT_DRIVE1_ID = 1;
     public static final int LEFT_DRIVE2_ID = 2;
     public static final int RIGHT_DRIVE1_ID = 3;
     public static final int RIGHT_DRIVE2_ID = 4;
+
+    // PID constants
+    public static final double KP = 0;
+    public static final double KI = 0;
+    public static final double KD = 0;
+
   }
 
   public static class ControlConstants{
