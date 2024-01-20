@@ -7,21 +7,28 @@ package frc.robot.Commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.Drivebase;
 
-public class drive extends Command {
+public class MoveForward extends Command {
+
+    Drivebase drivebase;
+    Boolean endCommand;
+
   /** Creates a new drive. */
-  public drive(Drivebase drivebase) {
-    drivebase = new Drivebase();
+  public MoveForward(Drivebase drivebase) {
+    drivebase = this.drivebase;
     addRequirements(drivebase);
     // Use addRequirements() here to declare subsystem dependencies.
   }
-
+// apple = sc.nextLn();
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    drivebase.drive(1, 1);
+    endCommand = true;
+  }
 
   // Called once the command ends or is interrupted.
   @Override
