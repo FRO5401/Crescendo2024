@@ -31,6 +31,12 @@ public final class Constants {
         public static final double STRAIGHT_DIRECTION = 1.0; 
     }
 
+    public static class ShooterConstants{
+        public static final int SHOOTER1_ID = 5;
+        public static final int SHOOTER2_ID = 6;
+
+    }
+
     public static class Controls{
         // Defines Driver Controller port number
         public static final int XBOX_CONTROLLER_DRIVER = 0;
