@@ -5,6 +5,9 @@
 package frc.robot.Subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -26,15 +29,33 @@ public class Drivebase extends SubsystemBase {
   private CANSparkMax rightDrive2;
 
   private DifferentialDrive allDrive;
+
+  //encoders used for messuring motor rotation. 
+  private RelativeEncoder leftEncoder1;
+  private RelativeEncoder leftEncoder2;
+
+  private RelativeEncoder rightEncoder1;
+  private RelativeEncoder rightEncoder2;
+
+  //PID used for setpoints and velocity
+  private SparkPIDController leftPIDController;
+  private SparkPIDController rightPIDController;
+
  
  
   /** Creates a new Drivebase. */
   public Drivebase() {
     // Initalizing class variables
-    leftDrive1 = new CANSparkMax(Constants.DriveMotors.LEFT_DRIVE1_ID, MotorType.kBrushed);
-    leftDrive2 = new CANSparkMax(Constants.DriveMotors.LEFT_DRIVE2_ID, MotorType.kBrushed);
-    rightDrive1 = new CANSparkMax(Constants.DriveMotors.RIGHT_DRIVE1_ID, MotorType.kBrushed);
-    rightDrive2 = new CANSparkMax(Constants.DriveMotors.RIGHT_DRIVE2_ID, MotorType.kBrushed);
+    leftDrive1 = new CANSparkMax(Constants.DriveMotors.LEFT_DRIVE1_ID, MotorType.kBrushless);
+    leftDrive2 = new CANSparkMax(Constants.DriveMotors.LEFT_DRIVE2_ID, MotorType.kBrushless);
+    rightDrive1 = new CANSparkMax(Constants.DriveMotors.RIGHT_DRIVE1_ID, MotorType.kBrushless);
+    rightDrive2 = new CANSparkMax(Constants.DriveMotors.RIGHT_DRIVE2_ID, MotorType.kBrushless);
+
+    //grab the encoders off the motors
+    leftEncoder1 = leftDrive1.getEncoder();
+    leftEncoder2 = leftDrive2.getEncoder();
+    rightEncoder1 = rightDrive1.getEncoder();
+    rightEncoder2 = rightDrive2.getEncoder();
 
     // Sets the drive motor params to factory default on every boot
     leftDrive1.restoreFactoryDefaults();
@@ -55,6 +76,10 @@ public class Drivebase extends SubsystemBase {
     // Has the left drive motors spin in the opposite direction so the robot does not turn in a circle
     leftDrive1.setInverted(true);
     
+    leftEncoder1.setInverted(true);
+    leftEncoder2.setInverted(true);
+
+    
     // Initalized allDrive
     allDrive = new DifferentialDrive(leftDrive1, rightDrive1);
     // Sets the max output to motors as 100%
@@ -69,6 +94,30 @@ public class Drivebase extends SubsystemBase {
    */
   public void drive(double left, double right){
     allDrive.tankDrive(left, right);
+  }
+
+  public double getLeftPosition(){
+    return leftEncoder1.getPosition();
+  }
+
+  public double getRightPostion(){
+    return rightEncoder1.getPosition();
+  }
+
+  public double getLeftVelocity(){
+    return leftEncoder1.getVelocity();
+  }
+
+  public double getRightVelocity(){
+    return rightEncoder1.getVelocity();
+  }
+
+  public void setVelocity(double velocity){
+    leftPIDController.setReference(velocity, ControlType.kVelocity);
+  }
+
+  public void setPosition(double setPoint){
+    leftPIDController.setReference(setPoint, ControlType.kPosition);
   }
 
   @Override
