@@ -64,4 +64,24 @@ public class Drivebase extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+  public class setDefaultCommand {
+  }
+    /*
+    public double getPitch() {
+      return gyro.getPitch;
+    }
+    public double getYaw() {
+      return gyro.getYaw;
+    }
+    public double getRoll() {
+      return gyro.getRoll;
+    }
+    public double getAngle() {
+      return gyro.getAngle;
+    }
+    public void toggleHighGear() {
+      isHighGear = !isHighGear
+    gearShifter.set(isHighGear); }
+    */
 }
