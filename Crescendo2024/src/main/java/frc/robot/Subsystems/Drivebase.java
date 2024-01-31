@@ -14,6 +14,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 //WPI imports
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 //File imports
@@ -55,11 +56,21 @@ public class Drivebase extends SubsystemBase {
     rightDrive1 = new CANSparkMax(Constants.DriveMotors.RIGHT_DRIVE1_ID, MotorType.kBrushless);
     rightDrive2 = new CANSparkMax(Constants.DriveMotors.RIGHT_DRIVE2_ID, MotorType.kBrushless);
 
+    //Initalizing PID controller
+    leftPIDController = leftDrive1.getPIDController();
+    rightPIDController = rightDrive1.getPIDController();
+
     //grab the encoders off the motors
     leftEncoder1 = leftDrive1.getEncoder();
     leftEncoder2 = leftDrive2.getEncoder();
     rightEncoder1 = rightDrive1.getEncoder();
     rightEncoder2 = rightDrive2.getEncoder();
+
+    //Set Encoder Value
+    leftEncoder1.equals(0);
+    leftEncoder2.equals(0);
+    rightEncoder1.equals(0);
+    rightEncoder2.equals(0);
 
     // Sets the drive motor params to factory default on every boot
     leftDrive1.restoreFactoryDefaults();
@@ -77,12 +88,9 @@ public class Drivebase extends SubsystemBase {
     leftDrive2.follow(leftDrive1);
     rightDrive2.follow(rightDrive1);
 
-    // Has the left drive motors spin in the opposite direction so the robot does not turn in a circle
+    //Inverts left Motors so robot doesn't spin in circles
     leftDrive1.setInverted(true);
-    
-    leftEncoder1.setInverted(true);
-    leftEncoder2.setInverted(true);
-
+    leftDrive2.setInverted(true);
     
     // Initalized allDrive
     allDrive = new DifferentialDrive(leftDrive1, rightDrive1);
@@ -90,6 +98,16 @@ public class Drivebase extends SubsystemBase {
     allDrive.setMaxOutput(1);
     // To handle errors from WPI 2024
     allDrive.setExpiration(0.1);
+    
+    //Right PID declaration 
+    rightPIDController.setP(Constants.DriveMotors.KP);
+    rightPIDController.setI(Constants.DriveMotors.KI);
+    rightPIDController.setD(Constants.DriveMotors.KD);
+
+    //Left PID declaration
+    leftPIDController.setP(Constants.DriveMotors.KP);
+    leftPIDController.setI(Constants.DriveMotors.KI);
+    leftPIDController.setD(Constants.DriveMotors.KD);
   }
 
   /**
@@ -116,16 +134,26 @@ public class Drivebase extends SubsystemBase {
     return rightEncoder1.getVelocity();
   }
 
-  public void setVelocity(double velocity){
+  public void setLeftVelocity(double velocity){
     leftPIDController.setReference(velocity, ControlType.kVelocity);
   }
 
-  public void setPosition(double setPoint){
+  public void setLeftPosition(double setPoint){
     leftPIDController.setReference(setPoint, ControlType.kPosition);
+  }
+
+  public void setRightVelocity(double velocity){
+    rightPIDController.setReference(velocity, ControlType.kVelocity);
+  }
+
+  public void setRightPostion(double setPoint){
+    rightPIDController.setReference(setPoint, ControlType.kPosition);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.getNumber("Left Drive Encoder Value", getLeftPosition());
+    SmartDashboard.getNumber("Right Drive Encoder Value", getRightPostion());
   }
 }
