@@ -15,6 +15,7 @@ import frc.robot.Commands.StopArm;
 import frc.robot.Commands.StopIntake;
 import frc.robot.Commands.XboxMove;
 import frc.robot.Subsystems.Arm;
+import frc.robot.Subsystems.Camera;
 import frc.robot.Subsystems.Drivebase;
 import frc.robot.Subsystems.Intake;
 
@@ -25,6 +26,8 @@ public class RobotContainer {
   private final Drivebase drivebase = new Drivebase();
   private final Intake intake = new Intake();
   private final Arm arm = new Arm();
+
+  private final Camera camera = new Camera();
   // Tells xboxMove which drivebase it can control
   private final XboxMove xboxMove = new XboxMove(drivebase);
 
