@@ -13,6 +13,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Subsystems.Drivebase;
 import frc.robot.Subsystems.Infeed;
 
+import frc.robot.Subsystems.Shooter;
+import frc.robot.Commands.AmpShot;
+import frc.robot.Commands.SpeakerShot;
+import frc.robot.Commands.TrapShot;
 //Command Imports
 import frc.robot.Commands.XboxMove;
 import frc.robot.Commands.Expel;
@@ -35,6 +39,9 @@ public class RobotContainer {
 
     /*Intake */
   private final Infeed infeed = new Infeed();
+    /*Shooter */
+    private final Shooter shooter = new Shooter();
+ 
 
   public RobotContainer() {
     drivebase.setDefaultCommand(xboxMove);
@@ -59,6 +66,9 @@ public class RobotContainer {
     //If "Left Bumper" pressed/held on operator controller rotatepivotAir command used (moves intake to air)
     operator.leftBumper().whileTrue(new RotatePivotAir(infeed));
 
+    operator.a().onTrue(new SpeakerShot(shooter));
+    operator.b().onTrue(new AmpShot(shooter));
+    operator.x().onTrue(new TrapShot(shooter));
   }
 
   public Command getAutonomousCommand() {
