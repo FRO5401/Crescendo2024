@@ -16,8 +16,7 @@ public class XboxMove extends Command {
   private boolean rotate;
   private boolean brake;
   private boolean precision;
-  private boolean gearShiftHigh;
-  private boolean gearShiftLow;
+
 
   // Testing Buttons
   boolean resetSensors;

@@ -46,6 +46,9 @@ public class Drivebase extends SubsystemBase {
   private SparkPIDController leftPIDController;
   private SparkPIDController rightPIDController;
 
+  //solenoid 
+
+
  
  
   /** Creates a new Drivebase. */

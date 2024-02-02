@@ -28,10 +28,10 @@ public final class Constants {
     //Drive Motors Constants
     public static class DriveMotors{
         // Defined Motor IDs
-        public static final int LEFT_DRIVE1_ID = 7;
-        public static final int LEFT_DRIVE2_ID = 2;
-        public static final int RIGHT_DRIVE1_ID = 5;
-        public static final int RIGHT_DRIVE2_ID = 4;
+        public static final int LEFT_DRIVE1_ID = 3;
+        public static final int LEFT_DRIVE2_ID = 4;
+        public static final int RIGHT_DRIVE1_ID = 1;
+        public static final int RIGHT_DRIVE2_ID = 2;
     
         // Maxium amount of AMPS allowed to the motors
         public static final int CURRENT_LIMIT = 30;
