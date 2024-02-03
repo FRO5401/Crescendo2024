@@ -67,4 +67,19 @@ public final class Constants {
 
     }
 
+    public final class ClimberConstants{
+        public static final int LEADER_ID = 7;
+        public static final int FOLLOW_ID = 8;
+
+        //TODO: tune these values
+        public static final double kP = 0;
+        public static final double kI = 0;
+        public static final double kD = 0;
+
+
+        //TODO: adjust to correct value for fully extended.
+        public static final double FULLY_EXTENDED = 25;
+        public static final double FULLY_RETRACTED = 0;
+    }
+
   }
