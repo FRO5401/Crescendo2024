@@ -7,11 +7,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-
+import frc.robot.Subsystems.Climber;
 //Subsystem Imports
 import frc.robot.Subsystems.Drivebase;
-
-
+import frc.robot.Commands.ExtendClimber;
+import frc.robot.Commands.RetractClimber;
 //Command Imports
 import frc.robot.Commands.XboxMove;
 
@@ -23,6 +23,7 @@ public class RobotContainer {
     private final XboxMove xboxMove = new XboxMove(drivebase);
 
     /*Intake */
+     private final Climber climber = new Climber();
  
 
   public RobotContainer() {
@@ -31,7 +32,8 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-
+    operator.rightTrigger().whileTrue(new ExtendClimber(climber));
+    operator.leftTrigger().whileTrue(new RetractClimber(climber));
   }
 
   public Command getAutonomousCommand() {
