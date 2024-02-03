@@ -5,6 +5,7 @@
 package frc.robot.Subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -17,6 +18,8 @@ public class Shooter extends SubsystemBase {
   //two motor on the shooter
   CANSparkMax leadMotor;
   CANSparkMax followMotor;
+
+  RelativeEncoder encoder;
 
   SparkPIDController pidController;
 
@@ -39,6 +42,10 @@ public class Shooter extends SubsystemBase {
 
   public void setVelocity(double velocity){
     pidController.setReference(velocity, ControlType.kVelocity);
+  }
+
+  public double getVelocity(){
+    return encoder.getVelocity();
   }
 
   @Override
