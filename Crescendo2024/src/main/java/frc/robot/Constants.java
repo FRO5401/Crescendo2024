@@ -64,7 +64,10 @@ public final class Constants {
         public static final double pivotP = 0;
         public static final double pivotI = 0;
         public static final double pivotD = 0;
-
+        //On ground
+        public static final double ON_GROUND = 6;
+        //At Shooter
+        public static final double AT_SHOOTER = 4;
     }
 
   }
