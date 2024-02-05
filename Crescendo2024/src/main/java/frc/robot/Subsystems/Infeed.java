@@ -100,7 +100,7 @@ public class Infeed extends SubsystemBase {
   }
   //Rotates the pivot Motor to ground
   public void rotatetoGround(){
-    if(pivotEncoder.getPosition() > Constants.InfeedConstants.ON_GROUND){
+    if(pivotEncoder.getPosition() > Constants.InfeedConstants.OUT_POSITION){
         pivotMotor.set(0);
     } else {
       pivotMotor.set(-0.35);
@@ -109,7 +109,7 @@ public class Infeed extends SubsystemBase {
   }
   //Rotates the pivot motor to Shooter
   public void rotatetoShooter(){
-    if (pivotEncoder.getPosition() > Constants.InfeedConstants.AT_SHOOTER){
+    if (pivotEncoder.getPosition() > Constants.InfeedConstants.IN_POSITION){
       pivotMotor.set(-0.2);
     }
     else{
