@@ -58,7 +58,7 @@ public class Infeed extends SubsystemBase {
 
     //Gets Encoders for Pivot Motor
     pivotEncoder = pivotMotor.getEncoder();
-    pivotEncoder.equals(0);
+    pivotEncoder.setPosition(0);
 
     //Resets Motors to factory defaults
     pivotMotor.restoreFactoryDefaults();
@@ -121,6 +121,9 @@ public class Infeed extends SubsystemBase {
     pivotMotor.set(0);
   }
 
+  public void resetEncoder(){
+    pivotEncoder.setPosition(0);
+  }
 
   @Override
   public void periodic() {

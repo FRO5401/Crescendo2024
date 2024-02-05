@@ -28,10 +28,10 @@ public final class Constants {
     //Drive Motors Constants
     public static class DriveMotors{
         // Defined Motor IDs
-        public static final int LEFT_DRIVE1_ID = 7;
-        public static final int LEFT_DRIVE2_ID = 2;
-        public static final int RIGHT_DRIVE1_ID = 5;
-        public static final int RIGHT_DRIVE2_ID = 4;
+        public static final int LEFT_DRIVE1_ID = 3;
+        public static final int LEFT_DRIVE2_ID = 4;
+        public static final int RIGHT_DRIVE1_ID = 1;
+        public static final int RIGHT_DRIVE2_ID = 2;
     
         // Maxium amount of AMPS allowed to the motors
         public static final int CURRENT_LIMIT = 30;
@@ -58,12 +58,16 @@ public final class Constants {
     //Infeed Constants
     public static class InfeedConstants{
         //Id of infeeds CANSparkMax motors
-        public static final int INTAKE1_ID = 1;
-        public static final int PIVOT_ID = 3;
+        public static final int INTAKE1_ID = 6;
+        public static final int PIVOT_ID = 5;
         //PID values
-        public static final double pivotP = 0;
+        public static final double pivotP = .1;
         public static final double pivotI = 0;
-        public static final double pivotD = 0;
+        public static final double pivotD = 10;
+
+        //set pointa
+        public static final double IN_POSITION = -1;
+        public static final double OUT_POSITION = -14;
 
     }
 

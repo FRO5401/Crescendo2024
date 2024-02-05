@@ -6,19 +6,19 @@ package frc.robot.Commands;
 
 //WPI Imports
 import edu.wpi.first.wpilibj2.command.Command;
-
+import frc.robot.Constants;
 //File Imports
 import frc.robot.Subsystems.Infeed;
 
 public class RotatePivotGround extends Command {
-  Infeed rotatetoground;
+  Infeed infeed;
   boolean endCommand = false;
 
   /** Creates a new Pivot. */
   public RotatePivotGround(Infeed m_rotatetoground) {
-    rotatetoground = m_rotatetoground;
+    infeed = m_rotatetoground;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(rotatetoground);
+    addRequirements(infeed);
   }
 
   // Called when the command is initially scheduled.
@@ -28,7 +28,7 @@ public class RotatePivotGround extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    rotatetoground.rotatetoGround();
+    infeed.setPoint(Constants.InfeedConstants.OUT_POSITION);
     endCommand = true;
   }
 
