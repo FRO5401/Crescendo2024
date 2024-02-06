@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Drivebase extends SubsystemBase {
-  /* 
+  /*
    Declaring Variables
   */
 
@@ -35,7 +35,7 @@ public class Drivebase extends SubsystemBase {
 
   private DifferentialDrive allDrive;
 
-  //encoders used for messuring motor rotation. 
+  //encoders used for messuring motor rotation.
   private RelativeEncoder leftEncoder1;
   private RelativeEncoder leftEncoder2;
 
@@ -46,11 +46,11 @@ public class Drivebase extends SubsystemBase {
   private SparkPIDController leftPIDController;
   private SparkPIDController rightPIDController;
 
-  //solenoid 
+  //solenoid
 
 
- 
- 
+
+
   /** Creates a new Drivebase. */
   public Drivebase() {
     // Initalizing class variables
@@ -94,15 +94,15 @@ public class Drivebase extends SubsystemBase {
     //Inverts left Motors so robot doesn't spin in circles
     leftDrive1.setInverted(true);
     leftDrive2.setInverted(true);
-    
+
     // Initalized allDrive
     allDrive = new DifferentialDrive(leftDrive1, rightDrive1);
     // Sets the max output to motors as 100%
     allDrive.setMaxOutput(1);
     // To handle errors from WPI 2024
     allDrive.setExpiration(0.1);
-    
-    //Right PID declaration 
+
+    //Right PID declaration
     rightPIDController.setP(Constants.DriveMotors.KP);
     rightPIDController.setI(Constants.DriveMotors.KI);
     rightPIDController.setD(Constants.DriveMotors.KD);
@@ -121,34 +121,65 @@ public class Drivebase extends SubsystemBase {
     allDrive.tankDrive(left, right);
   }
 
+  /**
+   *
+   * @return position of the left drive motor via the encoder
+   */
   public double getLeftPosition(){
     return leftEncoder1.getPosition();
   }
 
+  /**
+   *
+   * @return position of the right drive motor via the encoder
+   */
   public double getRightPostion(){
     return rightEncoder1.getPosition();
   }
 
+  /**
+   *
+   * @return velocity of the left drive motor via the encoder
+   */
   public double getLeftVelocity(){
     return leftEncoder1.getVelocity();
   }
 
+  /**
+   *
+   * @return velocity of the right drive motor via the encoder
+   */
   public double getRightVelocity(){
     return rightEncoder1.getVelocity();
   }
 
+  /**
+   *
+   * @param velocity sets the speed of the left drive motor
+   */
   public void setLeftVelocity(double velocity){
     leftPIDController.setReference(velocity, ControlType.kVelocity);
   }
 
+  /**
+   *
+   * @param velocity sets the position of the left drive motor
+   */
   public void setLeftPosition(double setPoint){
     leftPIDController.setReference(setPoint, ControlType.kPosition);
   }
 
+    /**
+   *
+   * @param velocity sets the speed of the right drive motor
+   */
   public void setRightVelocity(double velocity){
     rightPIDController.setReference(velocity, ControlType.kVelocity);
   }
-
+  /**
+   *
+   * @param velocity sets the position of the right drive motor
+   */
   public void setRightPostion(double setPoint){
     rightPIDController.setReference(setPoint, ControlType.kPosition);
   }
