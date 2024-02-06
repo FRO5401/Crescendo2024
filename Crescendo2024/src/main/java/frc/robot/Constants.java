@@ -58,12 +58,16 @@ public final class Constants {
     //Infeed Constants
     public static class InfeedConstants{
         //Id of infeeds CANSparkMax motors
-        public static final int INTAKE1_ID = 1;
-        public static final int PIVOT_ID = 3;
+        public static final int INTAKE1_ID = 6;
+        public static final int PIVOT_ID = 5;
         //PID values
-        public static final double pivotP = 0;
+        public static final double pivotP = .1;
         public static final double pivotI = 0;
-        public static final double pivotD = 0;
+        public static final double pivotD = 10;
+
+        //set pointa
+        public static final double IN_POSITION = -1;
+        public static final double OUT_POSITION = -14;
 
     }
 
