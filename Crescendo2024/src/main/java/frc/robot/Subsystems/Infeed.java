@@ -88,11 +88,11 @@ public class Infeed extends SubsystemBase {
   }
   //Makes Infeed take in a Note
   public void intake(){
-    intakeMotor1.set(0.2);
+    intakeMotor1.set(0.5);
   }
   //Makes Infeed expel Note
   public void expel(){
-    intakeMotor1.set(-0.2);
+    intakeMotor1.set(-0.5);
   }
   //Stop Infeed Motor
   public void stopIntake(){

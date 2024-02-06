@@ -67,8 +67,8 @@ public final class Constants {
 
         //set pointa
         public static final double IN_POSITION = -1;
-        public static final double OUT_POSITION = -14;
-
+        public static final double OUT_POSITION = -13.6;
+        public static final double AIR_POSITION = -7;
     }
 
   }

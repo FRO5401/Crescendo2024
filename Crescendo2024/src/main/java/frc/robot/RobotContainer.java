@@ -10,8 +10,14 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 //Subsystem Imports
 import frc.robot.Subsystems.Drivebase;
-
-
+import frc.robot.Subsystems.Infeed;
+import frc.robot.Commands.Expel;
+import frc.robot.Commands.Intake;
+import frc.robot.Commands.RotatePivotAir;
+import frc.robot.Commands.RotatePivotGround;
+import frc.robot.Commands.RotatePivotShooter;
+import frc.robot.Commands.StopIntake;
+import frc.robot.Commands.StopPivot;
 //Command Imports
 import frc.robot.Commands.XboxMove;
 
@@ -23,7 +29,7 @@ public class RobotContainer {
     private final XboxMove xboxMove = new XboxMove(drivebase);
 
     /*Intake */
- 
+  private final Infeed infeed = new Infeed();
 
   public RobotContainer() {
     drivebase.setDefaultCommand(xboxMove);
@@ -31,6 +37,14 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
+
+    operator.a().whileTrue(new Expel(infeed));
+    operator.b().whileTrue(new Intake(infeed));
+    operator.rightBumper().whileTrue(new StopIntake(infeed));
+
+    operator.rightTrigger().whileTrue(new RotatePivotGround(infeed));
+    operator.leftTrigger().whileTrue(new RotatePivotShooter(infeed));
+    operator.leftBumper().whileTrue(new RotatePivotAir(infeed));
 
   }
 
