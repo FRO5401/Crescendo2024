@@ -67,4 +67,10 @@ public final class Constants {
 
     }
 
+    public static class ClimberConstants {
+        //
+        public static final int LEFTCLIMBER_ID = 1;
+        public static final int RIGHTCLIMBER_ID = 2;
+    }
+
   }
