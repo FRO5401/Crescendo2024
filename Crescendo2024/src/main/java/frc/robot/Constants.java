@@ -60,6 +60,7 @@ public final class Constants {
         //Id of infeeds CANSparkMax motors
         public static final int INTAKE1_ID = 6;
         public static final int PIVOT_ID = 5;
+
         //PID values
         public static final double pivotP = .1;
         public static final double pivotI = 0;
@@ -69,6 +70,12 @@ public final class Constants {
         public static final double IN_POSITION = -1;
         public static final double OUT_POSITION = -13.6;
         public static final double AIR_POSITION = -7;
+
+        //Take in note speed
+        public static final double INTAKE_SPEED = 0.5;
+        
+        //Remove note from infeed speed
+        public static final double EXPEL_SPEED = -0.5;
     }
 
   }

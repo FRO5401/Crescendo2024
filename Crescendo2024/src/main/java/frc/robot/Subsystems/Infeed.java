@@ -20,7 +20,6 @@
 package frc.robot.Subsystems;
 
 //WPI Imports
-//import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -34,6 +33,9 @@ import com.revrobotics.SparkPIDController;
 
 //File Imports
 import frc.robot.Constants;
+
+//Used Imports that might be used in future unlikly
+//import edu.wpi.first.math.controller.PIDController;
 
 public class Infeed extends SubsystemBase {
   //Creates CANSparkMax's
@@ -82,17 +84,17 @@ public class Infeed extends SubsystemBase {
   public double getVelocity(){
     return pivotEncoder.getVelocity();
   }  
-  //
+  //Sets point of pivot motor
   public void setPoint(double position){
     pivotPID.setReference(position, ControlType.kPosition);
   }
   //Makes Infeed take in a Note
   public void intake(){
-    intakeMotor1.set(0.5);
+    intakeMotor1.set(Constants.InfeedConstants.INTAKE_SPEED);
   }
   //Makes Infeed expel Note
   public void expel(){
-    intakeMotor1.set(-0.5);
+    intakeMotor1.set(Constants.InfeedConstants.EXPEL_SPEED);
   }
   //Stop Infeed Motor
   public void stopIntake(){
@@ -100,19 +102,23 @@ public class Infeed extends SubsystemBase {
   }
   //Rotates the pivot Motor to ground
   public void rotatetoGround(){
+    //If pivot motor position is greater than out_position pivot motor stops
     if(pivotEncoder.getPosition() > Constants.InfeedConstants.OUT_POSITION){
         pivotMotor.set(0);
     } else {
+      //Other wise pivot motor moves at -35% speed
       pivotMotor.set(-0.35);
     }
 
   }
   //Rotates the pivot motor to Shooter
   public void rotatetoShooter(){
+    //If pivot motor position is greater than in_position pivot motor moves back at -20% speed
     if (pivotEncoder.getPosition() > Constants.InfeedConstants.IN_POSITION){
       pivotMotor.set(-0.2);
     }
     else{
+      //Other wise pivot motor moves at 35% speed
       pivotMotor.set(0.35);
     }
   }
@@ -120,7 +126,7 @@ public class Infeed extends SubsystemBase {
   public void stopPivot(){
     pivotMotor.set(0);
   }
-
+  //Resets enocoder position to 0
   public void resetEncoder(){
     pivotEncoder.setPosition(0);
   }
