@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 /**Removes note from infeed */
+
 package frc.robot.Commands;
 
 //WPI Imports
