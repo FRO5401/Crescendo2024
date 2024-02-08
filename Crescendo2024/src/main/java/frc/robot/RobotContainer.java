@@ -7,11 +7,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-
+import frc.robot.Subsystems.Climber;
 //Subsystem Imports
 import frc.robot.Subsystems.Drivebase;
-
-
+import frc.robot.Commands.*;
 //Command Imports
 import frc.robot.Commands.XboxMove;
 
@@ -22,7 +21,8 @@ public class RobotContainer {
     private final Drivebase drivebase = new Drivebase();
     private final XboxMove xboxMove = new XboxMove(drivebase);
 
-    /*Intake */
+    /*Climber */
+    private final Climber climber = new Climber();
  
 
   public RobotContainer() {
@@ -31,7 +31,11 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-
+    //We'll change all the buttons later!
+    operator.leftBumper().whileTrue(new LeftClimberUp(climber));
+    operator.rightBumper().whileTrue(new RightClimberUp(climber));
+    operator.leftTrigger().whileTrue(new LeftClimberDown(climber));
+    operator.rightTrigger().whileTrue(new RightClimberDown(climber));
   }
 
   public Command getAutonomousCommand() {

@@ -5,15 +5,15 @@ package frc.robot.Commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.Climber;
 
-public class LeftClimberUp extends Command {
-  Climber lclimberUp;
+public class RightClimberUp extends Command {
+  Climber rclimberUp;
   boolean endCommand = false;
 
   /** Creates a new Climber. */
-  public LeftClimberUp(Climber m_lclimberUp) {
-    lclimberUp = m_lclimberUp;
+  public RightClimberUp(Climber m_rclimberUp) {
+    rclimberUp = m_rclimberUp;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(lclimberUp);
+    addRequirements(rclimberUp);
   }
   // Called when the command is initially scheduled.
   @Override
@@ -22,7 +22,7 @@ public class LeftClimberUp extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lclimberUp.leftClimbUp();
+    rclimberUp.rightClimbUp();
     endCommand = true;
   }
 
