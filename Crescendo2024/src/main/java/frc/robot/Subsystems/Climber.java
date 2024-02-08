@@ -10,6 +10,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -65,10 +66,66 @@ public class Climber extends SubsystemBase {
     return rightClimberEncoder.getVelocity();
   }
 
-  
+// Left up
+  public void leftClimbUp() {
+    if (leftClimberEncoder.getPosition() > Constants.ClimberConstants.climberEncoderMax) {
+      leftClimberMotor.set(0);
+    } else {
+      leftClimberMotor.set(0.3);
+    }
+  }
+
+// Right up
+  public void rightClimbUp() {
+    if (rightClimberEncoder.getPosition() > Constants.ClimberConstants.climberEncoderMax) {
+      rightClimberMotor.set(0);
+    } else {
+      rightClimberMotor.set(0.3);
+    }
+  }
+
+// Left down
+  public void leftClimbDown() {
+    if (leftClimberEncoder.getPosition() < Constants.ClimberConstants.climberEncoderMin) {
+      leftClimberMotor.set(0);
+    } else {
+      leftClimberMotor.set(-0.3);
+    }
+  }
+
+
+// Right down
+  public void rightClimbDown() {
+    if (rightClimberEncoder.getPosition() < Constants.ClimberConstants.climberEncoderMin) {
+      rightClimberMotor.set(0);
+    } else {
+      rightClimberMotor.set(-0.3);
+    }
+  }
+
+
+  //Reset left encoder
+  public void resetLeftEncoder() {
+    leftClimberEncoder.setPosition(0);
+  }
+
+  //Reset right encoder
+  public void resetRightEncoder() {
+    rightClimberEncoder.setPosition(0);
+  }
+
+  //Reset both encoder
+  public void resetEncoders() {
+    leftClimberEncoder.setPosition(0);
+    rightClimberEncoder.setPosition(0);
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+    // Displays climber encoder values on SmartDashBoard
+    SmartDashboard.putNumber("Left Climber Motor-Encoder Value: ", getLeftPosition());
+    SmartDashboard.putNumber("Right Climber Motor-Encoder Value: ", getRightPosition());
   }
 }

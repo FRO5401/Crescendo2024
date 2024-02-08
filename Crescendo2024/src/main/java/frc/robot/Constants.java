@@ -71,6 +71,9 @@ public final class Constants {
         //
         public static final int LEFTCLIMBER_ID = 1;
         public static final int RIGHTCLIMBER_ID = 2;
+
+        public static final int climberEncoderMax = 25;
+        public static final int climberEncoderMin = 0;
     }
 
   }
