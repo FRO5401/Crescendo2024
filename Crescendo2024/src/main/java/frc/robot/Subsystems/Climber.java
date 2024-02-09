@@ -71,7 +71,7 @@ public class Climber extends SubsystemBase {
     if (leftClimberEncoder.getPosition() > Constants.ClimberConstants.climberEncoderMax) {
       leftClimberMotor.set(0);
     } else {
-      leftClimberMotor.set(0.3);
+      leftClimberMotor.set(Constants.ClimberConstants.climberUpSpeed);
     }
   }
 
@@ -80,7 +80,7 @@ public class Climber extends SubsystemBase {
     if (rightClimberEncoder.getPosition() > Constants.ClimberConstants.climberEncoderMax) {
       rightClimberMotor.set(0);
     } else {
-      rightClimberMotor.set(0.3);
+      rightClimberMotor.set(Constants.ClimberConstants.climberUpSpeed);
     }
   }
 
@@ -89,7 +89,7 @@ public class Climber extends SubsystemBase {
     if (leftClimberEncoder.getPosition() < Constants.ClimberConstants.climberEncoderMin) {
       leftClimberMotor.set(0);
     } else {
-      leftClimberMotor.set(-0.3);
+      leftClimberMotor.set(Constants.ClimberConstants.climberDownSpeed);
     }
   }
 
@@ -99,7 +99,7 @@ public class Climber extends SubsystemBase {
     if (rightClimberEncoder.getPosition() < Constants.ClimberConstants.climberEncoderMin) {
       rightClimberMotor.set(0);
     } else {
-      rightClimberMotor.set(-0.3);
+      rightClimberMotor.set(Constants.ClimberConstants.climberDownSpeed);
     }
   }
 

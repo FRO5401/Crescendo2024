@@ -74,6 +74,10 @@ public final class Constants {
 
         public static final int climberEncoderMax = 25;
         public static final int climberEncoderMin = 0;
+
+        public static final double climberUpSpeed = 0.3;
+        public static final double climberDownSpeed = -0.3;
+
     }
 
   }
