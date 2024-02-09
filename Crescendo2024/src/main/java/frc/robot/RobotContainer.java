@@ -67,10 +67,11 @@ public class RobotContainer {
     //If "Left Bumper" pressed/held on operator controller rotatepivotAir command used (moves intake to air)
     operator.leftBumper().whileTrue(new RotatePivotAir(infeed));
 
-    operator.a().onTrue(new SpeakerShot(shooter));
-    operator.b().onTrue(new AmpShot(shooter));
-    operator.x().onTrue(new TrapShot(shooter));
-    operator.y().onTrue(new StopShooter(shooter));
+
+    operator.povUp().onTrue(new SpeakerShot(shooter));
+    operator.povRight().onTrue(new AmpShot(shooter));
+    operator.povDown().onTrue(new TrapShot(shooter));
+    operator.povUp().onTrue(new StopShooter(shooter));
 
   }
 
