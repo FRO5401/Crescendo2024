@@ -53,6 +53,7 @@ public class XboxMove extends Command {
 
     // Braking
     /*** Precision ***/
+    
     // Hold for Precision Speed
     if (precision) {
       sensitivity = Constants.DriveMotors.PERCISION_SENSITIVITY;
