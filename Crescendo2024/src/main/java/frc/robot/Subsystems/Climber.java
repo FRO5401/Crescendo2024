@@ -44,6 +44,10 @@ public class Climber extends SubsystemBase {
     // Allows an idle stage
     leftClimberMotor.setIdleMode(IdleMode.kBrake);
     rightClimberMotor.setIdleMode(IdleMode.kBrake);
+
+    // Makes right climber motor inverted
+    leftClimberMotor.setInverted(false);
+    rightClimberMotor.setInverted(true);
   }
 
 // Get left climber motor position
@@ -104,17 +108,17 @@ public class Climber extends SubsystemBase {
   }
 
 
-  //Reset left encoder
+  // Reset left encoder
   public void resetLeftEncoder() {
     leftClimberEncoder.setPosition(0);
   }
 
-  //Reset right encoder
+  // Reset right encoder
   public void resetRightEncoder() {
     rightClimberEncoder.setPosition(0);
   }
 
-  //Reset both encoder
+  // Reset both encoder
   public void resetEncoders() {
     leftClimberEncoder.setPosition(0);
     rightClimberEncoder.setPosition(0);
