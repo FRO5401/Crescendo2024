@@ -158,7 +158,10 @@ public class Drivebase extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+    //Displays left drives encoder value to smart dashboard
     SmartDashboard.getNumber("Left Drive Encoder Value", getLeftPosition());
+    //Displays right drives encoder value to smart dashboard
     SmartDashboard.getNumber("Right Drive Encoder Value", getRightPostion());
   }
 }

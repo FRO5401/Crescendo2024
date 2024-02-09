@@ -71,11 +71,18 @@ public final class Constants {
         public static final double OUT_POSITION = -13.6;
         public static final double AIR_POSITION = -7;
 
+        /* Infeed speed constants */
+
         //Take in note speed
         public static final double INTAKE_SPEED = 0.5;
-        
         //Remove note from infeed speed
         public static final double EXPEL_SPEED = -0.5;
+        //Move Pivot to floor speed
+        public static final double PIVOT_TO_GROUND_SPEED = -0.35;
+        //Move Pivot to shooter speed
+        public static final double PIVOT_TO_SHOOTER_SPEED = 0.35;
+        //Fix Pivot position if overshot speed
+        public static final double OVERSHOOT_FIX_SPEED = -0.20;
     }
 
   }

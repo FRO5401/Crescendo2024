@@ -107,7 +107,7 @@ public class Infeed extends SubsystemBase {
         pivotMotor.set(0);
     } else {
       //Other wise pivot motor moves at -35% speed
-      pivotMotor.set(-0.35);
+      pivotMotor.set(Constants.InfeedConstants.PIVOT_TO_GROUND_SPEED);
     }
 
   }
@@ -115,11 +115,11 @@ public class Infeed extends SubsystemBase {
   public void rotatetoShooter(){
     //If pivot motor position is greater than in_position pivot motor moves back at -20% speed
     if (pivotEncoder.getPosition() > Constants.InfeedConstants.IN_POSITION){
-      pivotMotor.set(-0.2);
+      pivotMotor.set(Constants.InfeedConstants.OVERSHOOT_FIX_SPEED);
     }
     else{
       //Other wise pivot motor moves at 35% speed
-      pivotMotor.set(0.35);
+      pivotMotor.set(Constants.InfeedConstants.PIVOT_TO_SHOOTER_SPEED);
     }
   }
   //Stops pivot motor
