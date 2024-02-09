@@ -4,15 +4,18 @@
 
 package frc.robot;
 
+// WPI imports
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Subsystems.Climber;
+
 //Subsystem Imports
+import frc.robot.Subsystems.Climber;
 import frc.robot.Subsystems.Drivebase;
-import frc.robot.Commands.*;
+
 //Command Imports
 import frc.robot.Commands.XboxMove;
+import frc.robot.Commands.*;
 
 
 public class RobotContainer {

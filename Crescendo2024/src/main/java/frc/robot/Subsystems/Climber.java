@@ -4,14 +4,17 @@
 
 package frc.robot.Subsystems;
 
-
+// Rev imports
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+// WPI imports
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+// Constant imports
 import frc.robot.Constants;
 
 
