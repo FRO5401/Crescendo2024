@@ -16,6 +16,7 @@ import frc.robot.Subsystems.Infeed;
 import frc.robot.Subsystems.Shooter;
 import frc.robot.Commands.AmpShot;
 import frc.robot.Commands.SpeakerShot;
+import frc.robot.Commands.StopShooter;
 import frc.robot.Commands.TrapShot;
 //Command Imports
 import frc.robot.Commands.XboxMove;
@@ -69,6 +70,8 @@ public class RobotContainer {
     operator.a().onTrue(new SpeakerShot(shooter));
     operator.b().onTrue(new AmpShot(shooter));
     operator.x().onTrue(new TrapShot(shooter));
+    operator.y().onTrue(new StopShooter(shooter));
+
   }
 
   public Command getAutonomousCommand() {
