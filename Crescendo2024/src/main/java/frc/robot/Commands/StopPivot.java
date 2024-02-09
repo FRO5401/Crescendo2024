@@ -18,7 +18,9 @@ public class StopPivot extends Command {
 
   /** Creates a new Pivot. */
   public StopPivot(Infeed m_stoppivot) {
+    //Makes local variable equal to global variable
     infeed = m_stoppivot;
+    
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(infeed);
   }

@@ -2,8 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-/** Robot Controls */
-
 package frc.robot;
 
 //WPI Imports
@@ -24,13 +22,14 @@ import frc.robot.Commands.RotatePivotGround;
 import frc.robot.Commands.RotatePivotShooter;
 import frc.robot.Commands.StopIntake;
 
-//Commands not currently used that may be used most likely not
+//Used Imports that might be used in future
 //import frc.robot.Commands.StopPivot;
 
 
 public class RobotContainer {
     private final CommandXboxController operator = Controls.operator;
-    //Drivebase
+
+    /* Drivebase */
     private final Drivebase drivebase = new Drivebase();
     private final XboxMove xboxMove = new XboxMove(drivebase);
 

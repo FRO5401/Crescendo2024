@@ -9,6 +9,7 @@ package frc.robot.Commands;
 //WPI Imports
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+
 //File Imports
 import frc.robot.Subsystems.Infeed;
 
@@ -18,7 +19,9 @@ public class RotatePivotShooter extends Command {
 
   /** Creates a new Pivot. */
   public RotatePivotShooter(Infeed m_rotatetoshooter) {
+    //Makes local variable equal to global variable
     infeed = m_rotatetoshooter;
+    
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(infeed);
   }

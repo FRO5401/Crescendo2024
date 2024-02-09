@@ -34,7 +34,7 @@ import com.revrobotics.SparkPIDController;
 //File Imports
 import frc.robot.Constants;
 
-//Used Imports that might be used in future unlikly
+//Unused Imports that might be used in future
 //import edu.wpi.first.math.controller.PIDController;
 
 public class Infeed extends SubsystemBase {

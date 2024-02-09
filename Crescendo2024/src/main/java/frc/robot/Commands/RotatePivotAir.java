@@ -2,13 +2,14 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-/**Moves pivot into air so it touches nothing */
+/**Moves pivot into air so infeed touches nothing */
 
 package frc.robot.Commands;
 
 //WPI Imports
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+
 //File Imports
 import frc.robot.Subsystems.Infeed;
 
@@ -18,7 +19,9 @@ public class RotatePivotAir extends Command {
 
   /** Creates a new Pivot. */
   public RotatePivotAir(Infeed m_rotatetoground) {
+    //Makes local variable equal to global variable
     infeed = m_rotatetoground;
+    
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(infeed);
   }
