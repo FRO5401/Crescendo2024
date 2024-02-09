@@ -83,6 +83,9 @@ public final class Constants {
         public static final double PIVOT_TO_SHOOTER_SPEED = 0.35;
         //Fix Pivot position if overshot speed
         public static final double OVERSHOOT_FIX_SPEED = -0.20;
+    }
+
+
     public final class ShooterConstants{
         public static final int LEAD_ID = 7;
         public static final int FOLLOWER_ID = 8;
@@ -98,5 +101,4 @@ public final class Constants {
             public static final double TRAP_RPM = 4000;
         }
     }
-
   }
