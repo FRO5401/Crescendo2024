@@ -21,7 +21,7 @@ public class AmpShot extends Command {
   public AmpShot(Shooter m_shooter) {
     // makes local variable equal to global variable
     shooter = m_shooter;
-    
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter);
   }
@@ -33,6 +33,7 @@ public class AmpShot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //Shooter motors spin at amp rmp
     shooter.setVelocity(Constants.ShooterConstants.SpeedConstants.AMP_RPM);
   }
 

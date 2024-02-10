@@ -86,16 +86,19 @@ public final class Constants {
         public static final double OVERSHOOT_FIX_SPEED = -0.20;
     }
 
-
+    //Shooter Constants
     public final class ShooterConstants{
+        //Id of Shooters CANSparkMax motors
         public static final int LEAD_ID = 7;
         public static final int FOLLOWER_ID = 8;
 
+        //Shooter PID values
         public static final double kF = .00017;
         public static final double kP = .00015;
         public static final double kI = 0;
         public static final double kD = .00000;
 
+        //Shooter motor speeds in rpm
         public final class SpeedConstants{
             public static final double SHOOTER_RPM = 5500;
             public static final double AMP_RPM = 2500;

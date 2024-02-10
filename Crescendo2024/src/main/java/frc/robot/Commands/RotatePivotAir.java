@@ -8,10 +8,10 @@ package frc.robot.Commands;
 
 //WPI Imports
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 
 //File Imports
 import frc.robot.Subsystems.Infeed;
+import frc.robot.Constants;
 
 public class RotatePivotAir extends Command {
   Infeed infeed;

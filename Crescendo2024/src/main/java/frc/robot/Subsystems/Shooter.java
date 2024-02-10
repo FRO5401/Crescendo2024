@@ -22,7 +22,7 @@ import frc.robot.Constants;
 //import edu.wpi.first.math.controller.PIDController;
 
 public class Shooter extends SubsystemBase {
-  //two motor on the shooter
+  //two motors on the shooter
   private CANSparkMax leadMotor;
   private CANSparkMax followMotor;
 
