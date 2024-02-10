@@ -69,8 +69,8 @@ public final class Constants {
 
     public static class ClimberConstants {
         //IDs of climber CANSparkMax motors
-        public static final int LEFTCLIMBER_ID = 1;
-        public static final int RIGHTCLIMBER_ID = 2;
+        public static final int LEFTCLIMBER_ID = 9;
+        public static final int RIGHTCLIMBER_ID = 10;
 
         // Encoder ranges
         public static final int climberEncoderMax = 25;

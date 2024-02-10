@@ -9,15 +9,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 // Subsystem imports
 import frc.robot.Subsystems.Climber;
 
-public class LeftClimberDown extends Command {
-  Climber lclimberDown;
-  boolean endCommand = false;
+public class ClimberUp extends Command {
+  private Climber climber;
 
   /** Creates a new Climber. */
-  public LeftClimberDown(Climber m_lclimberDown) {
-    lclimberDown = m_lclimberDown;
+  public ClimberUp(Climber m_climber) {
+    climber = m_climber;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(lclimberDown);
+    addRequirements(climber);
   }
   // Called when the command is initially scheduled.
   @Override
@@ -26,13 +25,14 @@ public class LeftClimberDown extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lclimberDown.leftClimbDown();
-    endCommand = true;
+    climber.climbUp();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    climber.stopClimber();
+  }
 
   // Returns true when the command should end.
   @Override

@@ -24,8 +24,9 @@ public class RobotContainer {
     private final Drivebase drivebase = new Drivebase();
     private final XboxMove xboxMove = new XboxMove(drivebase);
 
-    /*Climber */
-    private final Climber climber = new Climber();
+    /*Climbers */
+    private final Climber leftClimber = new Climber(Constants.ClimberConstants.LEFTCLIMBER_ID, true, "Left");
+    private final Climber rightClimber = new Climber(Constants.ClimberConstants.RIGHTCLIMBER_ID, false, "Right");
  
 
   public RobotContainer() {
@@ -34,11 +35,13 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    //We'll change all the buttons later!
-    operator.leftBumper().whileTrue(new LeftClimberUp(climber));
-    operator.rightBumper().whileTrue(new RightClimberUp(climber));
-    operator.leftTrigger().whileTrue(new LeftClimberDown(climber));
-    operator.rightTrigger().whileTrue(new RightClimberDown(climber));
+    // Left climber controlls
+    operator.leftBumper().whileTrue(new ClimberUp(leftClimber));
+    operator.leftTrigger().whileTrue(new ClimberDown(leftClimber));
+
+    // Right climber controlls
+    operator.rightBumper().whileTrue(new ClimberUp(rightClimber));
+    operator.rightTrigger().whileTrue(new ClimberDown(rightClimber));
   }
 
   public Command getAutonomousCommand() {

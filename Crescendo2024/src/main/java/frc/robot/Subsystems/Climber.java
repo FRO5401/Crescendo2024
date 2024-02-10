@@ -10,6 +10,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+
 // WPI imports
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,117 +23,66 @@ public class Climber extends SubsystemBase {
   /** Creates a new Climber. */
 
   // Adds CANSparkMax
-    private CANSparkMax leftClimberMotor;
-    private CANSparkMax rightClimberMotor;
+    private CANSparkMax climberMotor;
 
   // Adds Encoder
-    private RelativeEncoder leftClimberEncoder;
-    private RelativeEncoder rightClimberEncoder;
+    private RelativeEncoder climberEncoder;
+    private String climberName;
 
-  public Climber() {
+  public Climber(int motor_ID, boolean isInverted, String climberName) {
+    this.climberName = climberName;
     // Init CANSparkMotors
-    leftClimberMotor = new CANSparkMax(Constants.ClimberConstants.LEFTCLIMBER_ID, MotorType.kBrushless);
-    rightClimberMotor = new CANSparkMax(Constants.ClimberConstants.RIGHTCLIMBER_ID, MotorType.kBrushless);
+    climberMotor = new CANSparkMax(motor_ID, MotorType.kBrushless);
 
-    // Sets up climber encoders
-    leftClimberEncoder = leftClimberMotor.getEncoder();
-    rightClimberEncoder = rightClimberMotor.getEncoder();
-    leftClimberEncoder.setPosition(0);
-    rightClimberEncoder.setPosition(0);
+    // Sets up climber encoder
+    climberEncoder = climberMotor.getEncoder();
+    climberEncoder.setPosition(0);
 
     // Resets Motors, factory defaults
-    leftClimberMotor.restoreFactoryDefaults();
-    rightClimberMotor.restoreFactoryDefaults();
+    climberMotor.restoreFactoryDefaults();
 
     // Allows an idle stage
-    leftClimberMotor.setIdleMode(IdleMode.kBrake);
-    rightClimberMotor.setIdleMode(IdleMode.kBrake);
+    climberMotor.setIdleMode(IdleMode.kBrake);
 
-    // Makes right climber motor inverted
-    leftClimberMotor.setInverted(false);
-    rightClimberMotor.setInverted(true);
+    // Inverts motor direction
+    climberMotor.setInverted(isInverted);
   }
 
-// Get left climber motor position
-  public double getLeftPosition() {
-    return leftClimberEncoder.getPosition();
+// Get climber motor position
+  public double getPosition() {
+    return climberEncoder.getPosition();
   }
   
-// Get right climber motor position
-  public double getRightPosition() {
-    return rightClimberEncoder.getPosition();
+
+// Get climber motor velocity
+  public double getVelocity() {
+    return climberEncoder.getVelocity();
   }
 
-// Get left climber motor velocity
-  public double getLeftVelocity() {
-    return leftClimberEncoder.getVelocity();
+// Climber up
+  public void climbUp() {
+    climberMotor.set(Constants.ClimberConstants.climberUpSpeed);
   }
 
-// Get left climber motor velocity
-  public double getRightVelocity() {
-    return rightClimberEncoder.getVelocity();
+// Climber down
+  public void climbDown() {
+    climberMotor.set(Constants.ClimberConstants.climberDownSpeed);
   }
 
-// Left up
-  public void leftClimbUp() {
-    if (leftClimberEncoder.getPosition() > Constants.ClimberConstants.climberEncoderMax) {
-      leftClimberMotor.set(0);
-    } else {
-      leftClimberMotor.set(Constants.ClimberConstants.climberUpSpeed);
-    }
-  }
+  // Reset encoder
+  public void resetEncoder() {
+    climberEncoder.setPosition(0);
+  } 
 
-// Right up
-  public void rightClimbUp() {
-    if (rightClimberEncoder.getPosition() > Constants.ClimberConstants.climberEncoderMax) {
-      rightClimberMotor.set(0);
-    } else {
-      rightClimberMotor.set(Constants.ClimberConstants.climberUpSpeed);
-    }
-  }
-
-// Left down
-  public void leftClimbDown() {
-    if (leftClimberEncoder.getPosition() < Constants.ClimberConstants.climberEncoderMin) {
-      leftClimberMotor.set(0);
-    } else {
-      leftClimberMotor.set(Constants.ClimberConstants.climberDownSpeed);
-    }
-  }
-
-
-// Right down
-  public void rightClimbDown() {
-    if (rightClimberEncoder.getPosition() < Constants.ClimberConstants.climberEncoderMin) {
-      rightClimberMotor.set(0);
-    } else {
-      rightClimberMotor.set(Constants.ClimberConstants.climberDownSpeed);
-    }
-  }
-
-
-  // Reset left encoder
-  public void resetLeftEncoder() {
-    leftClimberEncoder.setPosition(0);
-  }
-
-  // Reset right encoder
-  public void resetRightEncoder() {
-    rightClimberEncoder.setPosition(0);
-  }
-
-  // Reset both encoder
-  public void resetEncoders() {
-    leftClimberEncoder.setPosition(0);
-    rightClimberEncoder.setPosition(0);
+  public void stopClimber() {
+    climberMotor.stopMotor();
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
 
-    // Displays climber encoder values on SmartDashBoard
-    SmartDashboard.putNumber("Left Climber Motor-Encoder Value: ", getLeftPosition());
-    SmartDashboard.putNumber("Right Climber Motor-Encoder Value: ", getRightPosition());
+    // Displays climber encoder value on SmartDashBoard
+    SmartDashboard.putNumber(climberName + " Climber Motor Encoder Value: ", getPosition());
   }
 }
