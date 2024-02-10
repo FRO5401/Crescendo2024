@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-/** Stops infeed from sucking in */
+/** Stops pivot from moving */
 
 package frc.robot.Commands;
 
@@ -11,19 +11,21 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 //File Imports
 import frc.robot.Subsystems.Infeed;
+import frc.robot.Subsystems.Shooter;
 
-public class StopIntake extends Command {
-  //Declares Variables
+public class StopAll extends Command {
   Infeed infeed;
+  Shooter shooter;
   boolean endCommand = false;
 
-  /** Creates a new Expel. */
-  public StopIntake(Infeed m_stopinfeed) {
+  /** Creates a new Pivot. */
+  public StopAll(Infeed m_stoppivot, Shooter m_shooter) {
     //Makes local variable equal to global variable
-    infeed = m_stopinfeed;
-
+    infeed = m_stoppivot;
+    shooter = m_shooter;
+    
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(infeed);
+    addRequirements(infeed, shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -34,6 +36,7 @@ public class StopIntake extends Command {
   @Override
   public void execute() {
     infeed.stopIntake();
+    shooter.stop();
     endCommand = true;
   }
 

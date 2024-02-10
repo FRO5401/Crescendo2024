@@ -16,7 +16,7 @@ import frc.robot.Subsystems.Infeed;
 import frc.robot.Subsystems.Shooter;
 import frc.robot.Commands.AmpShot;
 import frc.robot.Commands.SpeakerShot;
-import frc.robot.Commands.StopShooter;
+import frc.robot.Commands.StopAll;
 import frc.robot.Commands.TrapShot;
 //Command Imports
 import frc.robot.Commands.XboxMove;
@@ -25,7 +25,6 @@ import frc.robot.Commands.Intake;
 import frc.robot.Commands.RotatePivotAir;
 import frc.robot.Commands.RotatePivotGround;
 import frc.robot.Commands.RotatePivotShooter;
-import frc.robot.Commands.StopIntake;
 
 //Used Imports that might be used in future
 //import frc.robot.Commands.StopPivot;
@@ -57,7 +56,7 @@ public class RobotContainer {
     //If "B" pressed/held on operator controller intake command used (sucks note into infeed)
     operator.b().whileTrue(new Intake(infeed));
     //If "Right Bumper" pressed/held on operator controller stop intake command used (stops infeed)
-    operator.rightBumper().whileTrue(new StopIntake(infeed));
+    operator.rightBumper().whileTrue(new StopAll(infeed, shooter));
 
     /** Pivot Commands */
     //If "Right Trigger" pressed/held on operator controller rotatepivotground command used (moves intake to ground)
@@ -71,7 +70,6 @@ public class RobotContainer {
     operator.povUp().onTrue(new SpeakerShot(shooter));
     operator.povRight().onTrue(new AmpShot(shooter));
     operator.povDown().onTrue(new TrapShot(shooter));
-    operator.povUp().onTrue(new StopShooter(shooter));
 
   }
 

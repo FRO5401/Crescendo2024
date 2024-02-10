@@ -63,20 +63,21 @@ public final class Constants {
 
         //PID values
         public static final double pivotP = .1;
-        public static final double pivotI = 0;
-        public static final double pivotD = 10;
+        public static final double pivotI = 0.000005;
+        public static final double pivotD = 9.5;
+        public static final double pivotILimit = .5;
 
         //set pointa
-        public static final double IN_POSITION = -1;
-        public static final double OUT_POSITION = -13.6;
-        public static final double AIR_POSITION = -7;
+        public static final double IN_POSITION = -.5;
+        public static final double OUT_POSITION = -13.5;
+        public static final double AIR_POSITION = -6.5;
 
         /* Infeed speed constants */
 
         //Take in note speed
-        public static final double INTAKE_SPEED = 0.5;
+        public static final double INTAKE_SPEED = 0.2;
         //Remove note from infeed speed
-        public static final double EXPEL_SPEED = -0.5;
+        public static final double EXPEL_SPEED = -0.43;
         //Move Pivot to floor speed
         public static final double PIVOT_TO_GROUND_SPEED = -0.35;
         //Move Pivot to shooter speed
