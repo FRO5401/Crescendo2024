@@ -12,12 +12,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 //Subsystem Imports
 import frc.robot.Subsystems.Drivebase;
 import frc.robot.Subsystems.Infeed;
-
 import frc.robot.Subsystems.Shooter;
-import frc.robot.Commands.AmpShot;
-import frc.robot.Commands.SpeakerShot;
-import frc.robot.Commands.StopAll;
-import frc.robot.Commands.TrapShot;
+
 //Command Imports
 import frc.robot.Commands.XboxMove;
 import frc.robot.Commands.Expel;
@@ -25,6 +21,10 @@ import frc.robot.Commands.Intake;
 import frc.robot.Commands.RotatePivotAir;
 import frc.robot.Commands.RotatePivotGround;
 import frc.robot.Commands.RotatePivotShooter;
+import frc.robot.Commands.AmpShot;
+import frc.robot.Commands.SpeakerShot;
+import frc.robot.Commands.StopAll;
+import frc.robot.Commands.TrapShot;
 
 //Used Imports that might be used in future
 //import frc.robot.Commands.StopPivot;
@@ -66,7 +66,7 @@ public class RobotContainer {
     //If "Left Bumper" pressed/held on operator controller rotatepivotAir command used (moves intake to air)
     operator.leftBumper().whileTrue(new RotatePivotAir(infeed));
 
-
+    /** Shooter Commands */
     operator.povUp().onTrue(new SpeakerShot(shooter));
     operator.povRight().onTrue(new AmpShot(shooter));
     operator.povDown().onTrue(new TrapShot(shooter));

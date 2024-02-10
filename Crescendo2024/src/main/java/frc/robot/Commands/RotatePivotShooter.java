@@ -14,6 +14,7 @@ import frc.robot.Constants;
 import frc.robot.Subsystems.Infeed;
 
 public class RotatePivotShooter extends Command {
+  //Declares variables
   Infeed infeed;
   boolean endCommand = false;
 
