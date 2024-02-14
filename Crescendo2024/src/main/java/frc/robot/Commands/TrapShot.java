@@ -34,7 +34,7 @@ public class TrapShot extends Command {
   @Override
   public void execute() {
     //Shooter motors spin at shooter rpm value
-    shooter.setVelocity(Constants.ShooterConstants.SpeedConstants.SHOOTER_RPM);
+    shooter.setVelocity(Constants.ShooterConstants.SpeedConstants.TRAP_RPM);
   }
 
   // Called once the command ends or is interrupted.
