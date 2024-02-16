@@ -22,36 +22,40 @@ public class Photonvision extends SubsystemBase{
     camera.setPipelineIndex(0);
   }
 
-  public PhotonTrackedTarget getBestTarget(){
-    var result = camera.getLatestResult();
-    PhotonTrackedTarget target = result.getBestTarget();
-    return target;
-  }
-
-  public double getTargetYaw(){
-    return getBestTarget().getYaw();
-  }
-
-  public double getTargetPitch(){
-    return getBestTarget().getPitch();
-  }
-
-  public double getAprilTagID(){
-    return getBestTarget().getFiducialId();
-  }
-
-  public boolean hasTargets(){
-    var result = camera.getLatestResult();
-    return result.hasTargets();
-  }
-
   public PhotonCamera getCamera(){
     return camera;
   }
 
-  public PhotonPipelineResult getLatestResult(){
-    return camera.getLatestResult();
-  }
+ 
+  boolean hasTarget(){
+    var result = camera.getLatestResult();
+    return result.hasTargets();
+   }
+ 
+   double getAprilTagID(){
+     var result = camera.getLatestResult();
+     if(hasTarget()){
+       return result.getBestTarget().getFiducialId();
+     }
+     return 0;
+   }
+ 
+   double getTargetYaw(){
+ 
+     var result = camera.getLatestResult();
+     if(hasTarget()){
+       return result.getBestTarget().getYaw();
+     }
+     return 0;
+   }
+ 
+   double getTargetArea(){
+     var result = camera.getLatestResult();
+     if(hasTarget()){
+       return result.getBestTarget().getArea();
+     }
+     return 0;
+   }
 
   /**
   @return returns value in meters
