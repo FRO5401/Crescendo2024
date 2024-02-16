@@ -14,6 +14,7 @@ import frc.robot.Constants;
 import frc.robot.Subsystems.Infeed;
 
 public class RotatePivotAir extends Command {
+  //Declaring variables
   Infeed infeed;
   boolean endCommand = false;
 

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.Infeed;
 
 public class StopPivot extends Command {
+  //Declare variables
   Infeed infeed;
   boolean endCommand = false;
 

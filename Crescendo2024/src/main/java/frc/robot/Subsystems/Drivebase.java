@@ -97,8 +97,10 @@ public class Drivebase extends SubsystemBase {
     
     // Initalized allDrive
     allDrive = new DifferentialDrive(leftDrive1, rightDrive1);
+
     // Sets the max output to motors as 100%
     allDrive.setMaxOutput(1);
+    
     // To handle errors from WPI 2024
     allDrive.setExpiration(0.1);
     
