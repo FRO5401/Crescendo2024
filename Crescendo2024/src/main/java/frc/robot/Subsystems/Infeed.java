@@ -75,6 +75,7 @@ public class Infeed extends SubsystemBase {
     pivotPID.setP(Constants.InfeedConstants.pivotP);
     pivotPID.setI(Constants.InfeedConstants.pivotI);
     pivotPID.setD(Constants.InfeedConstants.pivotD);
+    pivotPID.setIZone(Constants.InfeedConstants.pivotILimit);
     
   }
   //Gets position of pivotMotor

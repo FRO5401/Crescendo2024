@@ -13,6 +13,11 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Subsystems.Drivebase;
 import frc.robot.Subsystems.Infeed;
 
+import frc.robot.Subsystems.Shooter;
+import frc.robot.Commands.AmpShot;
+import frc.robot.Commands.SpeakerShot;
+import frc.robot.Commands.StopAll;
+import frc.robot.Commands.TrapShot;
 //Command Imports
 import frc.robot.Commands.XboxMove;
 import frc.robot.Commands.Expel;
@@ -20,7 +25,6 @@ import frc.robot.Commands.Intake;
 import frc.robot.Commands.RotatePivotAir;
 import frc.robot.Commands.RotatePivotGround;
 import frc.robot.Commands.RotatePivotShooter;
-import frc.robot.Commands.StopIntake;
 
 //Used Imports that might be used in future
 //import frc.robot.Commands.StopPivot;
@@ -34,6 +38,9 @@ public class RobotContainer {
 
     /*Intake */
   private final Infeed infeed = new Infeed();
+    /*Shooter */
+    private final Shooter shooter = new Shooter();
+ 
 
   public RobotContainer() {
     drivebase.setDefaultCommand(xboxMove);
@@ -48,7 +55,7 @@ public class RobotContainer {
     //If "B" pressed/held on operator controller intake command used (sucks note into infeed)
     operator.b().whileTrue(new Intake(infeed));
     //If "Right Bumper" pressed/held on operator controller stop intake command used (stops infeed)
-    operator.rightBumper().whileTrue(new StopIntake(infeed));
+    operator.rightBumper().whileTrue(new StopAll(infeed, shooter));
 
     /** Pivot Commands */
     //If "Right Trigger" pressed/held on operator controller rotatepivotground command used (moves intake to ground)
@@ -57,6 +64,11 @@ public class RobotContainer {
     operator.leftTrigger().whileTrue(new RotatePivotShooter(infeed));
     //If "Left Bumper" pressed/held on operator controller rotatepivotAir command used (moves intake to air)
     operator.leftBumper().whileTrue(new RotatePivotAir(infeed));
+
+
+    operator.povUp().onTrue(new SpeakerShot(shooter));
+    operator.povRight().onTrue(new AmpShot(shooter));
+    operator.povDown().onTrue(new TrapShot(shooter));
 
   }
 
