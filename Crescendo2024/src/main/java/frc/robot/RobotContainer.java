@@ -29,7 +29,6 @@ import frc.robot.Commands.RotatePivotShooter;
 //Used Imports that might be used in future
 //import frc.robot.Commands.StopPivot;
 
-
 public class RobotContainer {
     private final CommandXboxController operator = Controls.operator;
 
