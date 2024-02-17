@@ -58,14 +58,55 @@ public final class Constants {
     //Infeed Constants
     public static class InfeedConstants{
         //Id of infeeds CANSparkMax motors
-        public static final int INTAKE1_ID = 1;
-        public static final int PIVOT_ID = 3;
+        public static final int INTAKE1_ID = 6;
+        public static final int PIVOT_ID = 5;
+
         //PID values
+        public static final double pivotP = .1;
+        public static final double pivotI = 0.000005;
+        public static final double pivotD = 9.5;
+        public static final double pivotILimit = .5;
+
+        //set pointa
+        public static final double IN_POSITION = -.5;
+        public static final double OUT_POSITION = -13.5;
+        public static final double AIR_POSITION = -6.5;
+
+        /* Infeed speed constants */
+
+        //Take in note speed
+        public static final double INTAKE_SPEED = 0.2;
+        //Remove note from infeed speed
+        public static final double EXPEL_SPEED = -0.43;
+        //Move Pivot to floor speed
+        public static final double PIVOT_TO_GROUND_SPEED = -0.35;
+        //Move Pivot to shooter speed
+        public static final double PIVOT_TO_SHOOTER_SPEED = 0.35;
+        //Fix Pivot position if overshot speed
+        public static final double OVERSHOOT_FIX_SPEED = -0.20;
+    }
+
+
+    public final class ShooterConstants{
+        public static final int LEAD_ID = 7;
+        public static final int FOLLOWER_ID = 8;
+
+        public static final double kF = .00017;
+        public static final double kP = .00015;
+        public static final double kI = 0;
+        public static final double kD = .00000;
+
+        public final class SpeedConstants{
+            public static final double SHOOTER_RPM = 5500;
+            public static final double AMP_RPM = 2500;
+            public static final double TRAP_RPM = 4000;
+        }
+    }
         public static final double pivotP = 0;
         public static final double pivotI = 0;
         public static final double pivotD = 0;
 
-    }
+    
 
     public static class ClimberConstants {
         //IDs of climber CANSparkMax motors
@@ -81,5 +122,5 @@ public final class Constants {
         public static final double climberDownSpeed = -1;
 
     }
+}
 
-  }

@@ -97,8 +97,10 @@ public class Drivebase extends SubsystemBase {
     
     // Initalized allDrive
     allDrive = new DifferentialDrive(leftDrive1, rightDrive1);
+
     // Sets the max output to motors as 100%
     allDrive.setMaxOutput(1);
+    
     // To handle errors from WPI 2024
     allDrive.setExpiration(0.1);
     
@@ -120,35 +122,35 @@ public class Drivebase extends SubsystemBase {
   public void drive(double left, double right){
     allDrive.tankDrive(left, right);
   }
-
+  //Gets position of left motor 1 
   public double getLeftPosition(){
     return leftEncoder1.getPosition();
   }
-
+  //Gets position of right motor 1 
   public double getRightPostion(){
     return rightEncoder1.getPosition();
   }
-
+  //Gets velocity of left motor 1
   public double getLeftVelocity(){
     return leftEncoder1.getVelocity();
   }
-
+  //Gets velocity of right motor 1
   public double getRightVelocity(){
     return rightEncoder1.getVelocity();
   }
-
+  //Sets velocity of left motor 1
   public void setLeftVelocity(double velocity){
     leftPIDController.setReference(velocity, ControlType.kVelocity);
   }
-
+  //Sets position of left motor 1
   public void setLeftPosition(double setPoint){
     leftPIDController.setReference(setPoint, ControlType.kPosition);
   }
-
+  //Sets velocity of right motor 1
   public void setRightVelocity(double velocity){
     rightPIDController.setReference(velocity, ControlType.kVelocity);
   }
-
+  //Sets position of right motor 1
   public void setRightPostion(double setPoint){
     rightPIDController.setReference(setPoint, ControlType.kPosition);
   }
@@ -156,7 +158,10 @@ public class Drivebase extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+    //Displays left drives encoder value to smart dashboard
     SmartDashboard.getNumber("Left Drive Encoder Value", getLeftPosition());
+    //Displays right drives encoder value to smart dashboard
     SmartDashboard.getNumber("Right Drive Encoder Value", getRightPostion());
   }
 }
