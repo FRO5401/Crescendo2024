@@ -9,13 +9,12 @@ package frc.robot.Commands;
 //WPI Imports
 import edu.wpi.first.wpilibj2.command.Command;
 
-//File Imports
+//Subsystem Imports
 import frc.robot.Subsystems.Infeed;
 
 public class Expel extends Command {
   //Declares Variables
-  Infeed expel;
-  boolean endCommand = false;
+  private Infeed expel;
 
   /** Creates a new Expel. */
   public Expel(Infeed m_expel) {
@@ -34,7 +33,6 @@ public class Expel extends Command {
   @Override
   public void execute() {
     expel.expel();
-    endCommand = true;
   }
 
   // Called once the command ends or is interrupted.

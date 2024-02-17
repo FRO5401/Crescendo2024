@@ -71,19 +71,19 @@ public class RobotContainer {
      */
 
     /** Intake Commands */
-    //If "A" pressed/held on operator controller expel command used (removes note from infeed)
+    //If "Right Trigger" pressed/held on operator controller expel command used (removes note from infeed)
     operator.rightTrigger().whileTrue(new Expel(infeed));
-    //If "B" pressed/held on operator controller intake command used (sucks note into infeed)
+    //If "Left Trigger" pressed/held on operator controller intake command used (sucks note into infeed)
     operator.leftTrigger().whileTrue(new Intake(infeed));
-    //If "Right Bumper" pressed/held on operator controller stop intake command used (stops infeed)
+    //If "Left Bumper" pressed/held on operator controller stop intake command used (stops infeed)
     operator.leftBumper().whileTrue(new StopAll(infeed, shooter));
 
     /** Pivot Commands */
-    //If "Right Trigger" pressed/held on operator controller rotatepivotground command used (moves intake to ground)
+    //If "Y" pressed/held on operator controller rotatepivotground command used (moves intake to ground)
     operator.y().whileTrue(new RotatePivotGround(infeed));
-    //If "Left Trigger" pressed/held on operator controller rotatepivotshooter command used (moves intake to shooter)
+    //If "A" pressed/held on operator controller rotatepivotshooter command used (moves intake to shooter)
     operator.a().whileTrue(new RotatePivotShooter(infeed));
-    //If "Left Bumper" pressed/held on operator controller rotatepivotAir command used (moves intake to air)
+    //If "B" pressed/held on operator controller rotatepivotAir command used (moves intake to air)
     operator.b().whileTrue(new RotatePivotAir(infeed));
 
 
