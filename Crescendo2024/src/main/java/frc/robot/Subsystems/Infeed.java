@@ -50,7 +50,7 @@ public class Infeed extends SubsystemBase {
 
   /** Creates a new Infeed. */
   public Infeed() {
-
+    //TODO findout which type of motors are being used, brushed or brushless
     //Initalizes CANSparkMax Motors
     pivotMotor = new CANSparkMax(Constants.InfeedConstants.PIVOT_ID, MotorType.kBrushless);
     intakeMotor1 = new CANSparkMax(Constants.InfeedConstants.INTAKE1_ID, MotorType.kBrushless);

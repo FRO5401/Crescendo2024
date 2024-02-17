@@ -12,8 +12,12 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 //Subsystem Imports
 import frc.robot.Subsystems.Drivebase;
 import frc.robot.Subsystems.Infeed;
-import frc.robot.Subsystems.Shooter;
 
+import frc.robot.Subsystems.Shooter;
+import frc.robot.Commands.AmpShot;
+import frc.robot.Commands.SpeakerShot;
+import frc.robot.Commands.StopAll;
+import frc.robot.Commands.TrapShot;
 //Command Imports
 import frc.robot.Commands.XboxMove;
 import frc.robot.Commands.Expel;
@@ -21,10 +25,10 @@ import frc.robot.Commands.Intake;
 import frc.robot.Commands.RotatePivotAir;
 import frc.robot.Commands.RotatePivotGround;
 import frc.robot.Commands.RotatePivotShooter;
-import frc.robot.Commands.AmpShot;
-import frc.robot.Commands.SpeakerShot;
-import frc.robot.Commands.StopAll;
-import frc.robot.Commands.TrapShot;
+
+//Used Imports that might be used in future
+//import frc.robot.Commands.StopPivot;
+
 
 public class RobotContainer {
     private final CommandXboxController operator = Controls.operator;
@@ -34,8 +38,7 @@ public class RobotContainer {
     private final XboxMove xboxMove = new XboxMove(drivebase);
 
     /*Intake */
-    private final Infeed infeed = new Infeed();
-
+  private final Infeed infeed = new Infeed();
     /*Shooter */
     private final Shooter shooter = new Shooter();
  
@@ -52,7 +55,7 @@ public class RobotContainer {
     operator.a().whileTrue(new Expel(infeed));
     //If "B" pressed/held on operator controller intake command used (sucks note into infeed)
     operator.b().whileTrue(new Intake(infeed));
-    //If "Right Bumper" pressed/held on operator controller stop all command used (stops infeed and shooter)
+    //If "Right Bumper" pressed/held on operator controller stop intake command used (stops infeed)
     operator.rightBumper().whileTrue(new StopAll(infeed, shooter));
 
     /** Pivot Commands */
@@ -63,13 +66,11 @@ public class RobotContainer {
     //If "Left Bumper" pressed/held on operator controller rotatepivotAir command used (moves intake to air)
     operator.leftBumper().whileTrue(new RotatePivotAir(infeed));
 
-    /** Shooter Commands */
-    //If "D-pad Up" pressed/held on operator controller SpeakerShot command used (Shoots note into speaker)
+
     operator.povUp().onTrue(new SpeakerShot(shooter));
-    //If "D-pad Right" pressed/held on operator controller AmpShot command used (Shoots note into Amp)
     operator.povRight().onTrue(new AmpShot(shooter));
-    //If "D-pad Down" pressed/held on operator controller TrapShot command used (Shoots note into trap)
     operator.povDown().onTrue(new TrapShot(shooter));
+
   }
 
   public Command getAutonomousCommand() {
