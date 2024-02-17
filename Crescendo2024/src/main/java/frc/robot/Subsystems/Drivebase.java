@@ -12,6 +12,9 @@ import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 //WPI imports
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -48,7 +51,10 @@ public class Drivebase extends SubsystemBase {
 
   //solenoid 
 
+  private Solenoid solenoid;
+  private Compressor compressor;
 
+  private boolean isHighGear = false; 
  
  
   /** Creates a new Drivebase. */
@@ -113,6 +119,11 @@ public class Drivebase extends SubsystemBase {
     leftPIDController.setP(Constants.DriveMotors.KP);
     leftPIDController.setI(Constants.DriveMotors.KI);
     leftPIDController.setD(Constants.DriveMotors.KD);
+    
+    compressor = new Compressor(PneumaticsModuleType.REVPH);
+    compressor.enableDigital();
+    solenoid = new Solenoid(PneumaticsModuleType.REVPH, 1);
+    solenoid.set(isHighGear);
   }
 
   /**
@@ -154,6 +165,10 @@ public class Drivebase extends SubsystemBase {
   public void setRightPostion(double setPoint){
     rightPIDController.setReference(setPoint, ControlType.kPosition);
   }
+  public void toggleGearShifter(){
+    isHighGear = !isHighGear;
+    solenoid.set(isHighGear);
+  }
 
   @Override
   public void periodic() {
@@ -163,5 +178,8 @@ public class Drivebase extends SubsystemBase {
     SmartDashboard.getNumber("Left Drive Encoder Value", getLeftPosition());
     //Displays right drives encoder value to smart dashboard
     SmartDashboard.getNumber("Right Drive Encoder Value", getRightPostion());
+    //displays gear shift state
+    SmartDashboard.putBoolean("isHighGear", isHighGear);
+    SmartDashboard.putNumber("PSI", compressor.getPressure());
   }
 }
