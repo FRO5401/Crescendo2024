@@ -102,4 +102,25 @@ public final class Constants {
             public static final double TRAP_RPM = 4000;
         }
     }
-  }
+        public static final double pivotP = 0;
+        public static final double pivotI = 0;
+        public static final double pivotD = 0;
+
+    
+
+    public static class ClimberConstants {
+        //IDs of climber CANSparkMax motors
+        public static final int LEFTCLIMBER_ID = 10;
+        public static final int RIGHTCLIMBER_ID = 9;
+
+        // Encoder ranges
+        public static final int climberEncoderMax = 25;
+        public static final int climberEncoderMin = 0;
+
+        // Climb motor speed
+        public static final double climberUpSpeed = 1;
+        public static final double climberDownSpeed = -1;
+
+    }
+}
+

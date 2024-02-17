@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 //import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 
-
 public class Controls {
   public static final String DriveConstants = null;
   /* The driver's controller */
