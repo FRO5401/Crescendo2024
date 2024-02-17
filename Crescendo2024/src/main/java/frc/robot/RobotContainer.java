@@ -19,7 +19,6 @@ import frc.robot.Subsystems.Shooter;
 import frc.robot.Commands.AmpShot;
 import frc.robot.Commands.SpeakerShot;
 import frc.robot.Commands.StopAll;
-import frc.robot.Commands.TrapShot;
 
 //Command Imports
 import frc.robot.Commands.XboxMove;
