@@ -60,14 +60,12 @@ public class Climber extends SubsystemBase {
   }
 
 // Climber up
-  public void climbUp() {
-    climberMotor.set(Constants.ClimberConstants.climberUpSpeed);
+  public void climb(double speed) {
+    climberMotor.set(speed);
   }
 
 // Climber down
-  public void climbDown() {
-    climberMotor.set(Constants.ClimberConstants.climberDownSpeed);
-  }
+
 
   // Reset encoder
   public void resetEncoder() {

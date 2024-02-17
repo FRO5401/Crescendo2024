@@ -3,18 +3,24 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot.Commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 // WPI imports
 import edu.wpi.first.wpilibj2.command.Command;
-
+import frc.robot.Controls;
 // Subsystem imports
 import frc.robot.Subsystems.Climber;
 
-public class ClimberUp extends Command {
+public class ClimberMove extends Command {
   private Climber climber;
 
+  private String side;
+  private double speed;
+
+  private XboxController controller = Controls.xbox_operator;
   /** Creates a new Climber. */
-  public ClimberUp(Climber m_climber) {
+  public ClimberMove(Climber m_climber, String m_side) {
     climber = m_climber;
+    side = m_side;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(climber);
   }
@@ -25,7 +31,13 @@ public class ClimberUp extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.climbUp();
+    if (side == "Left"){
+      speed = controller.getLeftY();
+    }
+    else{
+      speed = controller.getRightY();
+    }
+    climber.climb(speed);
   }
 
   // Called once the command ends or is interrupted.

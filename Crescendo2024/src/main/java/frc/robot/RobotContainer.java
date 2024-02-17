@@ -51,38 +51,46 @@ public class RobotContainer {
 
   public RobotContainer() {
     drivebase.setDefaultCommand(xboxMove);
+    infeed.setDefaultCommand(new ClimberMove(leftClimber, "Left"));
+    infeed.setDefaultCommand(new ClimberMove(rightClimber, "Right"));
     configureBindings();
   }
 
   private void configureBindings() {
 
+    /*
+     * Low Power Shot - Bottom DPAD 
+     * Speaker Shot - Up DPAD
+     * Left climber - left joysticks
+     * right climber - right joystick
+     * Expel - Right Trigger
+     * Intake - Left Trigger
+     * Rotate Pivot Air - B
+     * Rotate Pivot Grouns - Y
+     * Rotate Pivot Shooter - A
+     * Stop All - Left Bumber
+     */
+
     /** Intake Commands */
     //If "A" pressed/held on operator controller expel command used (removes note from infeed)
-    operator.a().whileTrue(new Expel(infeed));
+    operator.rightTrigger().whileTrue(new Expel(infeed));
     //If "B" pressed/held on operator controller intake command used (sucks note into infeed)
-    operator.b().whileTrue(new Intake(infeed));
+    operator.leftTrigger().whileTrue(new Intake(infeed));
     //If "Right Bumper" pressed/held on operator controller stop intake command used (stops infeed)
-    operator.rightBumper().whileTrue(new StopAll(infeed, shooter));
+    operator.leftBumper().whileTrue(new StopAll(infeed, shooter));
 
     /** Pivot Commands */
     //If "Right Trigger" pressed/held on operator controller rotatepivotground command used (moves intake to ground)
-    operator.rightTrigger().whileTrue(new RotatePivotGround(infeed));
+    operator.y().whileTrue(new RotatePivotGround(infeed));
     //If "Left Trigger" pressed/held on operator controller rotatepivotshooter command used (moves intake to shooter)
-    operator.leftTrigger().whileTrue(new RotatePivotShooter(infeed));
+    operator.a().whileTrue(new RotatePivotShooter(infeed));
     //If "Left Bumper" pressed/held on operator controller rotatepivotAir command used (moves intake to air)
-    operator.leftBumper().whileTrue(new RotatePivotAir(infeed));
+    operator.b().whileTrue(new RotatePivotAir(infeed));
 
 
     operator.povUp().onTrue(new SpeakerShot(shooter));
-    operator.povRight().onTrue(new AmpShot(shooter));
-    operator.povDown().onTrue(new TrapShot(shooter));
-    // Left climber controlls
-    operator.leftBumper().whileTrue(new ClimberUp(leftClimber));
-    operator.leftTrigger().whileTrue(new ClimberDown(leftClimber));
+    operator.povDown().onTrue(new AmpShot(shooter));
 
-    // Right climber controlls
-    operator.rightBumper().whileTrue(new ClimberUp(rightClimber));
-    operator.rightTrigger().whileTrue(new ClimberDown(rightClimber));
   }
 
   public Command getAutonomousCommand() {
