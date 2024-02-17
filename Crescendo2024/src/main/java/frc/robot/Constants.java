@@ -69,7 +69,7 @@ public final class Constants {
 
         //set pointa
         public static final double IN_POSITION = -.5;
-        public static final double OUT_POSITION = -13.5;
+        public static final double OUT_POSITION = -14;
         public static final double AIR_POSITION = -6.5;
 
         /* Infeed speed constants */
@@ -120,6 +120,7 @@ public final class Constants {
         // Climb motor speed
         public static final double climberUpSpeed = 1;
         public static final double climberDownSpeed = -1;
+        public static final double CONTROLLER_DEADZONE = .05;
 
     }
 }

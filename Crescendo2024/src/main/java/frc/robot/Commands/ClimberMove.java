@@ -6,7 +6,9 @@ package frc.robot.Commands;
 import edu.wpi.first.wpilibj.XboxController;
 // WPI imports
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.Controls;
+import frc.robot.Constants.ClimberConstants;
 // Subsystem imports
 import frc.robot.Subsystems.Climber;
 
@@ -37,7 +39,11 @@ public class ClimberMove extends Command {
     else{
       speed = controller.getRightY();
     }
-    climber.climb(speed);
+    if (speed > Constants.ClimberConstants.CONTROLLER_DEADZONE || speed < -ClimberConstants.CONTROLLER_DEADZONE){
+      climber.climb(speed);
+    } else {
+      climber.climb(0);
+    }
   }
 
   // Called once the command ends or is interrupted.

@@ -9,31 +9,31 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-
-//Subsystem Imports
-import frc.robot.Subsystems.Climber;
-import frc.robot.Subsystems.Drivebase;
-import frc.robot.Subsystems.Infeed;
-
-import frc.robot.Subsystems.Shooter;
 import frc.robot.Commands.AmpShot;
-import frc.robot.Commands.SpeakerShot;
-import frc.robot.Commands.StopAll;
-
-//Command Imports
-import frc.robot.Commands.XboxMove;
+import frc.robot.Commands.ClimberMove;
 import frc.robot.Commands.Expel;
 import frc.robot.Commands.Intake;
 import frc.robot.Commands.RotatePivotAir;
 import frc.robot.Commands.RotatePivotGround;
 import frc.robot.Commands.RotatePivotShooter;
-import frc.robot.Commands.*;
+import frc.robot.Commands.ShiftGear;
+import frc.robot.Commands.SpeakerShot;
+import frc.robot.Commands.StopAll;
+//Command Imports
+import frc.robot.Commands.XboxMove;
+import frc.robot.Commands.Auto.AutoShoot;
+//Subsystem Imports
+import frc.robot.Subsystems.Climber;
+import frc.robot.Subsystems.Drivebase;
+import frc.robot.Subsystems.Infeed;
+import frc.robot.Subsystems.Shooter;
 
 //Used Imports that might be used in future
 //import frc.robot.Commands.StopPivot;
 
 public class RobotContainer {
     private final CommandXboxController operator = Controls.operator;
+    private final CommandXboxController driver = Controls.driver;
 
     /* Drivebase */
     private final Drivebase drivebase = new Drivebase();
@@ -50,8 +50,8 @@ public class RobotContainer {
 
   public RobotContainer() {
     drivebase.setDefaultCommand(xboxMove);
-    infeed.setDefaultCommand(new ClimberMove(leftClimber, "Left"));
-    infeed.setDefaultCommand(new ClimberMove(rightClimber, "Right"));
+    leftClimber.setDefaultCommand(new ClimberMove(leftClimber, "Left"));
+    rightClimber.setDefaultCommand(new ClimberMove(rightClimber, "Right"));
     configureBindings();
   }
 
@@ -87,8 +87,10 @@ public class RobotContainer {
     operator.b().whileTrue(new RotatePivotAir(infeed));
 
 
-    operator.povUp().onTrue(new SpeakerShot(shooter));
+    operator.povUp().onTrue(new AutoShoot(infeed, shooter));
     operator.povDown().onTrue(new AmpShot(shooter));
+
+    driver.start().onTrue(new ShiftGear(drivebase));
 
   }
 
