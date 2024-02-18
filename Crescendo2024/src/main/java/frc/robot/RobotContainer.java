@@ -15,6 +15,7 @@ import frc.robot.Commands.Expel;
 import frc.robot.Commands.Intake;
 import frc.robot.Commands.RotatePivotAir;
 import frc.robot.Commands.RotatePivotGround;
+import frc.robot.Commands.RotatePivotSafe;
 import frc.robot.Commands.RotatePivotShooter;
 import frc.robot.Commands.ShiftGear;
 import frc.robot.Commands.SpeakerShot;
@@ -85,6 +86,7 @@ public class RobotContainer {
     operator.a().whileTrue(new RotatePivotShooter(infeed));
     //If "Left Bumper" pressed/held on operator controller rotatepivotAir command used (moves intake to air)
     operator.b().whileTrue(new RotatePivotAir(infeed));
+    operator.x().whileTrue(new RotatePivotSafe(infeed));
 
 
     operator.povUp().onTrue(new AutoShoot(infeed, shooter));

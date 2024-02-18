@@ -17,7 +17,7 @@ import frc.robot.Subsystems.Shooter;
 public class AutoShoot extends SequentialCommandGroup {
   private Infeed infeed;
   private Shooter shooter; 
-
+  private boolean endCommand = false;
   /** Creates a new AutoShoot. */
   public AutoShoot(Infeed m_infeed, Shooter m_shooter) {
     infeed = m_infeed;
@@ -26,10 +26,11 @@ public class AutoShoot extends SequentialCommandGroup {
     addRequirements(shooter, infeed);
     addCommands(
       new ParallelCommandGroup(
-        new SpeakerShot(shooter), 
-        new RotatePivotShooter(m_infeed)
-        ),
-        new Expel(infeed)
+        new RotatePivotShooter(infeed),
+        new SpeakerShot(shooter) 
+
+      ),
+      new Expel(infeed)
     );
 
       

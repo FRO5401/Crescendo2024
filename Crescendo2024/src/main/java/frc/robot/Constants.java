@@ -69,13 +69,15 @@ public final class Constants {
 
         //set pointa
         public static final double IN_POSITION = -.5;
-        public static final double OUT_POSITION = -14;
+        public static final double SAFE_POSITION = -2;
+
+        public static final double OUT_POSITION = -14.2;
         public static final double AIR_POSITION = -6.5;
 
         /* Infeed speed constants */
 
         //Take in note speed
-        public static final double INTAKE_SPEED = 0.2;
+        public static final double INTAKE_SPEED = 0.6;
         //Remove note from infeed speed
         public static final double EXPEL_SPEED = -0.43;
         //Move Pivot to floor speed

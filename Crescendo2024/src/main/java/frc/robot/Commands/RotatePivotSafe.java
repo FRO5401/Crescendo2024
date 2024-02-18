@@ -13,13 +13,13 @@ import frc.robot.Constants;
 //File Imports
 import frc.robot.Subsystems.Infeed;
 
-public class RotatePivotShooter extends Command {
+public class RotatePivotSafe extends Command {
   //Declaring variables
   Infeed infeed;
   boolean endCommand = false;
 
   /** Creates a new Pivot. */
-  public RotatePivotShooter(Infeed m_rotatetoshooter) {
+  public RotatePivotSafe(Infeed m_rotatetoshooter) {
     //Makes local variable equal to global variable
     infeed = m_rotatetoshooter;
     
@@ -34,8 +34,8 @@ public class RotatePivotShooter extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    infeed.setPoint(Constants.InfeedConstants.IN_POSITION);
-    if(infeed.getPosition() <= Constants.InfeedConstants.IN_POSITION - .1 ){
+    infeed.setPoint(Constants.InfeedConstants.SAFE_POSITION);
+    if(infeed.getPosition() <= Constants.InfeedConstants.SAFE_POSITION ){
       endCommand = true;
     }
   }

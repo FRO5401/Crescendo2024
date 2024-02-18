@@ -10,6 +10,7 @@ import frc.robot.Subsystems.Shooter;
 
 public class SpeakerShot extends Command {
   Shooter shooter;
+  private boolean endCommand = false;
 
   /** Creates a new SpeakerShot. */
   public SpeakerShot(Shooter m_shooter) {
@@ -26,6 +27,9 @@ public class SpeakerShot extends Command {
   @Override
   public void execute() {
     shooter.setVelocity(Constants.ShooterConstants.SpeedConstants.SHOOTER_RPM);
+    if(shooter.getVelocity() > Constants.ShooterConstants.SpeedConstants.SHOOTER_RPM - 500){
+     endCommand = true;
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -35,6 +39,6 @@ public class SpeakerShot extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return endCommand;
   }
 }

@@ -67,6 +67,8 @@ public class Infeed extends SubsystemBase {
     pivotMotor.restoreFactoryDefaults();
     intakeMotor1.restoreFactoryDefaults();
 
+    pivotMotor.setSmartCurrentLimit(50);
+
     //Sets idle mode for when motors aren't being directly used
     pivotMotor.setIdleMode(IdleMode.kBrake);
     intakeMotor1.setIdleMode(IdleMode.kBrake);
@@ -136,7 +138,7 @@ public class Infeed extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-
+    SmartDashboard.putNumber("Current Pivot", pivotMotor.getOutputCurrent());
     //Creates SmartDashBoard pivotMotor Encoder Value
     SmartDashboard.putNumber("pivotMotor Encoder Value", getPosition());
 

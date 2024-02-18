@@ -93,6 +93,13 @@ public class Drivebase extends SubsystemBase {
     rightDrive1.setIdleMode(IdleMode.kBrake);
     rightDrive2.setIdleMode(IdleMode.kBrake);
 
+    leftDrive1.setSmartCurrentLimit(45);
+    leftDrive2.setSmartCurrentLimit(45);
+    rightDrive1.setSmartCurrentLimit(45);
+    rightDrive2.setSmartCurrentLimit(45);
+
+    //Current limit 
+
     // Having drive motor 2 [Left & Right] follow the actions of drive motor 1
     leftDrive2.follow(leftDrive1);
     rightDrive2.follow(rightDrive1);
@@ -122,7 +129,7 @@ public class Drivebase extends SubsystemBase {
     
     compressor = new Compressor(PneumaticsModuleType.REVPH);
     compressor.enableDigital();
-    solenoid = new Solenoid(PneumaticsModuleType.REVPH, 1);
+    solenoid = new Solenoid(PneumaticsModuleType.REVPH, 0);
     solenoid.set(isHighGear);
   }
 
