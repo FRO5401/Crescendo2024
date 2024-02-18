@@ -140,6 +140,10 @@ public class Drivebase extends SubsystemBase {
   public void drive(double left, double right){
     allDrive.tankDrive(left, right);
   }
+
+  public void arcadeDrive(double forwardSpeed, double rotateSpeed){
+    allDrive.arcadeDrive(forwardSpeed, rotateSpeed);
+  }
   //Gets position of left motor 1 
   public double getLeftPosition(){
     return leftEncoder1.getPosition();

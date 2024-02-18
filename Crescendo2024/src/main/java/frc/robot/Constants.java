@@ -12,6 +12,11 @@ public final class Constants {
         public static final double SPIN_SENSITIVITY = 0.8;
         
         }
+
+    public static class PhotonConstants{
+        public static final double CAMERA_ANGLE = 25;
+        public static final double CAMERA_HEIGHT = 24.5;
+    }
     
     //Controls Constants
     public static class Controls{

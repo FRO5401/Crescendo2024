@@ -2,14 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+
+// 24 1/2
+
+
 package frc.robot.Subsystems;
 
 import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Photonvision extends SubsystemBase{
   /** Creates a new NetworkTables. */
@@ -64,8 +71,8 @@ public class Photonvision extends SubsystemBase{
     switch(id){
       case 1: return 122/100;
       case 2: return 122/100;
-      case 3: return 132/100;
-      case 4: return 132/100;
+      case 3: return 1.37;
+      case 4: return 1.37;
       case 5: return 122/100;
       case 6: return 122/100;
       case 7: return 132/100;
@@ -84,9 +91,32 @@ public class Photonvision extends SubsystemBase{
     
   }
 
+  public double distanceToTarget(){
+     var result = camera.getLatestResult();
+
+    if (result.hasTargets()) {
+      // First calculate range
+      double range =
+        PhotonUtils.calculateDistanceToTargetMeters(
+          Units.inchesToMeters(Constants.PhotonConstants.CAMERA_HEIGHT),
+          getTargetHeight(result.getBestTarget().getFiducialId()),
+          Units.degreesToRadians(Constants.PhotonConstants.CAMERA_ANGLE),
+          Units.degreesToRadians(result.getBestTarget().getPitch())
+          );
+         return range;
+        }
+      return 0;
+  }
+
   public void shuffleBoardTabs(){
     var result = camera.getLatestResult();
     SmartDashboard.putNumber("Camera Latency", result.getLatencyMillis());
+    SmartDashboard.putNumber("Range", distanceToTarget());
+    SmartDashboard.putNumber("Yaw",result.getBestTarget().getYaw());
   }
-  double test = getTargetHeight(1);
+
+  @Override
+  public void periodic(){
+    shuffleBoardTabs();
+  }
 }

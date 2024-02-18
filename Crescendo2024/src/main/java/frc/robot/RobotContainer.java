@@ -27,6 +27,7 @@ import frc.robot.Commands.Auto.AutoShoot;
 import frc.robot.Subsystems.Climber;
 import frc.robot.Subsystems.Drivebase;
 import frc.robot.Subsystems.Infeed;
+import frc.robot.Subsystems.Photonvision;
 import frc.robot.Subsystems.Shooter;
 
 //Used Imports that might be used in future
@@ -41,12 +42,14 @@ public class RobotContainer {
     private final XboxMove xboxMove = new XboxMove(drivebase);
 
     /*Intake */
-  private final Infeed infeed = new Infeed();
+    private final Infeed infeed = new Infeed();
     /*Shooter */
     private final Shooter shooter = new Shooter();
     /*Climbers */
     private final Climber leftClimber = new Climber(Constants.ClimberConstants.LEFTCLIMBER_ID, true, "Left");
     private final Climber rightClimber = new Climber(Constants.ClimberConstants.RIGHTCLIMBER_ID, false, "Right");
+    /* Camera */
+    private final Photonvision camera = new Photonvision("Test");
  
 
   public RobotContainer() {
