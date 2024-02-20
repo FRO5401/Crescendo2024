@@ -25,11 +25,7 @@ public class AutoShoot extends SequentialCommandGroup {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter, infeed);
     addCommands(
-      new ParallelCommandGroup(
-        new RotatePivotShooter(infeed),
-        new SpeakerShot(shooter) 
-
-      ),
+      new SpeakerShot(shooter), 
       new Expel(infeed)
     );
 

@@ -23,6 +23,7 @@ import frc.robot.Commands.StopAll;
 //Command Imports
 import frc.robot.Commands.XboxMove;
 import frc.robot.Commands.Auto.AutoShoot;
+import frc.robot.Commands.Auto.AutoTarget;
 //Subsystem Imports
 import frc.robot.Subsystems.Climber;
 import frc.robot.Subsystems.Drivebase;
@@ -49,6 +50,7 @@ public class RobotContainer {
     private final Climber leftClimber = new Climber(Constants.ClimberConstants.LEFTCLIMBER_ID, true, "Left");
     private final Climber rightClimber = new Climber(Constants.ClimberConstants.RIGHTCLIMBER_ID, false, "Right");
     /* Camera */
+    
     private final Photonvision camera = new Photonvision("Test");
  
 
@@ -96,6 +98,7 @@ public class RobotContainer {
     operator.povDown().onTrue(new AmpShot(shooter));
 
     driver.start().onTrue(new ShiftGear(drivebase));
+    driver.a().whileTrue(new AutoTarget(camera, drivebase, 1, 0));
 
   }
 

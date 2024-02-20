@@ -8,7 +8,10 @@
 
 package frc.robot.Subsystems;
 
+import java.util.List;
+
 import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonTargetSortMode;
 import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
@@ -34,7 +37,7 @@ public class Photonvision extends SubsystemBase{
   }
 
  
-  boolean hasTarget(){
+  public boolean hasTarget(){
     var result = camera.getLatestResult();
     return result.hasTargets();
    }
@@ -91,29 +94,65 @@ public class Photonvision extends SubsystemBase{
     
   }
 
-  public double distanceToTarget(){
+  public double getDistance(){
      var result = camera.getLatestResult();
+     
+     PhotonTrackedTarget target = null;
 
     if (result.hasTargets()) {
       // First calculate range
+      var targetList = result.getTargets();
+      target = removeBadTargets(targetList);
+
+      }
+      if (target != null){
       double range =
         PhotonUtils.calculateDistanceToTargetMeters(
           Units.inchesToMeters(Constants.PhotonConstants.CAMERA_HEIGHT),
-          getTargetHeight(result.getBestTarget().getFiducialId()),
+          getTargetHeight(target.getFiducialId()),
           Units.degreesToRadians(Constants.PhotonConstants.CAMERA_ANGLE),
-          Units.degreesToRadians(result.getBestTarget().getPitch())
+          Units.degreesToRadians(target.getPitch())
           );
          return range;
-        }
+      }
+        
       return 0;
+  }
+
+  public PhotonTrackedTarget removeBadTargets(List<PhotonTrackedTarget> targetList){
+    PhotonTrackedTarget target = null;
+  for (PhotonTrackedTarget m_target : targetList){
+        if (m_target.getFiducialId() != 3){
+          target = m_target;
+          break;
+        }
+      
+      }
+      return target;
+
+  }
+
+
+
+
+  public double getYaw(){
+    var result = camera.getLatestResult();
+    var targets = result.getTargets();
+    var target = removeBadTargets(targets);
+    if (target != null){
+    return target.getYaw();
+    }
+    return 0;
   }
 
   public void shuffleBoardTabs(){
     var result = camera.getLatestResult();
     SmartDashboard.putNumber("Camera Latency", result.getLatencyMillis());
-    SmartDashboard.putNumber("Range", distanceToTarget());
-    SmartDashboard.putNumber("Yaw",result.getBestTarget().getYaw());
+    SmartDashboard.putNumber("Range", getDistance());
+    SmartDashboard.putNumber("Yaw", getYaw());
   }
+
+
 
   @Override
   public void periodic(){

@@ -12,12 +12,14 @@ import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 //WPI imports
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 //File imports
@@ -49,6 +51,13 @@ public class Drivebase extends SubsystemBase {
   private SparkPIDController leftPIDController;
   private SparkPIDController rightPIDController;
 
+  //WPILIB pid controllers for calculations
+  private PIDController turnWPIDController;
+  private PIDController forwardWPIDController;
+
+
+
+
   //solenoid 
 
   private Solenoid solenoid;
@@ -59,6 +68,7 @@ public class Drivebase extends SubsystemBase {
  
   /** Creates a new Drivebase. */
   public Drivebase() {
+
     // Initalizing class variables
     leftDrive1 = new CANSparkMax(Constants.DriveMotors.LEFT_DRIVE1_ID, MotorType.kBrushless);
     leftDrive2 = new CANSparkMax(Constants.DriveMotors.LEFT_DRIVE2_ID, MotorType.kBrushless);
@@ -122,6 +132,9 @@ public class Drivebase extends SubsystemBase {
     rightPIDController.setI(Constants.DriveMotors.KI);
     rightPIDController.setD(Constants.DriveMotors.KD);
 
+    turnWPIDController = new PIDController(Constants.DriveMotors.ANGULAR_KP, Constants.DriveMotors.ANGULAR_KI, Constants.DriveMotors.ANGULAR_KD);
+    forwardWPIDController = new PIDController(Constants.DriveMotors.KP, Constants.DriveMotors.KI, Constants.DriveMotors.KD);
+
     //Left PID declaration
     leftPIDController.setP(Constants.DriveMotors.KP);
     leftPIDController.setI(Constants.DriveMotors.KI);
@@ -175,6 +188,13 @@ public class Drivebase extends SubsystemBase {
   //Sets position of right motor 1
   public void setRightPostion(double setPoint){
     rightPIDController.setReference(setPoint, ControlType.kPosition);
+  }
+
+  public double calculateTurn(double desired, double current){
+    return turnWPIDController.calculate(current, desired);
+  }
+    public double calculateFoward(double desired, double current){
+    return forwardWPIDController.calculate(current, desired);
   }
   public void toggleGearShifter(){
     isHighGear = !isHighGear;
