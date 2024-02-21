@@ -24,6 +24,7 @@ import frc.robot.Commands.StopAll;
 import frc.robot.Commands.XboxMove;
 import frc.robot.Commands.Auto.AutoShoot;
 import frc.robot.Commands.Auto.AutoTarget;
+import frc.robot.Commands.Lights.AllianceLED;
 import frc.robot.Commands.Lights.BlueLED;
 import frc.robot.Commands.Lights.RainbowLED;
 //Subsystem Imports
@@ -65,7 +66,6 @@ public class RobotContainer {
     leftClimber.setDefaultCommand(new ClimberMove(leftClimber, "Left"));
     rightClimber.setDefaultCommand(new ClimberMove(rightClimber, "Right"));
 
-    LED.setDefaultCommand(new BlueLED(LED));
     configureBindings();
   }
 
@@ -108,6 +108,8 @@ public class RobotContainer {
     driver.start().onTrue(new ShiftGear(drivebase));
     driver.a().whileTrue(new AutoTarget(camera, drivebase, 1, 0));
     driver.back().onTrue(new RainbowLED(LED));
+    driver.x().onTrue(new BlueLED(LED));
+    driver.y().onTrue(new AllianceLED(LED));
 
   }
 

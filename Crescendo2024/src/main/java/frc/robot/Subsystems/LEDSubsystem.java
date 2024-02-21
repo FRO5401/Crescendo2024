@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDSubsystem extends SubsystemBase {
 
+
+
   AddressableLED m_led;
   AddressableLEDBuffer m_ledBuffer;
   /** Creates a new LEDSubsystem. */
@@ -27,7 +29,7 @@ public class LEDSubsystem extends SubsystemBase {
 
     // Length is expensive to set, so only set it once, then just update data
 
-    m_ledBuffer = new AddressableLEDBuffer(60);
+    m_ledBuffer = new AddressableLEDBuffer(300);
 
     m_led.setLength(m_ledBuffer.getLength());
 
@@ -40,16 +42,17 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   public void setLEDColor(int r, int g, int b){
-    for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+    for (int i = 0; i < m_ledBuffer.getLength(); i++) {
       // Sets the specified LED to the RGB values for red
       m_ledBuffer.setRGB(i, r, g, b);
+      
    }
    
    m_led.setData(m_ledBuffer);
   }
 
   public void rainbow() {
-    int m_rainbowFirstPixelHue = 0;
+    int m_rainbowFirstPixelHue = 1;
 
     // For every pixel
 
