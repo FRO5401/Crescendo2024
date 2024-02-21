@@ -18,7 +18,7 @@ public class LEDSubsystem extends SubsystemBase {
 
     // Must be a PWM header, not MXP or DIO
 
-    m_led = new AddressableLED(9);
+    m_led = new AddressableLED(0);
 
 
     // Reuse buffer
