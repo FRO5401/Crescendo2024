@@ -12,6 +12,11 @@ public final class Constants {
         public static final double SPIN_SENSITIVITY = 0.8;
         
         }
+
+    public static class PhotonConstants{
+        public static final double CAMERA_ANGLE = 25;
+        public static final double CAMERA_HEIGHT = 24.5;
+    }
     
     //Controls Constants
     public static class Controls{
@@ -37,9 +42,9 @@ public final class Constants {
         public static final int CURRENT_LIMIT = 30;
     
         // PID Constants
-        public static final int KP = 0;
-        public static final int KI = 0;
-        public static final int KD = 0; 
+        public static final double KP = 1.2;
+        public static final double KI = 0;
+        public static final double KD = 0; 
     
         // Sensitivity Constants
         public static final double PERCISION_SENSITIVITY = 0.4;
@@ -52,7 +57,10 @@ public final class Constants {
         public static final int INVERSE_DIRECTION = -1;
     
         // Straight Direction
-        public static final double STRAIGHT_DIRECTION = 1.0; 
+        public static final double STRAIGHT_DIRECTION = 1.0;
+        public static final double ANGULAR_KP = 0.03;
+        public static final double ANGULAR_KI = 0;
+        public static final double ANGULAR_KD = 0; 
     }
     
     //Infeed Constants
@@ -65,7 +73,7 @@ public final class Constants {
         public static final double pivotP = .1;
         public static final double pivotI = 0.000005;
         public static final double pivotD = 9.5;
-        public static final double pivotILimit = .5;
+        public static final double pivotILimit = .01;
 
         //set pointa
         public static final double IN_POSITION = -.5;
