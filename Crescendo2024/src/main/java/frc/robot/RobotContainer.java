@@ -24,10 +24,13 @@ import frc.robot.Commands.StopAll;
 import frc.robot.Commands.XboxMove;
 import frc.robot.Commands.Auto.AutoShoot;
 import frc.robot.Commands.Auto.AutoTarget;
+import frc.robot.Commands.Lights.BlueLED;
+import frc.robot.Commands.Lights.RainbowLED;
 //Subsystem Imports
 import frc.robot.Subsystems.Climber;
 import frc.robot.Subsystems.Drivebase;
 import frc.robot.Subsystems.Infeed;
+import frc.robot.Subsystems.LEDSubsystem;
 import frc.robot.Subsystems.Photonvision;
 import frc.robot.Subsystems.Shooter;
 
@@ -52,12 +55,17 @@ public class RobotContainer {
     /* Camera */
     
     private final Photonvision camera = new Photonvision("Test");
+
+    private final LEDSubsystem LED = new LEDSubsystem();
  
 
   public RobotContainer() {
     drivebase.setDefaultCommand(xboxMove);
+
     leftClimber.setDefaultCommand(new ClimberMove(leftClimber, "Left"));
     rightClimber.setDefaultCommand(new ClimberMove(rightClimber, "Right"));
+
+    LED.setDefaultCommand(new BlueLED(LED));
     configureBindings();
   }
 
@@ -99,6 +107,7 @@ public class RobotContainer {
 
     driver.start().onTrue(new ShiftGear(drivebase));
     driver.a().whileTrue(new AutoTarget(camera, drivebase, 1, 0));
+    driver.back().onTrue(new RainbowLED(LED));
 
   }
 
