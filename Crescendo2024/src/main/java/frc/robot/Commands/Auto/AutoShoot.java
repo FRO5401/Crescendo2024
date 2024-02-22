@@ -26,6 +26,7 @@ public class AutoShoot extends SequentialCommandGroup {
     addRequirements(shooter, infeed);
     addCommands(
       new SpeakerShot(shooter), 
+      
       new Expel(infeed)
     );
 

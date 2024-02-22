@@ -71,21 +71,21 @@ public final class Constants {
 
         //PID values
         public static final double pivotP = .1;
-        public static final double pivotI = 0.000005;
+        public static final double pivotI = 0.00005;
         public static final double pivotD = 9.5;
-        public static final double pivotILimit = .01;
+        public static final double pivotILimit = .2;
 
         //set pointa
-        public static final double IN_POSITION = -.5;
+        public static final double IN_POSITION = -.1;
         public static final double SAFE_POSITION = -2;
 
-        public static final double OUT_POSITION = -14.2;
+        public static final double OUT_POSITION = -14;
         public static final double AIR_POSITION = -6.5;
 
         /* Infeed speed constants */
 
         //Take in note speed
-        public static final double INTAKE_SPEED = 0.6;
+        public static final double INTAKE_SPEED = 0.4;
         //Remove note from infeed speed
         public static final double EXPEL_SPEED = -0.43;
         //Move Pivot to floor speed

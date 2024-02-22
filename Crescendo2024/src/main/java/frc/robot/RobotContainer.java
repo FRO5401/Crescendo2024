@@ -4,11 +4,16 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //WPI Imports
 // WPI imports
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Commands.AmpShot;
 import frc.robot.Commands.ClimberMove;
 import frc.robot.Commands.Expel;
@@ -57,6 +62,9 @@ public class RobotContainer {
     
     private final Photonvision camera = new Photonvision("Test");
 
+    private final DigitalInput limitSwitch = new DigitalInput(9);
+    private final Trigger hasNote = new Trigger(limitSwitch::get);
+
     private final LEDSubsystem LED = new LEDSubsystem();
  
 
@@ -86,11 +94,11 @@ public class RobotContainer {
 
     /** Intake Commands */
     //If "Right Trigger" pressed/held on operator controller expel command used (removes note from infeed)
-    operator.rightTrigger().whileTrue(new Expel(infeed));
+    operator.rightTrigger().onTrue(new Expel(infeed));
     //If "Left Trigger" pressed/held on operator controller intake command used (sucks note into infeed)
-    operator.leftTrigger().whileTrue(new Intake(infeed));
+    operator.leftTrigger().onTrue(new Intake(infeed));
     //If "Left Bumper" pressed/held on operator controller stop intake command used (stops infeed)
-    operator.leftBumper().whileTrue(new StopAll(infeed, shooter));
+    operator.leftBumper().onTrue(new StopAll(infeed, shooter));
 
     /** Pivot Commands */
     //If "Y" pressed/held on operator controller rotatepivotground command used (moves intake to ground)
@@ -108,9 +116,9 @@ public class RobotContainer {
     driver.start().onTrue(new ShiftGear(drivebase));
     driver.a().whileTrue(new AutoTarget(camera, drivebase, 1, 0));
     driver.back().onTrue(new RainbowLED(LED));
-    driver.x().onTrue(new BlueLED(LED));
-    driver.y().onTrue(new AllianceLED(LED));
-
+   driver.x().onTrue(new BlueLED(LED));
+   driver.y().onTrue(new AllianceLED(LED));
+    hasNote.onFalse(new StopAll(infeed, shooter));
   }
 
   public Command getAutonomousCommand() {
