@@ -4,14 +4,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 //WPI Imports
 // WPI imports
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Commands.AmpShot;
@@ -23,7 +23,6 @@ import frc.robot.Commands.RotatePivotGround;
 import frc.robot.Commands.RotatePivotSafe;
 import frc.robot.Commands.RotatePivotShooter;
 import frc.robot.Commands.ShiftGear;
-import frc.robot.Commands.SpeakerShot;
 import frc.robot.Commands.StopAll;
 //Command Imports
 import frc.robot.Commands.XboxMove;
@@ -74,6 +73,8 @@ public class RobotContainer {
 
     leftClimber.setDefaultCommand(new ClimberMove(leftClimber, "Left"));
     rightClimber.setDefaultCommand(new ClimberMove(rightClimber, "Right"));
+
+    drivebase.resetOdometry(new Pose2d(new Translation2d(0,0), new Rotation2d(0)));
 
     configureBindings();
   }

@@ -15,7 +15,6 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelPositions;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -27,7 +26,6 @@ import edu.wpi.first.wpilibj.Solenoid;
 //WPI imports
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 //File imports
@@ -60,6 +58,8 @@ public class Drivebase extends SubsystemBase {
 
   private RelativeEncoder rightEncoder1;
   private RelativeEncoder rightEncoder2;
+
+  //conversion factor
 
   //PID used for setpoints and velocity
   private SparkPIDController leftPIDController;
@@ -99,6 +99,19 @@ public class Drivebase extends SubsystemBase {
     leftEncoder2 = leftDrive2.getEncoder();
     rightEncoder1 = rightDrive1.getEncoder();
     rightEncoder2 = rightDrive2.getEncoder();
+
+    ///configure encoder 
+    leftEncoder1.setPositionConversionFactor(Constants.AutoConstants.CONVERSION_FACTOR);
+    leftEncoder2.setPositionConversionFactor(Constants.AutoConstants.CONVERSION_FACTOR);
+    rightEncoder1.setPositionConversionFactor(Constants.AutoConstants.CONVERSION_FACTOR);
+    rightEncoder2.setPositionConversionFactor(Constants.AutoConstants.CONVERSION_FACTOR);
+
+    leftEncoder1.setVelocityConversionFactor(Constants.AutoConstants.CONVERSION_FACTOR / 60);
+    leftEncoder2.setVelocityConversionFactor(Constants.AutoConstants.CONVERSION_FACTOR/ 60);
+    rightEncoder1.setVelocityConversionFactor(Constants.AutoConstants.CONVERSION_FACTOR/ 60);
+    rightEncoder2.setVelocityConversionFactor(Constants.AutoConstants.CONVERSION_FACTOR/60);
+
+
 
     //Set Encoder Value
     leftEncoder1.setPosition(0);
@@ -161,6 +174,7 @@ public class Drivebase extends SubsystemBase {
     solenoid.set(isHighGear);
 
     navxGyro = new AHRS(SPI.Port.kMXP);
+    navxGyro.reset();
 
      odometry = new DifferentialDriveOdometry(navxGyro.getRotation2d(), getLeftPosition(),
         getRightPostion());
@@ -320,5 +334,8 @@ public class Drivebase extends SubsystemBase {
     //displays gear shift state
     SmartDashboard.putBoolean("isHighGear", isHighGear);
     SmartDashboard.putNumber("PSI", compressor.getPressure());
+    SmartDashboard.putNumber("Position X", getPose().getX());
+    SmartDashboard.putNumber("Position Y", getPose().getY());
+
   }
 }

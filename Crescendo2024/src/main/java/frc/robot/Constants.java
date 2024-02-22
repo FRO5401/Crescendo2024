@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.Tracer;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
@@ -143,6 +142,10 @@ public final class Constants {
     }
 
     public static class AutoConstants{
+        public static final double GEAR_RATIO = 0;
+
+        public static final double WHEEL_RADIUS = 0;
+
         public static final double ksVolts = 0;
 
         public static final double kvVoltSecondsPerMeter = 0;
@@ -164,6 +167,8 @@ public final class Constants {
         public static final double kRamseteB = 2;
 
         public static final double kRamseteZeta = 0.7;
+
+        public static final double CONVERSION_FACTOR = (Units.inchesToMeters(1/GEAR_RATIO*Math.PI*Units.inchesToMeters(WHEEL_RADIUS)) *10);
 
         public static final DifferentialDriveVoltageConstraint autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
