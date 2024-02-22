@@ -29,6 +29,7 @@ import frc.robot.Commands.StopAll;
 import frc.robot.Commands.XboxMove;
 import frc.robot.Commands.Auto.AutoShoot;
 import frc.robot.Commands.Auto.AutoTarget;
+import frc.robot.Commands.Auto.Test;
 import frc.robot.Commands.Lights.AllianceLED;
 import frc.robot.Commands.Lights.BlueLED;
 import frc.robot.Commands.Lights.RainbowLED;
@@ -122,6 +123,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    return new Test(drivebase);
   }
 }
