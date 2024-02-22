@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDSubsystem extends SubsystemBase {
 
+  int m_rainbowFirstPixelHue = 1;
 
 
   AddressableLED m_led;
@@ -20,7 +21,7 @@ public class LEDSubsystem extends SubsystemBase {
 
     // Must be a PWM header, not MXP or DIO
 
-    m_led = new AddressableLED(0);
+    m_led = new AddressableLED(9);
 
 
     // Reuse buffer
@@ -29,7 +30,7 @@ public class LEDSubsystem extends SubsystemBase {
 
     // Length is expensive to set, so only set it once, then just update data
 
-    m_ledBuffer = new AddressableLEDBuffer(300);
+    m_ledBuffer = new AddressableLEDBuffer(249);
 
     m_led.setLength(m_ledBuffer.getLength());
 
@@ -52,7 +53,6 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   public void rainbow() {
-    int m_rainbowFirstPixelHue = 1;
 
     // For every pixel
 

@@ -8,13 +8,21 @@ package frc.robot.Subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelPositions;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.kinematics.Odometry;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 //WPI imports
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -29,6 +37,12 @@ public class Drivebase extends SubsystemBase {
   /* 
    Declaring Variables
   */
+
+  //NAVX Gyro
+    private AHRS navxGyro;
+
+  //Odomentry
+  private Odometry odometry;
 
   // Left-Side Drive Motors
   private CANSparkMax leftDrive1;
@@ -64,6 +78,7 @@ public class Drivebase extends SubsystemBase {
   private Compressor compressor;
 
   private boolean isHighGear = false; 
+  
  
  
   /** Creates a new Drivebase. */
@@ -86,10 +101,10 @@ public class Drivebase extends SubsystemBase {
     rightEncoder2 = rightDrive2.getEncoder();
 
     //Set Encoder Value
-    leftEncoder1.equals(0);
-    leftEncoder2.equals(0);
-    rightEncoder1.equals(0);
-    rightEncoder2.equals(0);
+    leftEncoder1.setPosition(0);
+    leftEncoder2.setPosition(0);
+    rightEncoder1.setPosition(0);
+    rightEncoder2.setPosition(0);
 
     // Sets the drive motor params to factory default on every boot
     leftDrive1.restoreFactoryDefaults();
@@ -144,6 +159,11 @@ public class Drivebase extends SubsystemBase {
     compressor.enableDigital();
     solenoid = new Solenoid(PneumaticsModuleType.REVPH, 0);
     solenoid.set(isHighGear);
+
+    navxGyro = new AHRS(SPI.Port.kMXP);
+
+     odometry = new DifferentialDriveOdometry(navxGyro.getRotation2d(), getLeftPosition(),
+        getRightPostion());
   }
 
   /**
@@ -200,6 +220,94 @@ public class Drivebase extends SubsystemBase {
     isHighGear = !isHighGear;
     solenoid.set(isHighGear);
   }
+
+    /**
+
+   * Returns the currently-estimated pose of the robot.
+
+   *
+
+   * @return The pose.
+
+   */
+
+  public Pose2d getPose() {
+
+    return odometry.getPoseMeters();
+
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+
+    return new DifferentialDriveWheelSpeeds(getLeftVelocity(), getRightVelocity());
+
+  }
+
+  public DifferentialDriveWheelPositions getWheelPositions() {
+
+    return new DifferentialDriveWheelPositions(getLeftPosition(), getRightPostion());
+
+  }
+
+
+  public void resetOdometry(Pose2d pose) {
+
+    odometry.resetPosition(
+
+        navxGyro.getRotation2d(), getWheelPositions(), pose);
+
+  }
+
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+
+    leftDrive1.setVoltage(leftVolts);
+
+    rightDrive1.setVoltage(rightVolts);
+
+    allDrive.feed();
+
+  }
+
+  public void zeroHeading() {
+
+    navxGyro.reset();
+
+  }
+
+    /**
+
+   * Returns the heading of the robot.
+
+   *
+
+   * @return the robot's heading in degrees, from -180 to 180
+
+   */
+
+   public double getHeading() {
+
+    return navxGyro.getRotation2d().getDegrees();
+
+  }
+
+
+  /**
+
+   * Returns the turn rate of the robot.
+
+   *
+
+   * @return The turn rate of the robot, in degrees per second
+
+   */
+
+  public double getTurnRate() {
+
+    return -navxGyro.getRate();
+
+  }
+
+
 
   @Override
   public void periodic() {

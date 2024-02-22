@@ -4,6 +4,14 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.Tracer;
+
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.math.util.Units;
+
 public final class Constants {
     public static class ControlConstants{
         public static final int XBOX_CONTROLLER_DRIVER = 0;
@@ -132,6 +140,48 @@ public final class Constants {
         public static final double climberDownSpeed = -1;
         public static final double CONTROLLER_DEADZONE = .05;
 
+    }
+
+    public static class AutoConstants{
+        public static final double ksVolts = 0;
+
+        public static final double kvVoltSecondsPerMeter = 0;
+    
+        public static final double kaVoltSecondsSquaredPerMeter = 0;
+    
+    
+    
+        public static final double kPDriveVel = 0;
+
+        public static final double TRACK_WIDTH =Units.inchesToMeters(24.5);
+
+        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(TRACK_WIDTH);
+
+        public static final double kMaxSpeedMetersPerSecond = 3;
+
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1;
+
+        public static final double kRamseteB = 2;
+
+        public static final double kRamseteZeta = 0.7;
+
+        public static final DifferentialDriveVoltageConstraint autoVoltageConstraint =
+        new DifferentialDriveVoltageConstraint(
+            new SimpleMotorFeedforward(
+                ksVolts,
+                kvVoltSecondsPerMeter,
+                kaVoltSecondsSquaredPerMeter),
+            kDriveKinematics,
+            10);
+
+        public static final TrajectoryConfig config =
+        new TrajectoryConfig(
+                AutoConstants.kMaxSpeedMetersPerSecond,
+                AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+            // Add kinematics to ensure max speed is actually obeyed
+            .setKinematics(kDriveKinematics)
+            // Apply the voltage constraint
+            .addConstraint(autoVoltageConstraint);
     }
 }
 
