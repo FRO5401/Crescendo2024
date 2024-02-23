@@ -88,6 +88,7 @@ public class RobotContainer {
     drivebase.resetOdometry(new Pose2d(new Translation2d(0,0), new Rotation2d(0)));
 
     configureBindings();
+    chooseAuto();
   }
 
   private void configureBindings() {
@@ -122,15 +123,21 @@ public class RobotContainer {
     operator.b().whileTrue(new RotatePivotAir(infeed));
     operator.x().whileTrue(new RotatePivotSafe(infeed));
 
-
+    //Auto Shooter Methods.
     operator.povUp().onTrue(new AutoShoot(infeed, shooter));
     operator.povDown().onTrue(new AmpShot(shooter));
 
     driver.start().onTrue(new ShiftGear(drivebase));
+
+    //AUTO TARGETING
     driver.a().whileTrue(new AutoTarget(camera, drivebase, 1, 0));
+
+    //LED COMMANDS
     driver.back().onTrue(new RainbowLED(LED));
-   driver.x().onTrue(new BlueLED(LED));
-   driver.y().onTrue(new AllianceLED(LED));
+    driver.x().onTrue(new BlueLED(LED));
+    driver.y().onTrue(new AllianceLED(LED));
+
+    //Limit Switch to stop infeed
     hasNote.onFalse(new StopAll(infeed, shooter));
   }
 
