@@ -8,7 +8,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DigitalInput;
-
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 //WPI Imports
 // WPI imports
 import edu.wpi.first.wpilibj2.command.Command;
@@ -51,6 +52,11 @@ public class RobotContainer {
     /* Drivebase */
     private static final Drivebase drivebase = new Drivebase();
     private final XboxMove xboxMove = new XboxMove(drivebase);
+
+    /* Auto chooser 
+     * TODO: Change to choose your own auto
+     */
+    private final SendableChooser<Command> chooser = new SendableChooser<>();
 
     /*Intake */
     private final Infeed infeed = new Infeed();
@@ -126,6 +132,14 @@ public class RobotContainer {
    driver.x().onTrue(new BlueLED(LED));
    driver.y().onTrue(new AllianceLED(LED));
     hasNote.onFalse(new StopAll(infeed, shooter));
+  }
+
+  public void chooseAuto(){
+    
+
+    chooser.addOption("test", new Test(drivebase));
+
+    Shuffleboard.getTab("Autonomous").add(chooser);
   }
 
   public Command getAutonomousCommand() {

@@ -365,11 +365,7 @@ public class Drivebase extends SubsystemBase {
   /**
 
    * Returns the turn rate of the robot.
-
-   *
-
    * @return The turn rate of the robot, in degrees per second
-
    */
 
   public  double getTurnRate() {
