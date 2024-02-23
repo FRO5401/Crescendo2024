@@ -9,15 +9,12 @@ import java.util.List;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
+import frc.robot.Trajectorys;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Subsystems.Drivebase;
 
@@ -32,31 +29,11 @@ public class Test extends SequentialCommandGroup {
   public Test(Drivebase m_Drivebase) {
     drivebase = m_Drivebase;
 
-         exampleTrajectory =
-
-      TrajectoryGenerator.generateTrajectory(
-
-        // Start at the origin facing the +X direction
-
-        new Pose2d(0, 0, new Rotation2d(0)),
-
-        // Pass through these two interior waypoints, making an 's' curve path
-
-        List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-
-        // End 3 meters straight ahead of where we started, facing forward
-
-        new Pose2d(3, 0, new Rotation2d(0)),
-
-            // Pass config
-
-            Constants.AutoConstants.config);
-      
+    exampleTrajectory = Trajectorys.testTrajectory;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addRequirements(drivebase);
     addCommands(
-      Commands.runOnce(()-> drivebase.resetOdometry(exampleTrajectory.getInitialPose()), drivebase),
 
       new RamseteCommand(
 
@@ -86,9 +63,8 @@ public class Test extends SequentialCommandGroup {
 
             drivebase::tankDriveVolts,
 
-            drivebase),
+            drivebase)
 
-            Commands.runOnce(() -> drivebase.tankDriveVolts(0, 0))
     );
   }
 }

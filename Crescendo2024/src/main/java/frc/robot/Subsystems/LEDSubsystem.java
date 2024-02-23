@@ -30,7 +30,7 @@ public class LEDSubsystem extends SubsystemBase {
 
     // Length is expensive to set, so only set it once, then just update data
 
-    m_ledBuffer = new AddressableLEDBuffer(249);
+    m_ledBuffer = new AddressableLEDBuffer(300);
 
     m_led.setLength(m_ledBuffer.getLength());
 

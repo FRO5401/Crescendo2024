@@ -19,15 +19,28 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelPositions;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.kinematics.Odometry;
+import edu.wpi.first.units.Distance;
+import edu.wpi.first.units.Measure;
+import edu.wpi.first.units.MutableMeasure;
+import edu.wpi.first.units.Velocity;
+import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 //WPI imports
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Volts;
+import static  edu.wpi.first.units.MutableMeasure.mutable;
 //File imports
 import frc.robot.Constants;
 
@@ -37,49 +50,92 @@ public class Drivebase extends SubsystemBase {
   */
 
   //NAVX Gyro
-    private AHRS navxGyro;
+    private  AHRS navxGyro;
 
   //Odomentry
-  private Odometry odometry;
+  private  Odometry odometry;
 
   // Left-Side Drive Motors
-  private CANSparkMax leftDrive1;
+  private  CANSparkMax leftDrive1;
   private CANSparkMax leftDrive2;
 
   // Right-Side Drive Motors
-  private CANSparkMax rightDrive1;
+  private  CANSparkMax rightDrive1;
   private CANSparkMax rightDrive2;
 
-  private DifferentialDrive allDrive;
+  private  DifferentialDrive allDrive;
 
   //encoders used for messuring motor rotation. 
-  private RelativeEncoder leftEncoder1;
+  private  RelativeEncoder leftEncoder1;
   private RelativeEncoder leftEncoder2;
 
-  private RelativeEncoder rightEncoder1;
+  private  RelativeEncoder rightEncoder1;
   private RelativeEncoder rightEncoder2;
 
   //conversion factor
 
   //PID used for setpoints and velocity
-  private SparkPIDController leftPIDController;
-  private SparkPIDController rightPIDController;
+  private  SparkPIDController leftPIDController;
+  private  SparkPIDController rightPIDController;
 
   //WPILIB pid controllers for calculations
-  private PIDController turnWPIDController;
-  private PIDController forwardWPIDController;
+  private  PIDController turnWPIDController;
+  private  PIDController forwardWPIDController;
 
 
 
 
   //solenoid 
 
-  private Solenoid solenoid;
+  private  Solenoid solenoid;
   private Compressor compressor;
 
-  private boolean isHighGear = false; 
-  
- 
+  private  boolean isHighGear = false; 
+
+  //auto things
+
+    private final MutableMeasure<Voltage> m_appliedVoltage = mutable(Volts.of(0));
+  // Mutable holder for unit-safe linear distance values, persisted to avoid reallocation.
+  private final MutableMeasure<Distance> m_distance = mutable(Meters.of(0));
+  // Mutable holder for unit-safe linear velocity values, persisted to avoid reallocation.
+  private final MutableMeasure<Velocity<Distance>> m_velocity = mutable(MetersPerSecond.of(0));
+
+  private final SysIdRoutine m_sysIdRoutine =
+  new SysIdRoutine(
+      // Empty config defaults to 1 volt/second ramp rate and 7 volt step voltage.
+      new SysIdRoutine.Config(),
+      new SysIdRoutine.Mechanism(
+          // Tell SysId how to plumb the driving voltage to the motors.
+          (Measure<Voltage> volts) -> {
+            leftDrive1.setVoltage(volts.in(Volts));
+            rightDrive1.setVoltage(volts.in(Volts));
+          },
+          // Tell SysId how to record a frame of data for each motor on the mechanism being
+          // characterized.
+          log -> {
+            // Record a frame for the left motors.  Since these share an encoder, we consider
+            // the entire group to be one motor.
+            log.motor("drive-left")
+                .voltage(
+                    m_appliedVoltage.mut_replace(
+                        leftDrive1.get() * RobotController.getBatteryVoltage(), Volts))
+                .linearPosition(m_distance.mut_replace(leftEncoder1.getPosition(), Meters))
+                .linearVelocity(
+                    m_velocity.mut_replace(leftEncoder1.getVelocity(), MetersPerSecond));
+            // Record a frame for the right motors.  Since these share an encoder, we consider
+            // the entire group to be one motor.
+            log.motor("drive-right")
+                .voltage(
+                    m_appliedVoltage.mut_replace(
+                        rightDrive1.get() * RobotController.getBatteryVoltage(), Volts))
+                .linearPosition(m_distance.mut_replace(rightEncoder1.getPosition(), Meters))
+                .linearVelocity(
+                    m_velocity.mut_replace(rightEncoder1.getVelocity(), MetersPerSecond));
+          },
+          // Tell SysId to make generated commands require this subsystem, suffix test state in
+          // WPILog with this subsystem's name ("drive")
+          this));
+
  
   /** Creates a new Drivebase. */
   public Drivebase() {
@@ -178,37 +234,38 @@ public class Drivebase extends SubsystemBase {
 
      odometry = new DifferentialDriveOdometry(navxGyro.getRotation2d(), getLeftPosition(),
         getRightPostion());
-  }
 
+
+  }
   /**
    * @param left left motor speed
    * @param right right motor speed
    */
-  public void drive(double left, double right){
+  public   void drive(double left, double right){
     allDrive.tankDrive(left, right);
   }
 
-  public void arcadeDrive(double forwardSpeed, double rotateSpeed){
+  public  void arcadeDrive(double forwardSpeed, double rotateSpeed){
     allDrive.arcadeDrive(forwardSpeed, rotateSpeed);
   }
   //Gets position of left motor 1 
-  public double getLeftPosition(){
-    return leftEncoder1.getPosition();
+  public   double getLeftPosition(){
+    return leftEncoder1.getPosition() * Constants.AutoConstants.CONVERSION_FACTOR ;
   }
   //Gets position of right motor 1 
-  public double getRightPostion(){
-    return rightEncoder1.getPosition();
+  public  double getRightPostion(){
+    return rightEncoder1.getPosition() * Constants.AutoConstants.CONVERSION_FACTOR;
   }
   //Gets velocity of left motor 1
-  public double getLeftVelocity(){
-    return leftEncoder1.getVelocity();
+  public  double getLeftVelocity(){
+    return leftEncoder1.getVelocity() * (Constants.AutoConstants.CONVERSION_FACTOR / 60);
   }
   //Gets velocity of right motor 1
-  public double getRightVelocity(){
-    return rightEncoder1.getVelocity();
+  public  double getRightVelocity(){
+    return rightEncoder1.getVelocity() * (Constants.AutoConstants.CONVERSION_FACTOR / 60);
   }
   //Sets velocity of left motor 1
-  public void setLeftVelocity(double velocity){
+  public  void setLeftVelocity(double velocity){
     leftPIDController.setReference(velocity, ControlType.kVelocity);
   }
   //Sets position of left motor 1
@@ -216,21 +273,21 @@ public class Drivebase extends SubsystemBase {
     leftPIDController.setReference(setPoint, ControlType.kPosition);
   }
   //Sets velocity of right motor 1
-  public void setRightVelocity(double velocity){
+  public  void setRightVelocity(double velocity){
     rightPIDController.setReference(velocity, ControlType.kVelocity);
   }
   //Sets position of right motor 1
-  public void setRightPostion(double setPoint){
+  public  void setRightPostion(double setPoint){
     rightPIDController.setReference(setPoint, ControlType.kPosition);
   }
 
-  public double calculateTurn(double desired, double current){
+  public  double calculateTurn(double desired, double current){
     return turnWPIDController.calculate(current, desired);
   }
-    public double calculateFoward(double desired, double current){
+    public  double calculateFoward(double desired, double current){
     return forwardWPIDController.calculate(current, desired);
   }
-  public void toggleGearShifter(){
+  public  void toggleGearShifter(){
     isHighGear = !isHighGear;
     solenoid.set(isHighGear);
   }
@@ -257,7 +314,7 @@ public class Drivebase extends SubsystemBase {
 
   }
 
-  public DifferentialDriveWheelPositions getWheelPositions() {
+  public  DifferentialDriveWheelPositions getWheelPositions() {
 
     return new DifferentialDriveWheelPositions(getLeftPosition(), getRightPostion());
 
@@ -272,7 +329,7 @@ public class Drivebase extends SubsystemBase {
 
   }
 
-  public void tankDriveVolts(double leftVolts, double rightVolts) {
+  public  void tankDriveVolts(double leftVolts, double rightVolts) {
 
     leftDrive1.setVoltage(leftVolts);
 
@@ -282,7 +339,7 @@ public class Drivebase extends SubsystemBase {
 
   }
 
-  public void zeroHeading() {
+  public  void zeroHeading() {
 
     navxGyro.reset();
 
@@ -298,7 +355,7 @@ public class Drivebase extends SubsystemBase {
 
    */
 
-   public double getHeading() {
+   public  double getHeading() {
 
     return navxGyro.getRotation2d().getDegrees();
 
@@ -315,11 +372,19 @@ public class Drivebase extends SubsystemBase {
 
    */
 
-  public double getTurnRate() {
+  public  double getTurnRate() {
 
     return -navxGyro.getRate();
 
   }
+
+  public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+  return m_sysIdRoutine.quasistatic(direction);
+}
+
+public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+  return m_sysIdRoutine.dynamic(direction);
+}
 
 
 
@@ -327,15 +392,21 @@ public class Drivebase extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
+    odometry.update(navxGyro.getRotation2d(), getWheelPositions());
+    SmartDashboard.putNumber("Conversion factor", leftEncoder1.getPositionConversionFactor());
+        SmartDashboard.putNumber("Conversion factor2", Constants.AutoConstants.CONVERSION_FACTOR);
+
+
     //Displays left drives encoder value to smart dashboard
-    SmartDashboard.getNumber("Left Drive Encoder Value", getLeftPosition());
+    SmartDashboard.putNumber("Left Drive Encoder Value", getLeftPosition());
     //Displays right drives encoder value to smart dashboard
-    SmartDashboard.getNumber("Right Drive Encoder Value", getRightPostion());
+    SmartDashboard.putNumber("Right Drive Encoder Value", getRightPostion());
     //displays gear shift state
     SmartDashboard.putBoolean("isHighGear", isHighGear);
     SmartDashboard.putNumber("PSI", compressor.getPressure());
     SmartDashboard.putNumber("Position X", getPose().getX());
     SmartDashboard.putNumber("Position Y", getPose().getY());
+    SmartDashboard.putNumber("Angle", getPose().getRotation().getDegrees());
 
   }
 }

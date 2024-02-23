@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Commands.AmpShot;
 import frc.robot.Commands.ClimberMove;
 import frc.robot.Commands.Expel;
@@ -48,7 +49,7 @@ public class RobotContainer {
     private final CommandXboxController driver = Controls.driver;
 
     /* Drivebase */
-    private final Drivebase drivebase = new Drivebase();
+    private static final Drivebase drivebase = new Drivebase();
     private final XboxMove xboxMove = new XboxMove(drivebase);
 
     /*Intake */
@@ -56,8 +57,8 @@ public class RobotContainer {
     /*Shooter */
     private final Shooter shooter = new Shooter();
     /*Climbers */
-    private final Climber leftClimber = new Climber(Constants.ClimberConstants.LEFTCLIMBER_ID, true, "Left");
-    private final Climber rightClimber = new Climber(Constants.ClimberConstants.RIGHTCLIMBER_ID, false, "Right");
+    private final Climber leftClimber = new Climber(Constants.ClimberConstants.LEFTCLIMBER_ID, false, "Left", 8);
+    private final Climber rightClimber = new Climber(Constants.ClimberConstants.RIGHTCLIMBER_ID, true, "Right", 7);
     /* Camera */
     
     private final Photonvision camera = new Photonvision("Test");
@@ -66,13 +67,17 @@ public class RobotContainer {
     private final Trigger hasNote = new Trigger(limitSwitch::get);
 
     private final LEDSubsystem LED = new LEDSubsystem();
+
+
  
+
 
   public RobotContainer() {
     drivebase.setDefaultCommand(xboxMove);
 
     leftClimber.setDefaultCommand(new ClimberMove(leftClimber, "Left"));
     rightClimber.setDefaultCommand(new ClimberMove(rightClimber, "Right"));
+    
 
     drivebase.resetOdometry(new Pose2d(new Translation2d(0,0), new Rotation2d(0)));
 
@@ -125,5 +130,9 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return new Test(drivebase);
+  }
+
+  public static Drivebase getDrivebase() {
+      return drivebase;
   }
 }

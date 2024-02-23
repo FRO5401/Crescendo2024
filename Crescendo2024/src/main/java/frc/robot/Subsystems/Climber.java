@@ -10,7 +10,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-
+import edu.wpi.first.wpilibj.DigitalInput;
 // WPI imports
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -28,7 +28,10 @@ public class Climber extends SubsystemBase {
     private RelativeEncoder climberEncoder;
     private String climberName;
 
-  public Climber(int motor_ID, boolean isInverted, String climberName) {
+  //Limit switch
+    private DigitalInput limitSwitch;
+
+  public Climber(int motor_ID, boolean isInverted, String climberName, int limitSwitchID) {
     this.climberName = climberName;
     // Init CANSparkMotors
     climberMotor = new CANSparkMax(motor_ID, MotorType.kBrushless);
@@ -45,6 +48,7 @@ public class Climber extends SubsystemBase {
 
     // Inverts motor direction
     climberMotor.setInverted(isInverted);
+    limitSwitch = new DigitalInput(limitSwitchID);
   }
 
 // Get climber motor position
@@ -60,7 +64,11 @@ public class Climber extends SubsystemBase {
 
 // Climber up
   public void climb(double speed) {
-    climberMotor.set(speed);
+    if (speed > 0 && !limitSwitch.get()){
+          climberMotor.set(0);
+    }else {
+      climberMotor.set(speed);
+    }
   }
 
 // Climber down

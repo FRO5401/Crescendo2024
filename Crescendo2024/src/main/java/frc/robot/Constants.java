@@ -142,9 +142,9 @@ public final class Constants {
     }
 
     public static class AutoConstants{
-        public static final double GEAR_RATIO = 0;
+        public static final double GEAR_RATIO = 64.0/20.0;
 
-        public static final double WHEEL_RADIUS = 0;
+        public static final double WHEEL_RADIUS = Units.inchesToMeters(3);
 
         public static final double ksVolts = 0;
 
@@ -168,7 +168,7 @@ public final class Constants {
 
         public static final double kRamseteZeta = 0.7;
 
-        public static final double CONVERSION_FACTOR = (Units.inchesToMeters(1/GEAR_RATIO*Math.PI*Units.inchesToMeters(WHEEL_RADIUS)) *10);
+        public static final double CONVERSION_FACTOR = (Units.inchesToMeters( 1 / (GEAR_RATIO * 2 * Math.PI * (WHEEL_RADIUS)) )) ;
 
         public static final DifferentialDriveVoltageConstraint autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
