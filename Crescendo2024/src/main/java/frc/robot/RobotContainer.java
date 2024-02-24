@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import javax.swing.JList.DropLocation;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -13,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 //WPI Imports
 // WPI imports
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -35,6 +38,7 @@ import frc.robot.Commands.XboxMove;
 import frc.robot.Commands.Auto.AutoShoot;
 import frc.robot.Commands.Auto.AutoTarget;
 import frc.robot.Commands.Auto.Test;
+import frc.robot.Commands.Auto.TestAuto;
 import frc.robot.Commands.Lights.AllianceLED;
 import frc.robot.Commands.Lights.BlueLED;
 import frc.robot.Commands.Lights.RainbowLED;
@@ -134,17 +138,13 @@ public class RobotContainer {
     driver.start().onTrue(new ShiftGear(drivebase));
 
     //AUTO TARGETING
-    //driver.a().whileTrue(new AutoTarget(camera, drivebase, 1, 0));
+    driver.a().whileTrue(new AutoTarget(camera, drivebase, 1, 0));
 
     //LED COMMANDS
-    //driver.back().onTrue(new RainbowLED(LED));
-    //driver.x().onTrue(new BlueLED(LED));
-   // driver.y().onTrue(new AllianceLED(LED));
+    driver.back().onTrue(new RainbowLED(LED));
+    driver.x().onTrue(new BlueLED(LED));
+    driver.y().onTrue(new AllianceLED(LED));
 
-  driver.a().onTrue(drivebase.sysIdDynamic(Direction.kForward));
-  driver.b().onTrue(drivebase.sysIdDynamic(Direction.kReverse));
-  driver.x().onTrue(drivebase.sysIdQuasistatic(Direction.kForward));
-  driver.y().onTrue(drivebase.sysIdQuasistatic(Direction.kReverse));
 
 
 
@@ -156,12 +156,16 @@ public class RobotContainer {
     
 
     chooser.addOption("test", new Test(drivebase));
+    chooser.addOption("Builder", new SequentialCommandGroup(new Test(drivebase), new TestAuto(drivebase)));
+    chooser.addOption("Nothing", Commands.print("Die"));
+
 
     Shuffleboard.getTab("Autonomous").add(chooser);
+
   }
 
   public Command getAutonomousCommand() {
-    return new Test(drivebase);
+    return chooser.getSelected();
   }
 
   public static Drivebase getDrivebase() {

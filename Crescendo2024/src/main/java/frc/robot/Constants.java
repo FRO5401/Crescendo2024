@@ -146,25 +146,25 @@ public final class Constants {
 
         public static final double WHEEL_RADIUS = Units.inchesToMeters(3);
 
-        public static final double ksVolts = 0.22;
+        public static final double ksVolts = 0.00023372;
 
-        public static final double kvVoltSecondsPerMeter = 1;
+        public static final double kvVoltSecondsPerMeter = 6.8433;
     
-        public static final double kaVoltSecondsSquaredPerMeter = 0.2;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.29499;
     
     
     
-        public static final double kPDriveVel = .5;
+        public static final double kPDriveVel = 0.063841;
 
-        public static final double TRACK_WIDTH =24.5; 
+        public static final double TRACK_WIDTH =Units.inchesToMeters(24.5); 
 
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(TRACK_WIDTH);
 
-        public static final double kMaxSpeedMetersPerSecond = 3;
+        public static final double kMaxSpeedMetersPerSecond = 1;
 
-        public static final double kMaxAccelerationMetersPerSecondSquared = 1;
+        public static final double kMaxAccelerationMetersPerSecondSquared = .5;
 
-        public static final double kRamseteB = 2;
+        public static final double kRamseteB = 20;
 
         public static final double kRamseteZeta = 0.7;
 

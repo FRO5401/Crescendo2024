@@ -119,22 +119,13 @@ public class Drivebase extends SubsystemBase {
           log -> {
             // Record a frame for the left motors.  Since these share an encoder, we consider
             // the entire group to be one motor.
-            log.motor("drive-left")
+            log.motor("drive")
                 .voltage(
                     m_appliedVoltage.mut_replace(
-                        leftDrive1.getAppliedOutput() * leftDrive1.getBusVoltage() , Volts))
-                .linearPosition(m_distance.mut_replace(getLeftPosition(), Meters))
+                        ((leftDrive1.getAppliedOutput() * leftDrive1.getBusVoltage()) + (rightDrive1.getAppliedOutput() * rightDrive1.getBusVoltage())) /2 , Volts))
+                .linearPosition(m_distance.mut_replace((getLeftPosition() + getRightPostion()) /2 , Meters))
                 .linearVelocity(
-                    m_velocity.mut_replace(getLeftVelocity(), MetersPerSecond));
-            // Record a frame for the right motors.  Since these share an encoder, we consider
-            // the entire group to be one motor.
-            log.motor("drive-right")
-                .voltage(
-                    m_appliedVoltage.mut_replace(
-                        leftDrive1.getAppliedOutput() * leftDrive1.getBusVoltage(), Volts))
-                .linearPosition(m_distance.mut_replace(getRightPostion(), Meters))
-                .linearVelocity(
-                    m_velocity.mut_replace(getRightVelocity(), MetersPerSecond));
+                    m_velocity.mut_replace((getLeftVelocity() + getRightVelocity()) /2, MetersPerSecond));
           },
           // Tell SysId to make generated commands require this subsystem, suffix test state in
           // WPILog with this subsystem's name ("drive")
@@ -149,6 +140,12 @@ public class Drivebase extends SubsystemBase {
     leftDrive2 = new CANSparkMax(Constants.DriveMotors.LEFT_DRIVE2_ID, MotorType.kBrushless);
     rightDrive1 = new CANSparkMax(Constants.DriveMotors.RIGHT_DRIVE1_ID, MotorType.kBrushless);
     rightDrive2 = new CANSparkMax(Constants.DriveMotors.RIGHT_DRIVE2_ID, MotorType.kBrushless);
+
+    leftDrive1.setIdleMode(IdleMode.kCoast);
+    leftDrive2.setIdleMode(IdleMode.kCoast);
+    rightDrive1.setIdleMode(IdleMode.kCoast);
+    rightDrive2.setIdleMode(IdleMode.kCoast);
+
 
 
     //Initalizing PID controller
@@ -186,11 +183,7 @@ public class Drivebase extends SubsystemBase {
     rightDrive1.restoreFactoryDefaults();
     rightDrive2.restoreFactoryDefaults();
 
-    // When the driver lefts go of the trigger, apply full breaking, do not allow coasting
-    leftDrive1.setIdleMode(IdleMode.kBrake);
-    leftDrive2.setIdleMode(IdleMode.kBrake);
-    rightDrive1.setIdleMode(IdleMode.kBrake);
-    rightDrive2.setIdleMode(IdleMode.kBrake);
+
 
     leftDrive1.setSmartCurrentLimit(45);
     leftDrive2.setSmartCurrentLimit(45);
@@ -249,7 +242,8 @@ public class Drivebase extends SubsystemBase {
    * @param right right motor speed
    */
   public   void drive(double left, double right){
-    allDrive.tankDrive(left, right);
+    allDrive.tankDrive(left, right
+    );
   }
 
   public  void arcadeDrive(double forwardSpeed, double rotateSpeed){
@@ -387,6 +381,10 @@ public class Drivebase extends SubsystemBase {
 
 public Command sysIdDynamic(SysIdRoutine.Direction direction) {
   return m_sysIdRoutine.dynamic(direction);
+}
+
+public void updateOdometry(){
+  odometry.update(navxGyro.getRotation2d(), getWheelPositions());
 }
 
 

@@ -8,6 +8,7 @@ package frc.robot.Commands;
 
 //WPI Imports
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import frc.robot.Constants;
 
 //File Imports
@@ -35,7 +36,9 @@ public class RotatePivotGround extends Command {
   @Override
   public void execute() {
     infeed.setPoint(Constants.InfeedConstants.OUT_POSITION);
+    infeed.intake();
     endCommand = true;
+    
   }
 
   // Called once the command ends or is interrupted.
