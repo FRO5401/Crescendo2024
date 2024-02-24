@@ -13,9 +13,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 //WPI Imports
 // WPI imports
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Commands.AmpShot;
 import frc.robot.Commands.ClimberMove;
 import frc.robot.Commands.Expel;
@@ -130,12 +134,19 @@ public class RobotContainer {
     driver.start().onTrue(new ShiftGear(drivebase));
 
     //AUTO TARGETING
-    driver.a().whileTrue(new AutoTarget(camera, drivebase, 1, 0));
+    //driver.a().whileTrue(new AutoTarget(camera, drivebase, 1, 0));
 
     //LED COMMANDS
-    driver.back().onTrue(new RainbowLED(LED));
-    driver.x().onTrue(new BlueLED(LED));
-    driver.y().onTrue(new AllianceLED(LED));
+    //driver.back().onTrue(new RainbowLED(LED));
+    //driver.x().onTrue(new BlueLED(LED));
+   // driver.y().onTrue(new AllianceLED(LED));
+
+  driver.a().onTrue(drivebase.sysIdDynamic(Direction.kForward));
+  driver.b().onTrue(drivebase.sysIdDynamic(Direction.kReverse));
+  driver.x().onTrue(drivebase.sysIdQuasistatic(Direction.kForward));
+  driver.y().onTrue(drivebase.sysIdQuasistatic(Direction.kReverse));
+
+
 
     //Limit Switch to stop infeed
     hasNote.onFalse(new StopAll(infeed, shooter));

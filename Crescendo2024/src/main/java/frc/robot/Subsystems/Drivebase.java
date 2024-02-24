@@ -19,6 +19,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelPositions;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.kinematics.Odometry;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.MutableMeasure;
@@ -109,6 +110,9 @@ public class Drivebase extends SubsystemBase {
           (Measure<Voltage> volts) -> {
             leftDrive1.setVoltage(volts.in(Volts));
             rightDrive1.setVoltage(volts.in(Volts));
+            leftDrive2.setVoltage(volts.in(Volts));
+            rightDrive2.setVoltage(volts.in(Volts));
+            allDrive.feed();
           },
           // Tell SysId how to record a frame of data for each motor on the mechanism being
           // characterized.
@@ -118,19 +122,19 @@ public class Drivebase extends SubsystemBase {
             log.motor("drive-left")
                 .voltage(
                     m_appliedVoltage.mut_replace(
-                        leftDrive1.get() * RobotController.getBatteryVoltage(), Volts))
-                .linearPosition(m_distance.mut_replace(leftEncoder1.getPosition(), Meters))
+                        leftDrive1.getAppliedOutput() * leftDrive1.getBusVoltage() , Volts))
+                .linearPosition(m_distance.mut_replace(getLeftPosition(), Meters))
                 .linearVelocity(
-                    m_velocity.mut_replace(leftEncoder1.getVelocity(), MetersPerSecond));
+                    m_velocity.mut_replace(getLeftVelocity(), MetersPerSecond));
             // Record a frame for the right motors.  Since these share an encoder, we consider
             // the entire group to be one motor.
             log.motor("drive-right")
                 .voltage(
                     m_appliedVoltage.mut_replace(
-                        rightDrive1.get() * RobotController.getBatteryVoltage(), Volts))
-                .linearPosition(m_distance.mut_replace(rightEncoder1.getPosition(), Meters))
+                        leftDrive1.getAppliedOutput() * leftDrive1.getBusVoltage(), Volts))
+                .linearPosition(m_distance.mut_replace(getRightPostion(), Meters))
                 .linearVelocity(
-                    m_velocity.mut_replace(rightEncoder1.getVelocity(), MetersPerSecond));
+                    m_velocity.mut_replace(getRightVelocity(), MetersPerSecond));
           },
           // Tell SysId to make generated commands require this subsystem, suffix test state in
           // WPILog with this subsystem's name ("drive")
@@ -145,6 +149,7 @@ public class Drivebase extends SubsystemBase {
     leftDrive2 = new CANSparkMax(Constants.DriveMotors.LEFT_DRIVE2_ID, MotorType.kBrushless);
     rightDrive1 = new CANSparkMax(Constants.DriveMotors.RIGHT_DRIVE1_ID, MotorType.kBrushless);
     rightDrive2 = new CANSparkMax(Constants.DriveMotors.RIGHT_DRIVE2_ID, MotorType.kBrushless);
+
 
     //Initalizing PID controller
     leftPIDController = leftDrive1.getPIDController();
@@ -210,6 +215,8 @@ public class Drivebase extends SubsystemBase {
     
     // To handle errors from WPI 2024
     allDrive.setExpiration(0.1);
+
+    allDrive.setSafetyEnabled(true);
     
     //Right PID declaration 
     rightPIDController.setP(Constants.DriveMotors.KP);
@@ -250,19 +257,19 @@ public class Drivebase extends SubsystemBase {
   }
   //Gets position of left motor 1 
   public   double getLeftPosition(){
-    return leftEncoder1.getPosition() * Constants.AutoConstants.CONVERSION_FACTOR ;
+    return Units.feetToMeters(leftEncoder1.getPosition() / Constants.AutoConstants.CONVERSION_FACTOR); 
   }
   //Gets position of right motor 1 
   public  double getRightPostion(){
-    return rightEncoder1.getPosition() * Constants.AutoConstants.CONVERSION_FACTOR;
+    return Units.feetToMeters(rightEncoder1.getPosition() / Constants.AutoConstants.CONVERSION_FACTOR);
   }
   //Gets velocity of left motor 1
   public  double getLeftVelocity(){
-    return leftEncoder1.getVelocity() * (Constants.AutoConstants.CONVERSION_FACTOR / 60);
+    return Units.feetToMeters((leftEncoder1.getVelocity() / Constants.AutoConstants.CONVERSION_FACTOR) / 60);
   }
   //Gets velocity of right motor 1
   public  double getRightVelocity(){
-    return rightEncoder1.getVelocity() * (Constants.AutoConstants.CONVERSION_FACTOR / 60);
+    return Units.feetToMeters((rightEncoder1.getVelocity() / Constants.AutoConstants.CONVERSION_FACTOR) / 60);
   }
   //Sets velocity of left motor 1
   public  void setLeftVelocity(double velocity){
@@ -390,13 +397,13 @@ public Command sysIdDynamic(SysIdRoutine.Direction direction) {
 
     odometry.update(navxGyro.getRotation2d(), getWheelPositions());
     SmartDashboard.putNumber("Conversion factor", leftEncoder1.getPositionConversionFactor());
-        SmartDashboard.putNumber("Conversion factor2", Constants.AutoConstants.CONVERSION_FACTOR);
+    SmartDashboard.putNumber("Conversion factor2", Constants.AutoConstants.CONVERSION_FACTOR);
 
 
     //Displays left drives encoder value to smart dashboard
-    SmartDashboard.putNumber("Left Drive Encoder Value", getLeftPosition());
+    SmartDashboard.putNumber("Left Drive Encoder Value", getLeftVelocity());
     //Displays right drives encoder value to smart dashboard
-    SmartDashboard.putNumber("Right Drive Encoder Value", getRightPostion());
+    SmartDashboard.putNumber("Right Drive Encoder Value", getRightVelocity());
     //displays gear shift state
     SmartDashboard.putBoolean("isHighGear", isHighGear);
     SmartDashboard.putNumber("PSI", compressor.getPressure());
