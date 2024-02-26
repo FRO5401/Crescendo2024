@@ -25,13 +25,13 @@ import frc.robot.Trajectorys;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Subsystems.Drivebase;
 
-public class TestAuto extends Command {
+public class TestAuto2  extends Command {
   Trajectory m_exampleTrajectory;
 
   Drivebase drivebase;
 
   /** Creates a new TestAuto. */
-  public TestAuto(Drivebase m_Drivebase) {
+  public TestAuto2(Drivebase m_Drivebase) {
     drivebase = m_Drivebase;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivebase);
@@ -58,11 +58,11 @@ public class TestAuto extends Command {
 
     // Pass through these two interior waypoints, making an 's' curve path
 
-    List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+    List.of(new Translation2d(4, 0), new Translation2d(5, -1)),
 
     // End 3 meters straight ahead of where we started, facing forward
 
-    new Pose2d(3, 0, new Rotation2d(0)),
+    new Pose2d(6, -1, new Rotation2d(0)),
 
         // Pass config
 

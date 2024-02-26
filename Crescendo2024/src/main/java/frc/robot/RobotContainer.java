@@ -39,6 +39,7 @@ import frc.robot.Commands.Auto.AutoShoot;
 import frc.robot.Commands.Auto.AutoTarget;
 import frc.robot.Commands.Auto.Test;
 import frc.robot.Commands.Auto.TestAuto;
+import frc.robot.Commands.Auto.TestAuto2;
 import frc.robot.Commands.Lights.AllianceLED;
 import frc.robot.Commands.Lights.BlueLED;
 import frc.robot.Commands.Lights.RainbowLED;
@@ -156,7 +157,7 @@ public class RobotContainer {
     
 
     chooser.addOption("test", new Test(drivebase));
-    chooser.addOption("Builder", new SequentialCommandGroup(new Test(drivebase), new TestAuto(drivebase)));
+    chooser.addOption("Builder", new SequentialCommandGroup(new TestAuto(drivebase), new TestAuto2(drivebase)));
     chooser.addOption("Nothing", Commands.print("Die"));
 
 

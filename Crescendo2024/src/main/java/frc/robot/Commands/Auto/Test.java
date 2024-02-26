@@ -25,7 +25,7 @@ import frc.robot.Subsystems.Drivebase;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Test extends SequentialCommandGroup {
-    Trajectory exampleTrajectory;
+  Trajectory exampleTrajectory;
 
   Drivebase drivebase;
   /** Creates a new Test. */
