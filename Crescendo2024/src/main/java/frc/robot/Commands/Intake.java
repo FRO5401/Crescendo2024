@@ -6,9 +6,10 @@
 
 package frc.robot.Commands;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 //WPI imports
 import edu.wpi.first.wpilibj2.command.Command;
-
+import frc.robot.RobotContainer;
 //File Impots
 import frc.robot.Subsystems.Infeed;
 
@@ -16,6 +17,7 @@ public class Intake extends Command {
   //Declares Variables
   Infeed intake;
   boolean endCommand = false;
+  DigitalInput limitSwitch = RobotContainer.getLimitSwitch();
 
   /** Creates a new Intake. */
   public Intake(Infeed m_intake) {
@@ -34,18 +36,23 @@ public class Intake extends Command {
   @Override
   public void execute() {
     intake.intake();
-    endCommand = true;
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    intake.stopIntake();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+
+    if (!limitSwitch.get()){
+      return true;
+    } else {
+      return false;
+    }
+    
   }
 }

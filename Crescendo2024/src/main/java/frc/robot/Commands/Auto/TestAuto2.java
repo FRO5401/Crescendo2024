@@ -30,6 +30,8 @@ public class TestAuto2  extends Command {
 
   Drivebase drivebase;
 
+  boolean endCommand = false;
+
   /** Creates a new TestAuto. */
   public TestAuto2(Drivebase m_Drivebase) {
     drivebase = m_Drivebase;
@@ -100,6 +102,8 @@ public class TestAuto2  extends Command {
         drivebase));
 
         drivebase.updateOdometry();
+        
+        endCommand = true;
   }
 
   // Called once the command ends or is interrupted.
@@ -109,6 +113,6 @@ public class TestAuto2  extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return endCommand;
   }
 }

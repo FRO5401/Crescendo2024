@@ -27,9 +27,11 @@ public class SpeakerShot extends Command {
   @Override
   public void execute() {
     shooter.setVelocity(Constants.ShooterConstants.SpeedConstants.SHOOTER_RPM);
+
     if(shooter.getVelocity() > Constants.ShooterConstants.SpeedConstants.SHOOTER_RPM - 500){
      endCommand = true;
     }
+    
   }
 
   // Called once the command ends or is interrupted.

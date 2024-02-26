@@ -78,7 +78,7 @@ public class RobotContainer {
     
     private final Photonvision camera = new Photonvision("Test");
 
-    private final DigitalInput limitSwitch = new DigitalInput(9);
+    private final static DigitalInput limitSwitch = new DigitalInput(9);
     private final Trigger hasNote = new Trigger(limitSwitch::get);
 
     private final LEDSubsystem LED = new LEDSubsystem();
@@ -125,7 +125,7 @@ public class RobotContainer {
 
     /** Pivot Commands */
     //If "Y" pressed/held on operator controller rotatepivotground command used (moves intake to ground)
-    operator.y().whileTrue(new RotatePivotGround(infeed));
+    operator.y().whileTrue(new SequentialCommandGroup(new RotatePivotGround(infeed), new Intake(infeed)));
     //If "A" pressed/held on operator controller rotatepivotshooter command used (moves intake to shooter)
     operator.a().whileTrue(new RotatePivotShooter(infeed));
     //If "B" pressed/held on operator controller rotatepivotAir command used (moves intake to air)
@@ -157,7 +157,7 @@ public class RobotContainer {
     
 
     chooser.addOption("test", new Test(drivebase));
-    chooser.addOption("Builder", new SequentialCommandGroup(new TestAuto(drivebase), new TestAuto2(drivebase)));
+    chooser.addOption("Builder", new SequentialCommandGroup(new TestAuto2(drivebase), new Test(drivebase)));
     chooser.addOption("Nothing", Commands.print("Die"));
 
 
@@ -171,5 +171,9 @@ public class RobotContainer {
 
   public static Drivebase getDrivebase() {
       return drivebase;
+  }
+
+  public static DigitalInput getLimitSwitch(){
+    return limitSwitch;
   }
 }

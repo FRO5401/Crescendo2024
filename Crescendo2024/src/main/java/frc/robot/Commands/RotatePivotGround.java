@@ -36,7 +36,6 @@ public class RotatePivotGround extends Command {
   @Override
   public void execute() {
     infeed.setPoint(Constants.InfeedConstants.OUT_POSITION);
-    infeed.intake();
     endCommand = true;
     
   }
@@ -48,6 +47,6 @@ public class RotatePivotGround extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return endCommand;
   }
 }
