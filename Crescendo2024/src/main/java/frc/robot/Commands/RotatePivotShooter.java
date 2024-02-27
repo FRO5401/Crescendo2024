@@ -15,8 +15,8 @@ import frc.robot.Subsystems.Infeed;
 
 public class RotatePivotShooter extends Command {
   //Declaring variables
-  Infeed infeed;
-  boolean endCommand = false;
+  private Infeed infeed;
+  private boolean endCommand = false;
 
   /** Creates a new Pivot. */
   public RotatePivotShooter(Infeed m_rotatetoshooter) {
