@@ -10,7 +10,7 @@ public class Controls {
   public static final String DriveConstants = null;
   /* The driver's controller */
   public static XboxController xbox_driver = new XboxController(Constants.ControlConstants.XBOX_CONTROLLER_DRIVER);
-  public static CommandXboxController driver = new CommandXboxController(0); // Creates a CommandXboxController on port 1.
+  public static CommandXboxController driver = new CommandXboxController(0); // Creates a CommandXboxController on port 0.
   
   /* The Operator controller */
   public static XboxController xbox_operator = new XboxController(Constants.ControlConstants.XBOX_CONTROLLER_OPERATOR);
