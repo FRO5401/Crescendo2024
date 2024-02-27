@@ -4,15 +4,20 @@
 
 package frc.robot.Commands;
 
+//WPI Imports
 import edu.wpi.first.wpilibj2.command.Command;
+
+//File Imports
 import frc.robot.Subsystems.Drivebase;
 
 public class ShiftGear extends Command {
   private Drivebase drivebase;
   private boolean endCommand = false; 
+
   /** Creates a new ShiftGear. */
   public ShiftGear(Drivebase m_drivebase) {
     drivebase = m_drivebase;
+    
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivebase);
   }

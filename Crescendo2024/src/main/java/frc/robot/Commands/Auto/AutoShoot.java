@@ -4,24 +4,35 @@
 
 package frc.robot.Commands.Auto;
 
+//WPI Imports
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
+/* File Imports */
 import frc.robot.Constants;
-import frc.robot.Commands.Expel;
+
+//Command Imports
 import frc.robot.Commands.RotatePivotShooter;
 import frc.robot.Commands.SpeakerShot;
+import frc.robot.Commands.Expel;
+
+//Subsystem Imports
 import frc.robot.Subsystems.Infeed;
 import frc.robot.Subsystems.Shooter;
 
 public class AutoShoot extends SequentialCommandGroup {
+  //Declaring Variables
   private Infeed infeed;
   private Shooter shooter; 
   private boolean endCommand = false;
+
   /** Creates a new AutoShoot. */
   public AutoShoot(Infeed m_infeed, Shooter m_shooter) {
+
     infeed = m_infeed;
     shooter = m_shooter;
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter, infeed);
     addCommands(

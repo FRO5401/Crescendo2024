@@ -8,9 +8,9 @@ package frc.robot.Commands;
 
 //WPI Imports
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 
 //File Imports
+import frc.robot.Constants;
 import frc.robot.Subsystems.Infeed;
 
 public class RotatePivotShooter extends Command {

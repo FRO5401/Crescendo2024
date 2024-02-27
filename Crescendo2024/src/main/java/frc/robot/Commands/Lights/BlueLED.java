@@ -4,16 +4,21 @@
 
 package frc.robot.Commands.Lights;
 
+//WPI Imports
 import edu.wpi.first.wpilibj2.command.Command;
+
+//File Imports
 import frc.robot.Subsystems.LEDSubsystem;
 
-
 public class BlueLED extends Command {
-  LEDSubsystem LED;
+  //Declaring Variables
+  private LEDSubsystem LED;
 
   /** Creates a new BlueLED. */
   public BlueLED(LEDSubsystem m_LED) {
+
     LED=m_LED;
+    
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(LED);
   }

@@ -14,8 +14,8 @@ import frc.robot.Subsystems.Infeed;
 
 public class Intake extends Command {
   //Declares Variables
-  Infeed intake;
-  boolean endCommand = false;
+  private Infeed intake;
+  private boolean endCommand = false;
 
   /** Creates a new Intake. */
   public Intake(Infeed m_intake) {

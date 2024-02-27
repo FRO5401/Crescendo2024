@@ -14,9 +14,9 @@ import frc.robot.Subsystems.Infeed;
 import frc.robot.Subsystems.Shooter;
 
 public class StopAll extends Command {
-  Infeed infeed;
-  Shooter shooter;
-  boolean endCommand = false;
+  private Infeed infeed;
+  private Shooter shooter;
+  private boolean endCommand = false;
 
   /** Creates a new Pivot. */
   public StopAll(Infeed m_stoppivot, Shooter m_shooter) {

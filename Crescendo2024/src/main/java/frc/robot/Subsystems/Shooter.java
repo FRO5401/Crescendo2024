@@ -4,26 +4,28 @@
 
 package frc.robot.Subsystems;
 
+//REV Imports
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-
+//WPI Imports
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+//File Imports
 import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
+  /* Declaring Variables */
   //two motor on the shooter
-  CANSparkMax leadMotor;
-  CANSparkMax followMotor;
+  private CANSparkMax leadMotor;
+  private CANSparkMax followMotor;
 
-  RelativeEncoder encoder;
-
-  SparkPIDController pidController;
-
+  private RelativeEncoder encoder;
+  private SparkPIDController pidController;
 
   /** Creates a new Shooter. */
   public Shooter() {

@@ -10,13 +10,9 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-
 // WPI imports
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-
-
 
 public class Climber extends SubsystemBase {
   /** Creates a new Climber. */
@@ -30,7 +26,7 @@ public class Climber extends SubsystemBase {
 
   public Climber(int motor_ID, boolean isInverted, String climberName) {
     this.climberName = climberName;
-    // Init CANSparkMotors
+    // Initilizing CANSparkMotors
     climberMotor = new CANSparkMax(motor_ID, MotorType.kBrushless);
 
     // Sets up climber encoder

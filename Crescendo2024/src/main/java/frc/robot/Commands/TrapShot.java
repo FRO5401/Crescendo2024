@@ -4,17 +4,23 @@
 
 package frc.robot.Commands;
 
+//WPI Imports
 import edu.wpi.first.wpilibj2.command.Command;
+
+//FIle Imports
 import frc.robot.Constants;
 import frc.robot.Subsystems.Shooter;
 
 public class TrapShot extends Command {
-  Shooter shooter;
+  //Declaring Variables
+  private Shooter shooter;
 
   /** Creates a new SpeakerShot. */
   public TrapShot(Shooter m_shooter) {
-    // Use addRequirements() here to declare subsystem dependencies.
+
     shooter = m_shooter;
+    
+    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter);
   }
 

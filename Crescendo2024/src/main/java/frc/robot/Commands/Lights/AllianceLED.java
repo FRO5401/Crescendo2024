@@ -4,18 +4,24 @@
 
 package frc.robot.Commands.Lights;
 
+//WPI Imports
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+
+//File Imports
 import frc.robot.Subsystems.LEDSubsystem;
 
 public class AllianceLED extends Command {
-  LEDSubsystem LED;
-  int r, g, b = 0;
+  //Declaring Variables
+  private LEDSubsystem LED;
+  private int r, g, b = 0;
+
   /** Creates a new AllianceLED. */
   public AllianceLED(LEDSubsystem m_LED) {
     
     LED = m_LED;
+    
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(LED);
   }

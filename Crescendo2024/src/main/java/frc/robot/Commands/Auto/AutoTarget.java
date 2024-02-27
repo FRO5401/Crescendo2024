@@ -4,13 +4,15 @@
 
 package frc.robot.Commands.Auto;
 
-
+//WPI Imports
 import edu.wpi.first.wpilibj2.command.Command;
+
+//Subsystem Imports
 import frc.robot.Subsystems.Drivebase;
 import frc.robot.Subsystems.Photonvision;
 
 public class AutoTarget extends Command {
-
+  //Declaring Variables
   private Photonvision camera;
   private Drivebase drivebase;
   private double targetDistance;
@@ -22,8 +24,8 @@ public class AutoTarget extends Command {
     drivebase = m_drivebase;
     targetDistance = m_targetDistance;
     targetAngle = m_targetAngle;
-    // Use addRequirements() here to declare subsystem dependencies.
 
+    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivebase, camera);
   }
 

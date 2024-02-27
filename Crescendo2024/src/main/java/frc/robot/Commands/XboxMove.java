@@ -22,14 +22,14 @@ public class XboxMove extends Command {
 
 
   // Testing Buttons
-  boolean resetSensors;
+  private boolean resetSensors;
 
   // Instance Vars
-  double left;
-  double right;
-  double sensitivity;
+  private double left;
+  private double right;
+  private double sensitivity;
 
-  Drivebase drivebase;
+  private Drivebase drivebase;
 
   public XboxMove(Drivebase m_drivebase) {
     drivebase = m_drivebase;
