@@ -17,7 +17,7 @@ public class TrapShot extends Command {
 
   /** Creates a new SpeakerShot. */
   public TrapShot(Shooter m_shooter) {
-
+    //Makes local variable equal to global variable
     shooter = m_shooter;
     
     // Use addRequirements() here to declare subsystem dependencies.

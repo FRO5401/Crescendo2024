@@ -18,7 +18,7 @@ public class SpeakerShot extends Command {
 
   /** Creates a new SpeakerShot. */
   public SpeakerShot(Shooter m_shooter) {
-    
+    //Makes local variable equal to global variable
     shooter = m_shooter;
 
     // Use addRequirements() here to declare subsystem dependencies.

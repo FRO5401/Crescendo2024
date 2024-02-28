@@ -98,12 +98,11 @@ public class Drivebase extends SubsystemBase {
     rightDrive1.setIdleMode(IdleMode.kBrake);
     rightDrive2.setIdleMode(IdleMode.kBrake);
 
+    //Current Limit
     leftDrive1.setSmartCurrentLimit(45);
     leftDrive2.setSmartCurrentLimit(45);
     rightDrive1.setSmartCurrentLimit(45);
     rightDrive2.setSmartCurrentLimit(45);
-
-    //Current limit 
 
     // Having drive motor 2 [Left & Right] follow the actions of drive motor 1
     leftDrive2.follow(leftDrive1);

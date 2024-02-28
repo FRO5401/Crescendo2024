@@ -14,6 +14,7 @@ import frc.robot.Subsystems.Infeed;
 import frc.robot.Subsystems.Shooter;
 
 public class StopAll extends Command {
+  //Declaring Variables
   private Infeed infeed;
   private Shooter shooter;
   private boolean endCommand = false;
