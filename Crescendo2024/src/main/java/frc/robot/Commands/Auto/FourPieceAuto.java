@@ -34,18 +34,19 @@ import frc.robot.Subsystems.Shooter;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ThreePieceAuto extends SequentialCommandGroup {
+public class FourPieceAuto extends SequentialCommandGroup {
   Infeed infeed;
   Shooter shooter;
   Drivebase drivebase;
 
   Trajectory leaveStart;
   Trajectory backToSpeaker;
-  Trajectory getNote;
+  Trajectory getNote1;
+  Trajectory getNote2;
 
   int flipped;
   /** Creates a new ThreePieceAuto. */
-  public ThreePieceAuto(  Infeed m_infeed, Shooter m_shooter, Drivebase m_drivebase) {
+  public FourPieceAuto(  Infeed m_infeed, Shooter m_shooter, Drivebase m_drivebase) {
      infeed = m_infeed;
     shooter = m_shooter;
     drivebase = m_drivebase;
@@ -79,7 +80,7 @@ public class ThreePieceAuto extends SequentialCommandGroup {
       Constants.AutoConstants.config.setReversed(true));
     // Add your commands in the addCommands() call, e.g.
 
-    getNote = TrajectoryGenerator.generateTrajectory(
+    getNote1 = TrajectoryGenerator.generateTrajectory(
 
       drivebase.getPose(),
 
@@ -89,13 +90,23 @@ public class ThreePieceAuto extends SequentialCommandGroup {
 
       Constants.AutoConstants.config.setReversed(false));
 
+    getNote2 = TrajectoryGenerator.generateTrajectory(
+
+      drivebase.getPose(),
+
+      List.of(new Translation2d(.275, flipped*.2)),
+
+      new Pose2d(1.2, flipped*1.3, new Rotation2d(0)),
+
+      Constants.AutoConstants.config.setReversed(false));
+
     addRequirements(drivebase,infeed,shooter);
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
 
       new AutoShoot(infeed, shooter),
 
-      new WaitCommand(.45),
+      new WaitCommand(.1),
 
       new StopAll(infeed, shooter),
 
@@ -178,7 +189,7 @@ public class ThreePieceAuto extends SequentialCommandGroup {
 
         new ParallelCommandGroup(new RamseteCommand(
 
-            getNote,
+            getNote1,
 
             drivebase::getPose,
 
@@ -242,8 +253,76 @@ public class ThreePieceAuto extends SequentialCommandGroup {
 
             new WaitCommand(.1),
             
+            new AutoShoot(infeed, shooter),
+
+            new WaitCommand(.4),
+
+            new ParallelCommandGroup(new RamseteCommand(
+
+            getNote2,
+
+            drivebase::getPose,
+
+            new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
+
+            new SimpleMotorFeedforward(
+
+                Constants.AutoConstants.ksVolts,
+
+                Constants.AutoConstants.kvVoltSecondsPerMeter,
+
+                Constants.AutoConstants.kaVoltSecondsSquaredPerMeter),
+
+            Constants.AutoConstants.kDriveKinematics,
+
+            drivebase::getWheelSpeeds,
+
+            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+
+            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+
+            // RamseteCommand passes volts to the callback
+
+            drivebase::tankDriveVolts,
+
+            drivebase), new Intake(infeed)).until(infeed::getLimitSwitchReverse),
+
+            new ParallelCommandGroup( new RamseteCommand(
+
+            backToSpeaker,
+
+            drivebase::getPose,
+
+            new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
+
+            new SimpleMotorFeedforward(
+
+                Constants.AutoConstants.ksVolts,
+
+                Constants.AutoConstants.kvVoltSecondsPerMeter,
+
+                Constants.AutoConstants.kaVoltSecondsSquaredPerMeter),
+
+            Constants.AutoConstants.kDriveKinematics,
+
+            drivebase::getWheelSpeeds,
+
+            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+
+            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+
+            // RamseteCommand passes volts to the callback
+
+            drivebase::tankDriveVolts,
+
+            drivebase), new RotatePivotSafe(infeed)),
+
+            new RotatePivotShooter(infeed),
+
+            new WaitCommand(.1),
+            
             new AutoShoot(infeed, shooter)
-          
+
     );
   }
 }

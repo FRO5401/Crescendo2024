@@ -39,6 +39,7 @@ import frc.robot.Commands.StopAll;
 import frc.robot.Commands.XboxMove;
 import frc.robot.Commands.Auto.AutoShoot;
 import frc.robot.Commands.Auto.AutoTarget;
+import frc.robot.Commands.Auto.FourPieceAuto;
 import frc.robot.Commands.Auto.OnePieceAuto;
 import frc.robot.Commands.Auto.Test;
 import frc.robot.Commands.Auto.ThreePieceAuto;
@@ -159,10 +160,12 @@ public class RobotContainer {
   public void chooseAuto(){
     
 
-    chooser.addOption("OnePiece", new OnePieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
-    chooser.addOption("TwoPiece", new TwoPieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
-    chooser.addOption("ThreePiece", new ThreePieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
-    chooser.addOption("Nothing", Commands.print("Oops"));
+    chooser.addOption("One Piece", new OnePieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    chooser.addOption("Two Piece", new TwoPieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    chooser.addOption("Three Piece", new ThreePieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    chooser.addOption("Four Piece", new FourPieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+
+    chooser.addOption("Do Nothing", Commands.print("Oops"));
 
 
     Shuffleboard.getTab("Autonomous").add(chooser);
