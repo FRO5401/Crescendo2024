@@ -16,9 +16,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 // WPI imports
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -37,11 +39,13 @@ import frc.robot.Commands.StopAll;
 import frc.robot.Commands.XboxMove;
 import frc.robot.Commands.Auto.AutoShoot;
 import frc.robot.Commands.Auto.AutoTarget;
+import frc.robot.Commands.Auto.OnePieceAuto;
 import frc.robot.Commands.Auto.Test;
-import frc.robot.Commands.Auto.TestAuto;
-import frc.robot.Commands.Auto.TestAuto2;
+import frc.robot.Commands.Auto.ThreePieceAuto;
+import frc.robot.Commands.Auto.TwoPieceAuto;
 import frc.robot.Commands.Lights.AllianceLED;
 import frc.robot.Commands.Lights.BlueLED;
+import frc.robot.Commands.Lights.GreenLED;
 import frc.robot.Commands.Lights.RainbowLED;
 //Subsystem Imports
 import frc.robot.Subsystems.Climber;
@@ -76,10 +80,9 @@ public class RobotContainer {
     private final Climber rightClimber = new Climber(Constants.ClimberConstants.RIGHTCLIMBER_ID, true, "Right", 7);
     /* Camera */
     
-    private final Photonvision camera = new Photonvision("Test");
+    private final Photonvision camera = new Photonvision("Front");
 
-    private final static DigitalInput limitSwitch = new DigitalInput(9);
-    private final Trigger hasNote = new Trigger(limitSwitch::get);
+    private final Trigger hasNote = new Trigger(infeed::getLimitSwitch);
 
     private final LEDSubsystem LED = new LEDSubsystem();
 
@@ -139,7 +142,7 @@ public class RobotContainer {
     driver.start().onTrue(new ShiftGear(drivebase));
 
     //AUTO TARGETING
-    driver.a().whileTrue(new AutoTarget(camera, drivebase, 1, 0));
+    driver.a().whileTrue(new AutoTarget(camera, drivebase, 1.2, -6));
 
     //LED COMMANDS
     driver.back().onTrue(new RainbowLED(LED));
@@ -149,16 +152,17 @@ public class RobotContainer {
 
 
 
-    //Limit Switch to stop infeed
-    hasNote.onFalse(new StopAll(infeed, shooter));
+    //Limit Switch t stop infeed
+    hasNote.onFalse(new SequentialCommandGroup(new ParallelCommandGroup(new StopAll(infeed, shooter), new GreenLED(LED)), new RotatePivotAir(infeed)) );
   }
 
   public void chooseAuto(){
     
 
-    chooser.addOption("test", new Test(drivebase));
-    chooser.addOption("Builder", new SequentialCommandGroup(new TestAuto2(drivebase), new Test(drivebase)));
-    chooser.addOption("Nothing", Commands.print("Die"));
+    chooser.addOption("OnePiece", new OnePieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    chooser.addOption("TwoPiece", new TwoPieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    chooser.addOption("ThreePiece", new ThreePieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    chooser.addOption("Nothing", Commands.print("Oops"));
 
 
     Shuffleboard.getTab("Autonomous").add(chooser);
@@ -173,7 +177,5 @@ public class RobotContainer {
       return drivebase;
   }
 
-  public static DigitalInput getLimitSwitch(){
-    return limitSwitch;
-  }
+
 }

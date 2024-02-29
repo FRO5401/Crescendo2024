@@ -28,7 +28,7 @@ public class SpeakerShot extends Command {
   public void execute() {
     shooter.setVelocity(Constants.ShooterConstants.SpeedConstants.SHOOTER_RPM);
 
-    if(shooter.getVelocity() > Constants.ShooterConstants.SpeedConstants.SHOOTER_RPM - 500){
+    if(shooter.getVelocity() > Constants.ShooterConstants.SpeedConstants.SHOOTER_RPM - 300){
      endCommand = true;
     }
     

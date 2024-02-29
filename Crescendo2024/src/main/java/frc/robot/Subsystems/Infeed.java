@@ -21,6 +21,7 @@ package frc.robot.Subsystems;
 
 //WPI Imports
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //Rev Imports
@@ -47,6 +48,9 @@ public class Infeed extends SubsystemBase {
 
   //Creates PIDController
   private SparkPIDController pivotPID;
+
+  //Limit Switch
+  DigitalInput limitSwitch;
 
   /** Creates a new Infeed. */
   public Infeed() {
@@ -78,6 +82,9 @@ public class Infeed extends SubsystemBase {
     pivotPID.setI(Constants.InfeedConstants.pivotI);
     pivotPID.setD(Constants.InfeedConstants.pivotD);
     pivotPID.setIZone(Constants.InfeedConstants.pivotILimit);
+
+    //Create limit switch
+    limitSwitch = new DigitalInput(9);
     
   }
   //Gets position of pivotMotor
@@ -135,12 +142,22 @@ public class Infeed extends SubsystemBase {
     pivotEncoder.setPosition(0);
   }
 
+  public boolean getLimitSwitch(){
+    return limitSwitch.get();
+  }
+
+    public boolean getLimitSwitchReverse(){
+    return !limitSwitch.get();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Current Pivot", pivotMotor.getOutputCurrent());
     //Creates SmartDashBoard pivotMotor Encoder Value
     SmartDashboard.putNumber("pivotMotor Encoder Value", getPosition());
+    
+    SmartDashboard.putBoolean("Has Note", getLimitSwitch());
 
   }
 }

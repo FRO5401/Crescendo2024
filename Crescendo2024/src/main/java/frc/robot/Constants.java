@@ -21,8 +21,8 @@ public final class Constants {
         }
 
     public static class PhotonConstants{
-        public static final double CAMERA_ANGLE = 25;
-        public static final double CAMERA_HEIGHT = 24.5;
+        public static final double CAMERA_ANGLE = 42.5;
+        public static final double CAMERA_HEIGHT = 24.375;
     }
     
     //Controls Constants
@@ -49,9 +49,10 @@ public final class Constants {
         public static final int CURRENT_LIMIT = 30;
     
         // PID Constants
-        public static final double KP = 1.2;
-        public static final double KI = 0;
-        public static final double KD = 0; 
+        public static final double KP = .6;
+        public static final double KI = 0.2;
+        public static final double KD = .125; 
+        public static final double IZONE = .32;
     
         // Sensitivity Constants
         public static final double PERCISION_SENSITIVITY = 0.4;
@@ -65,7 +66,7 @@ public final class Constants {
     
         // Straight Direction
         public static final double STRAIGHT_DIRECTION = 1.0;
-        public static final double ANGULAR_KP = 0.03;
+        public static final double ANGULAR_KP = 0.015;
         public static final double ANGULAR_KI = 0;
         public static final double ANGULAR_KD = 0; 
     }
@@ -160,11 +161,11 @@ public final class Constants {
 
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(TRACK_WIDTH);
 
-        public static final double kMaxSpeedMetersPerSecond = 1;
+        public static final double kMaxSpeedMetersPerSecond = 1.7;
 
-        public static final double kMaxAccelerationMetersPerSecondSquared = .5;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1;
 
-        public static final double kRamseteB = 20;
+        public static final double kRamseteB = 26;
 
         public static final double kRamseteZeta = 0.7;
 
@@ -187,6 +188,8 @@ public final class Constants {
             .setKinematics(kDriveKinematics)
             // Apply the voltage constraint
             .addConstraint(autoVoltageConstraint);
+        
+            
     }
 }
 

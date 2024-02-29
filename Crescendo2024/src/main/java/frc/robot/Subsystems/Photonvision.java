@@ -28,6 +28,8 @@ public class Photonvision extends SubsystemBase{
     camera = new PhotonCamera(cameraName);
 
     camera.setPipelineIndex(0);
+
+    
   }
 
   public PhotonCamera getCamera(){

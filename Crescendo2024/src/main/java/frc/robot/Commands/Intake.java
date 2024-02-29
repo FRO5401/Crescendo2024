@@ -17,7 +17,7 @@ public class Intake extends Command {
   //Declares Variables
   Infeed intake;
   boolean endCommand = false;
-  DigitalInput limitSwitch = RobotContainer.getLimitSwitch();
+
 
   /** Creates a new Intake. */
   public Intake(Infeed m_intake) {
@@ -36,23 +36,19 @@ public class Intake extends Command {
   @Override
   public void execute() {
     intake.intake();
+    endCommand = true;
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.stopIntake();
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-
-    if (!limitSwitch.get()){
-      return true;
-    } else {
-      return false;
-    }
+    return endCommand;
     
   }
 }

@@ -141,10 +141,10 @@ public class Drivebase extends SubsystemBase {
     rightDrive1 = new CANSparkMax(Constants.DriveMotors.RIGHT_DRIVE1_ID, MotorType.kBrushless);
     rightDrive2 = new CANSparkMax(Constants.DriveMotors.RIGHT_DRIVE2_ID, MotorType.kBrushless);
 
-    leftDrive1.setIdleMode(IdleMode.kCoast);
-    leftDrive2.setIdleMode(IdleMode.kCoast);
-    rightDrive1.setIdleMode(IdleMode.kCoast);
-    rightDrive2.setIdleMode(IdleMode.kCoast);
+    leftDrive1.setIdleMode(IdleMode.kBrake);
+    leftDrive2.setIdleMode(IdleMode.kBrake);
+    rightDrive1.setIdleMode(IdleMode.kBrake);
+    rightDrive2.setIdleMode(IdleMode.kBrake);
 
 
 
@@ -218,6 +218,7 @@ public class Drivebase extends SubsystemBase {
 
     turnWPIDController = new PIDController(Constants.DriveMotors.ANGULAR_KP, Constants.DriveMotors.ANGULAR_KI, Constants.DriveMotors.ANGULAR_KD);
     forwardWPIDController = new PIDController(Constants.DriveMotors.KP, Constants.DriveMotors.KI, Constants.DriveMotors.KD);
+    forwardWPIDController.setIZone(Constants.DriveMotors.IZONE);
 
     //Left PID declaration
     leftPIDController.setP(Constants.DriveMotors.KP);
@@ -231,6 +232,7 @@ public class Drivebase extends SubsystemBase {
 
     navxGyro = new AHRS(SPI.Port.kMXP);
     navxGyro.reset();
+
 
      odometry = new DifferentialDriveOdometry(navxGyro.getRotation2d(), getLeftPosition(),
         getRightPostion());
@@ -387,6 +389,20 @@ public void updateOdometry(){
   odometry.update(navxGyro.getRotation2d(), getWheelPositions());
 }
 
+public void setIdleModeBreak(){
+    leftDrive1.setIdleMode(IdleMode.kBrake);
+    leftDrive2.setIdleMode(IdleMode.kBrake);
+    rightDrive1.setIdleMode(IdleMode.kBrake);
+    rightDrive2.setIdleMode(IdleMode.kBrake);
+}
+
+public void setIdleModeCoast(){
+    leftDrive1.setIdleMode(IdleMode.kCoast);
+    leftDrive2.setIdleMode(IdleMode.kCoast);
+    rightDrive1.setIdleMode(IdleMode.kCoast);
+    rightDrive2.setIdleMode(IdleMode.kCoast);
+}
+
 
 
   @Override
@@ -394,10 +410,10 @@ public void updateOdometry(){
     // This method will be called once per scheduler run
 
     odometry.update(navxGyro.getRotation2d(), getWheelPositions());
-    SmartDashboard.putNumber("Conversion factor", leftEncoder1.getPositionConversionFactor());
-    SmartDashboard.putNumber("Conversion factor2", Constants.AutoConstants.CONVERSION_FACTOR);
 
 
+
+    
     //Displays left drives encoder value to smart dashboard
     SmartDashboard.putNumber("Left Drive Encoder Value", getLeftVelocity());
     //Displays right drives encoder value to smart dashboard
