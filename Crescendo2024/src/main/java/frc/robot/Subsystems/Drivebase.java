@@ -409,21 +409,10 @@ public void setIdleModeCoast(){
   public void periodic() {
     // This method will be called once per scheduler run
 
-    odometry.update(navxGyro.getRotation2d(), getWheelPositions());
 
-
-
-    
-    //Displays left drives encoder value to smart dashboard
-    SmartDashboard.putNumber("Left Drive Encoder Value", getLeftVelocity());
-    //Displays right drives encoder value to smart dashboard
-    SmartDashboard.putNumber("Right Drive Encoder Value", getRightVelocity());
     //displays gear shift state
     SmartDashboard.putBoolean("isHighGear", isHighGear);
     SmartDashboard.putNumber("PSI", compressor.getPressure());
-    SmartDashboard.putNumber("Position X", getPose().getX());
-    SmartDashboard.putNumber("Position Y", getPose().getY());
-    SmartDashboard.putNumber("Angle", getPose().getRotation().getDegrees());
 
   }
 }

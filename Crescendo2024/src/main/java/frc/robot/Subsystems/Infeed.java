@@ -157,7 +157,7 @@ public class Infeed extends SubsystemBase {
     //Creates SmartDashBoard pivotMotor Encoder Value
     SmartDashboard.putNumber("pivotMotor Encoder Value", getPosition());
     
-    SmartDashboard.putBoolean("Has Note", getLimitSwitch());
+    SmartDashboard.putBoolean("Has Note", getLimitSwitchReverse());
 
   }
 }
