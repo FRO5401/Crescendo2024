@@ -163,7 +163,7 @@ public final class Constants {
 
         public static final double kMaxSpeedMetersPerSecond = 1.7;
 
-        public static final double kMaxAccelerationMetersPerSecondSquared = 1;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1.2;
 
         public static final double kRamseteB = 26;
 
