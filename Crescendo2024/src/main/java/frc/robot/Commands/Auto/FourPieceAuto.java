@@ -22,10 +22,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.Commands.Expel;
 import frc.robot.Commands.Intake;
 import frc.robot.Commands.RotatePivotGround;
 import frc.robot.Commands.RotatePivotSafe;
 import frc.robot.Commands.RotatePivotShooter;
+import frc.robot.Commands.SpeakerShot;
 import frc.robot.Commands.StopAll;
 import frc.robot.Subsystems.Drivebase;
 import frc.robot.Subsystems.Infeed;
@@ -173,11 +175,9 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
             drivebase::tankDriveVolts,
 
-            drivebase), new RotatePivotShooter(infeed)),
+            drivebase), new RotatePivotShooter(infeed), new SpeakerShot(shooter)),
 
-
-
-        new AutoShoot(infeed, shooter),
+            new Expel(infeed),
 
         new WaitCommand(.2),
 
@@ -245,9 +245,9 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
             drivebase::tankDriveVolts,
 
-            drivebase), new RotatePivotShooter(infeed)),
+            drivebase), new RotatePivotShooter(infeed), new SpeakerShot(shooter)),
             
-            new AutoShoot(infeed, shooter),
+            new Expel(infeed),
 
             new WaitCommand(.2),
 
@@ -315,10 +315,10 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
             drivebase::tankDriveVolts,
 
-            drivebase), new RotatePivotShooter(infeed)),
+            drivebase), new RotatePivotShooter(infeed), new SpeakerShot(shooter)),
 
             
-            new AutoShoot(infeed, shooter)
+            new Expel(infeed)
 
     );
   }
