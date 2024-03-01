@@ -143,7 +143,7 @@ public class RobotContainer {
     driver.start().onTrue(new ShiftGear(drivebase));
 
     //AUTO TARGETING
-    driver.a().whileTrue(new AutoTarget(camera, drivebase, 1.2, -6));
+    driver.a().whileTrue(new AutoTarget(camera, drivebase, 1.0, -6));
 
     //LED COMMANDS
     driver.back().onTrue(new RainbowLED(LED));
