@@ -409,10 +409,12 @@ public void setIdleModeCoast(){
   public void periodic() {
     // This method will be called once per scheduler run
 
+    odometry.update(navxGyro.getRotation2d(), getWheelPositions());
 
     //displays gear shift state
     SmartDashboard.putBoolean("isHighGear", isHighGear);
     SmartDashboard.putNumber("PSI", compressor.getPressure());
+
 
   }
 }

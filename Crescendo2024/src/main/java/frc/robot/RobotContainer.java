@@ -81,7 +81,7 @@ public class RobotContainer {
     private final Climber rightClimber = new Climber(Constants.ClimberConstants.RIGHTCLIMBER_ID, true, "Right", 7);
     /* Camera */
     
-    private final Photonvision camera = new Photonvision("Front");
+    private final Photonvision camera = new Photonvision("Back");
 
     private final Trigger hasNote = new Trigger(infeed::getLimitSwitch);
 
