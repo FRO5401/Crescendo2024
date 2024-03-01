@@ -70,7 +70,7 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
       backToSpeaker = TrajectoryGenerator.generateTrajectory(
 
-      new Pose2d(1.3, 0, new Rotation2d(0)),
+      new Pose2d(1.1, 0, new Rotation2d(0)),
 
       List.of(new Translation2d(.6, 0)),
 
@@ -106,7 +106,7 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
       new AutoShoot(infeed, shooter),
 
-      new WaitCommand(.1),
+      new WaitCommand(.2),
 
       new StopAll(infeed, shooter),
 
@@ -165,23 +165,21 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
             drivebase::getWheelSpeeds,
 
-            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+            new PIDController(Constants.AutoConstants.kPDriveVel, 0, 0),
 
-            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+            new PIDController(Constants.AutoConstants.kPDriveVel, 0, 0),
 
             // RamseteCommand passes volts to the callback
 
             drivebase::tankDriveVolts,
 
-            drivebase), new RotatePivotSafe(infeed)),
+            drivebase), new RotatePivotShooter(infeed)),
 
-          new RotatePivotShooter(infeed),
 
-          new WaitCommand(.1),
 
         new AutoShoot(infeed, shooter),
 
-        new WaitCommand(.4),
+        new WaitCommand(.2),
 
         new StopAll(infeed, shooter),
 
@@ -247,15 +245,15 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
             drivebase::tankDriveVolts,
 
-            drivebase), new RotatePivotSafe(infeed)),
-
-            new RotatePivotShooter(infeed),
-
-            new WaitCommand(.1),
+            drivebase), new RotatePivotShooter(infeed)),
             
             new AutoShoot(infeed, shooter),
 
-            new WaitCommand(.4),
+            new WaitCommand(.2),
+
+            new StopAll(infeed, shooter),
+
+            new RotatePivotGround(infeed),
 
             new ParallelCommandGroup(new RamseteCommand(
 
@@ -287,6 +285,8 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
             drivebase), new Intake(infeed)).until(infeed::getLimitSwitchReverse),
 
+            new StopAll(infeed, shooter),
+
             new ParallelCommandGroup( new RamseteCommand(
 
             backToSpeaker,
@@ -307,19 +307,16 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
             drivebase::getWheelSpeeds,
 
-            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+            new PIDController(Constants.AutoConstants.kPDriveVel, 0, 0),
 
-            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+            new PIDController(Constants.AutoConstants.kPDriveVel, 0, 0),
 
             // RamseteCommand passes volts to the callback
 
             drivebase::tankDriveVolts,
 
-            drivebase), new RotatePivotSafe(infeed)),
+            drivebase), new RotatePivotShooter(infeed)),
 
-            new RotatePivotShooter(infeed),
-
-            new WaitCommand(.1),
             
             new AutoShoot(infeed, shooter)
 
