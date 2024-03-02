@@ -47,7 +47,9 @@ import frc.robot.Commands.Auto.TwoPieceAuto;
 import frc.robot.Commands.Lights.AllianceLED;
 import frc.robot.Commands.Lights.BlueLED;
 import frc.robot.Commands.Lights.GreenLED;
+import frc.robot.Commands.Lights.PurpleLED;
 import frc.robot.Commands.Lights.RainbowLED;
+import frc.robot.Commands.Lights.YellowLED;
 //Subsystem Imports
 import frc.robot.Subsystems.Climber;
 import frc.robot.Subsystems.Drivebase;
@@ -137,20 +139,19 @@ public class RobotContainer {
     operator.x().whileTrue(new RotatePivotSafe(infeed));
 
     //Auto Shooter Methods.
-    operator.povUp().onTrue(new AutoShoot(infeed, shooter));
+    operator.povUp().onTrue(new ParallelCommandGroup(new AutoShoot(infeed, shooter), new BlueLED(LED)));
     operator.povDown().onTrue(new AmpShot(shooter));
 
     driver.start().onTrue(new ShiftGear(drivebase));
 
     //AUTO TARGETING
-    driver.a().whileTrue(new AutoTarget(camera, drivebase, 1.0, -6));
+    driver.a().whileTrue(new AutoTarget(camera, drivebase, .95, -6));
 
     //LED COMMANDS
     driver.back().onTrue(new RainbowLED(LED));
     driver.x().onTrue(new BlueLED(LED));
-    driver.y().onTrue(new AllianceLED(LED));
-
-
+    driver.y().onTrue(new YellowLED(LED));
+    driver.b().onTrue(new PurpleLED(LED));
 
 
     //Limit Switch t stop infeed

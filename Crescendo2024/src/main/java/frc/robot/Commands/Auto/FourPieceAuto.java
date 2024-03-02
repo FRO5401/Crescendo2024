@@ -65,7 +65,7 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
       List.of(new Translation2d(.7, 0)),
 
-      new Pose2d(1.1, 0, new Rotation2d(0)),
+      new Pose2d(1.3, 0, new Rotation2d(0)),
 
       Constants.AutoConstants.config.setReversed(false));
 
@@ -108,7 +108,7 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
       new AutoShoot(infeed, shooter),
 
-      new WaitCommand(.2),
+      new WaitCommand(.3),
 
       new StopAll(infeed, shooter),
 
