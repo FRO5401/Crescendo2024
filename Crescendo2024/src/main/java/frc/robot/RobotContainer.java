@@ -43,6 +43,7 @@ import frc.robot.Commands.Auto.FourPieceAuto;
 import frc.robot.Commands.Auto.OnePieceAuto;
 import frc.robot.Commands.Auto.Test;
 import frc.robot.Commands.Auto.ThreePieceAuto;
+import frc.robot.Commands.Auto.ThreePieceFlipped;
 import frc.robot.Commands.Auto.TwoPieceAuto;
 import frc.robot.Commands.Lights.AllianceLED;
 import frc.robot.Commands.Lights.BlueLED;
@@ -165,6 +166,10 @@ public class RobotContainer {
     chooser.addOption("Two Piece", new TwoPieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("Three Piece", new ThreePieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("Four Piece", new FourPieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    chooser.addOption("Three Piece Flipped", new ThreePieceFlipped(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    
+
+
 
     chooser.addOption("Do Nothing", Commands.print("Oops"));
 
