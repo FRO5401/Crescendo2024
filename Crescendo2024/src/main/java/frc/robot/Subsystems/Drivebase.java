@@ -413,7 +413,6 @@ public void setIdleModeCoast(){
 
     //displays gear shift state
     SmartDashboard.putBoolean("isHighGear", isHighGear);
-    SmartDashboard.putNumber("PSI", compressor.getPressure());
 
 
   }

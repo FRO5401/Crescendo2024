@@ -87,7 +87,5 @@ public class Climber extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    // Displays climber encoder value on SmartDashBoard
-    SmartDashboard.putNumber(climberName + " Climber Motor Encoder Value: ", getPosition());
   }
 }

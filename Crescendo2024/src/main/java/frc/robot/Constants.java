@@ -49,10 +49,10 @@ public final class Constants {
         public static final int CURRENT_LIMIT = 30;
     
         // PID Constants
-        public static final double KP = .6;
-        public static final double KI = 0.2;
+        public static final double KP = .8;
+        public static final double KI = 0.5;
         public static final double KD = .125; 
-        public static final double IZONE = .32;
+        public static final double IZONE = .4;
     
         // Sensitivity Constants
         public static final double PERCISION_SENSITIVITY = 0.4;
@@ -87,7 +87,7 @@ public final class Constants {
         public static final double IN_POSITION = -.1;
         public static final double SAFE_POSITION = -2;
 
-        public static final double OUT_POSITION = -14;
+        public static final double OUT_POSITION = -14.3;
         public static final double AIR_POSITION = -6.5;
 
         /* Infeed speed constants */
@@ -95,7 +95,7 @@ public final class Constants {
         //Take in note speed
         public static final double INTAKE_SPEED = 0.4;
         //Remove note from infeed speed
-        public static final double EXPEL_SPEED = -0.43;
+        public static final double EXPEL_SPEED = -5; // was 4.2 changed for hatboro
         //Move Pivot to floor speed
         public static final double PIVOT_TO_GROUND_SPEED = -0.35;
         //Move Pivot to shooter speed
@@ -116,8 +116,9 @@ public final class Constants {
 
         public final class SpeedConstants{
             public static final double SHOOTER_RPM = 5500;
-            public static final double AMP_RPM = 2500;
+            public static final double AMP_RPM = 1675;
             public static final double TRAP_RPM = 4000;
+            public static final double BACK_RPM = -750;
         }
     }
         public static final double pivotP = 0;
@@ -165,7 +166,7 @@ public final class Constants {
 
         public static final double kMaxAccelerationMetersPerSecondSquared = 1;
 
-        public static final double kRamseteB = 26;
+        public static final double kRamseteB = 27;
 
         public static final double kRamseteZeta = 0.7;
 
