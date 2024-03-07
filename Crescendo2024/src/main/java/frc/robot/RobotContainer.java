@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import javax.swing.JList.DropLocation;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -65,7 +64,7 @@ public class RobotContainer {
 
     /* Drivebase */
     private static final Drivebase drivebase = new Drivebase();
-    private final XboxMove xboxMove = new XboxMove(drivebase);
+
 
     /* Auto chooser 
      * TODO: Change to choose your own auto
@@ -86,6 +85,8 @@ public class RobotContainer {
     private final Trigger hasNote = new Trigger(infeed::getLimitSwitch);
 
     private final LEDSubsystem LED = new LEDSubsystem();
+
+    private final XboxMove xboxMove = new XboxMove(drivebase, camera);
 
 
  

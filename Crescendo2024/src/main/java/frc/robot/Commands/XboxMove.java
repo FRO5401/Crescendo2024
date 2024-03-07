@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Controls;
 import frc.robot.Subsystems.Drivebase;
+import frc.robot.Subsystems.Photonvision;
 
 public class XboxMove extends Command {
   /*** Variables ***/
@@ -19,6 +20,7 @@ public class XboxMove extends Command {
   private boolean rotate;
   private boolean brake;
   private boolean precision;
+  private boolean autoTarget;
 
 
   // Testing Buttons
@@ -31,10 +33,13 @@ public class XboxMove extends Command {
 
   Drivebase drivebase;
 
-  public XboxMove(Drivebase m_drivebase) {
+  private Photonvision camera;
+
+  public XboxMove(Drivebase m_drivebase,Photonvision m_camera) {
     drivebase = m_drivebase;
+    camera = m_camera;
     sensitivity = Constants.Controls.DEFAULT_SENSITIVTY;
-    addRequirements(drivebase);
+    addRequirements(drivebase, camera);
   }
 
   // Called just before this Command runs the first time
@@ -52,6 +57,7 @@ public class XboxMove extends Command {
     rotate = Controls.xbox_driver.getLeftStickButton();
     throttle = Controls.xbox_driver.getRightTriggerAxis();
     reverse = Controls.xbox_driver.getLeftTriggerAxis();
+    autoTarget = Controls.xbox_driver.getAButton();
     turn = Controls.xbox_driver.getLeftX() * 0.8;
 
     // Braking
@@ -81,6 +87,12 @@ public class XboxMove extends Command {
       else if (Math.abs(turn) < Constants.Controls.AXIS_THRESHOLD) {
         left = Constants.DriveMotors.POWER_STOP;
         right = Constants.DriveMotors.POWER_STOP;
+      }
+    } else if (autoTarget){
+      if(camera.hasTarget()){
+        double range = camera.getDistance();
+        double angle = camera.getYaw();
+        drivebase.arcadeDrive(drivebase.calculateFoward(1, range), drivebase.calculateTurn(-6, angle));
       }
     }
     // Not pirouetting (Not turning in place).
