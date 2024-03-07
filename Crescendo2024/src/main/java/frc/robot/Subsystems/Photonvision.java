@@ -122,7 +122,7 @@ public class Photonvision extends SubsystemBase{
   public PhotonTrackedTarget removeBadTargets(List<PhotonTrackedTarget> targetList){
     PhotonTrackedTarget target = null;
   for (PhotonTrackedTarget m_target : targetList){
-        if (m_target.getFiducialId() != 3){
+        if (m_target.getFiducialId() != 3 || m_target.getFiducialId() != 8){
           target = m_target;
           break;
         }
@@ -146,10 +146,6 @@ public class Photonvision extends SubsystemBase{
   }
 
   public void shuffleBoardTabs(){
-    var result = camera.getLatestResult();
-    SmartDashboard.putNumber("Camera Latency", result.getLatencyMillis());
-    SmartDashboard.putNumber("Range", getDistance());
-    SmartDashboard.putNumber("Yaw", getYaw());
   }
 
 

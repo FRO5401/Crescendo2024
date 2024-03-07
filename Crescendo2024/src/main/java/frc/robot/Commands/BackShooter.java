@@ -8,12 +8,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Shooter;
 
-public class AmpShot extends Command {
-  private Shooter shooter;
-  private boolean endCommand = false;
+public class BackShooter extends Command {
+  Shooter shooter;
 
   /** Creates a new SpeakerShot. */
-  public AmpShot(Shooter m_shooter) {
+  public BackShooter(Shooter m_shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
     shooter = m_shooter;
     addRequirements(shooter);
@@ -26,11 +25,7 @@ public class AmpShot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setVelocity(Constants.ShooterConstants.SpeedConstants.AMP_RPM);
-
-    if(shooter.getVelocity() > Constants.ShooterConstants.SpeedConstants.AMP_RPM && shooter.getVelocity() < Constants.ShooterConstants.SpeedConstants.AMP_RPM + 50){
-      endCommand = true;
-     }
+    shooter.setVelocity(Constants.ShooterConstants.SpeedConstants.BACK_RPM);
   }
 
   // Called once the command ends or is interrupted.
@@ -40,6 +35,6 @@ public class AmpShot extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return endCommand;
+    return false;
   }
 }

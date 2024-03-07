@@ -1,22 +1,22 @@
+
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Commands;
+package frc.robot.Commands.Lights;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.Subsystems.Shooter;
+import frc.robot.Subsystems.LEDSubsystem;
 
-public class AmpShot extends Command {
-  private Shooter shooter;
-  private boolean endCommand = false;
 
-  /** Creates a new SpeakerShot. */
-  public AmpShot(Shooter m_shooter) {
+public class PurpleLED extends Command {
+  LEDSubsystem LED;
+
+  /** Creates a new BlueLED. */
+  public PurpleLED(LEDSubsystem m_LED) {
+    LED=m_LED;
     // Use addRequirements() here to declare subsystem dependencies.
-    shooter = m_shooter;
-    addRequirements(shooter);
+    addRequirements(LED);
   }
 
   // Called when the command is initially scheduled.
@@ -26,11 +26,8 @@ public class AmpShot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setVelocity(Constants.ShooterConstants.SpeedConstants.AMP_RPM);
-
-    if(shooter.getVelocity() > Constants.ShooterConstants.SpeedConstants.AMP_RPM && shooter.getVelocity() < Constants.ShooterConstants.SpeedConstants.AMP_RPM + 50){
-      endCommand = true;
-     }
+    LED.setLEDColor(255, 0, 255);
+    LED.setData();
   }
 
   // Called once the command ends or is interrupted.
@@ -40,6 +37,6 @@ public class AmpShot extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return endCommand;
+    return false;
   }
 }

@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Commands.AmpShot;
+import frc.robot.Commands.BackShooter;
 import frc.robot.Commands.ClimberMove;
 import frc.robot.Commands.Expel;
 import frc.robot.Commands.Intake;
@@ -36,17 +37,23 @@ import frc.robot.Commands.ShiftGear;
 import frc.robot.Commands.StopAll;
 //Command Imports
 import frc.robot.Commands.XboxMove;
+import frc.robot.Commands.Auto.AutoAmpShot;
 import frc.robot.Commands.Auto.AutoShoot;
 import frc.robot.Commands.Auto.AutoTarget;
 import frc.robot.Commands.Auto.FourPieceAuto;
+import frc.robot.Commands.Auto.JustShoot;
 import frc.robot.Commands.Auto.OnePieceAuto;
+import frc.robot.Commands.Auto.SideAuto;
 import frc.robot.Commands.Auto.Test;
 import frc.robot.Commands.Auto.ThreePieceAuto;
+import frc.robot.Commands.Auto.ThreePieceFlipped;
 import frc.robot.Commands.Auto.TwoPieceAuto;
 import frc.robot.Commands.Lights.AllianceLED;
 import frc.robot.Commands.Lights.BlueLED;
 import frc.robot.Commands.Lights.GreenLED;
+import frc.robot.Commands.Lights.PurpleLED;
 import frc.robot.Commands.Lights.RainbowLED;
+import frc.robot.Commands.Lights.YellowLED;
 //Subsystem Imports
 import frc.robot.Subsystems.Climber;
 import frc.robot.Subsystems.Drivebase;
@@ -138,19 +145,21 @@ public class RobotContainer {
     //If "B" pressed/held on operator controller rotatepivotAir command used (moves intake to air)
     operator.b().whileTrue(new RotatePivotAir(infeed));
     operator.x().whileTrue(new RotatePivotSafe(infeed));
+    operator.povLeft().onTrue(new BackShooter(shooter));
 
     //Auto Shooter Methods.
-    operator.povUp().onTrue(new AutoShoot(infeed, shooter));
-    operator.povDown().onTrue(new AmpShot(shooter));
+    operator.povUp().onTrue(new ParallelCommandGroup(new AutoShoot(infeed, shooter), new BlueLED(LED)));
+    operator.povDown().onTrue(new ParallelCommandGroup(new AutoAmpShot(shooter, infeed), new BlueLED(LED)));
+    
 
     driver.start().onTrue(new ShiftGear(drivebase));
+
 
     //LED COMMANDS
     driver.back().onTrue(new RainbowLED(LED));
     driver.x().onTrue(new BlueLED(LED));
-    driver.y().onTrue(new AllianceLED(LED));
-
-
+    driver.y().onTrue(new YellowLED(LED));
+    driver.b().onTrue(new PurpleLED(LED));
 
 
     //Limit Switch t stop infeed
@@ -164,6 +173,13 @@ public class RobotContainer {
     chooser.addOption("Two Piece", new TwoPieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("Three Piece", new ThreePieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("Four Piece", new FourPieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    chooser.addOption("Flipped Three Piece", new ThreePieceFlipped(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    chooser.addOption("One Piece Side", new SideAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    chooser.addOption("Just Shoot (For Peddie)", new JustShoot(infeed, shooter).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+
+    
+
+
 
     chooser.addOption("Do Nothing", Commands.print("Oops"));
 
