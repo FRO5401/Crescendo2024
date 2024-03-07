@@ -62,16 +62,15 @@ public class RobotContainer {
     /*Climbers */
     private final Climber leftClimber = new Climber(Constants.ClimberConstants.LEFTCLIMBER_ID, false, "Left", 8);
     private final Climber rightClimber = new Climber(Constants.ClimberConstants.RIGHTCLIMBER_ID, true, "Right", 7);
-    /* Camera */
-    
+    /* Cameraa */
     private final static Photonvision backCamera = new Photonvision("Back");
     private final static Photonvision frontCamera = new Photonvision("Front");
 
-
+    //trigger for the limit switch having the note
     private final Trigger hasNote = new Trigger(infeed::getLimitSwitch);
-
+    //Leds, currently not working, hardware is unplugged
     private final LEDSubsystem LED = new LEDSubsystem();
-
+    // new and improved XBOX move with cameras!!
     private final XboxMove xboxMove = new XboxMove(drivebase, backCamera, frontCamera);
 
 
@@ -134,7 +133,7 @@ public class RobotContainer {
 
 
     driver.start().onTrue(new ShiftGear(drivebase));
-    
+
     driver.back().onTrue(new RainbowLED(LED));
     driver.x().onTrue(new BlueLED(LED));
     driver.y().onTrue(new AllianceLED(LED));
