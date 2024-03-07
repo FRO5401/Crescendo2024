@@ -20,7 +20,12 @@ public class XboxMove extends Command {
   private boolean rotate;
   private boolean brake;
   private boolean precision;
-  private boolean autoTarget;
+  private boolean autoTargetSpeaker;
+  private boolean autoTargetNote;
+
+
+  private double distance;
+  private double angle;
 
 
   // Testing Buttons
@@ -33,13 +38,16 @@ public class XboxMove extends Command {
 
   Drivebase drivebase;
 
-  private Photonvision camera;
+  private Photonvision backCamera;
+  private Photonvision frontCamera;
 
-  public XboxMove(Drivebase m_drivebase,Photonvision m_camera) {
+
+  public XboxMove(Drivebase m_drivebase,Photonvision m_backCamera, Photonvision m_frontCamera) {
     drivebase = m_drivebase;
-    camera = m_camera;
+    frontCamera = m_frontCamera;
+    backCamera = m_backCamera;
     sensitivity = Constants.Controls.DEFAULT_SENSITIVTY;
-    addRequirements(drivebase, camera);
+    addRequirements(drivebase, frontCamera, backCamera);
   }
 
   // Called just before this Command runs the first time
@@ -57,7 +65,8 @@ public class XboxMove extends Command {
     rotate = Controls.xbox_driver.getLeftStickButton();
     throttle = Controls.xbox_driver.getRightTriggerAxis();
     reverse = Controls.xbox_driver.getLeftTriggerAxis();
-    autoTarget = Controls.xbox_driver.getAButton();
+    autoTargetSpeaker = Controls.xbox_driver.getAButton();
+    autoTargetNote = Controls.xbox_driver.getBButton();
     turn = Controls.xbox_driver.getLeftX() * 0.8;
 
     // Braking
@@ -88,13 +97,22 @@ public class XboxMove extends Command {
         left = Constants.DriveMotors.POWER_STOP;
         right = Constants.DriveMotors.POWER_STOP;
       }
-    } else if (autoTarget){
-      if(camera.hasTarget()){
-        double range = camera.getDistance();
-        double angle = camera.getYaw();
-        drivebase.arcadeDrive(drivebase.calculateFoward(1, range), drivebase.calculateTurn(-6, angle));
+    } 
+    // this is used for auto targeting onto the speaker, requires a distance and a desired angle, the angle is -6 because the camera is off to the side
+    if (autoTargetSpeaker){
+      if(backCamera.hasTarget()){
+        distance = backCamera.getDistance();
+        angle = backCamera.getYaw();
+        drivebase.arcadeDrive(drivebase.calculateFoward(1, distance), drivebase.calculateTurn(-6, angle));
       }
     }
+    if (autoTargetNote){
+      if(frontCamera.hasTarget()){
+        angle = frontCamera.getYaw();
+        drivebase.arcadeDrive(0, angle);
+      }
+    }
+
     // Not pirouetting (Not turning in place).
     else {
       // Turning right
