@@ -49,9 +49,9 @@ public final class Constants {
         public static final int CURRENT_LIMIT = 30;
     
         // PID Constants
-        public static final double KP = .8;
-        public static final double KI = 0.5;
-        public static final double KD = .125; 
+        public static final double KP = 3;
+        public static final double KI = 0;
+        public static final double KD = 0; 
         public static final double IZONE = .4;
     
         // Sensitivity Constants
@@ -95,7 +95,7 @@ public final class Constants {
         //Take in note speed
         public static final double INTAKE_SPEED = 0.4;
         //Remove note from infeed speed
-        public static final double EXPEL_SPEED = -5; // was 4.2 changed for hatboro
+        public static final double EXPEL_SPEED = -.5; // was 4.2 changed for hatboro
         //Move Pivot to floor speed
         public static final double PIVOT_TO_GROUND_SPEED = -0.35;
         //Move Pivot to shooter speed

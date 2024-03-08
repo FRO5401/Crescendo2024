@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 //WPI Imports
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 //Subsystem Imports
@@ -31,6 +33,7 @@ import frc.robot.Commands.Auto.AutoShoot;
 import frc.robot.Commands.Auto.AutoTarget;
 import frc.robot.Commands.Lights.AllianceLED;
 import frc.robot.Commands.Lights.BlueLED;
+import frc.robot.Commands.Lights.GreenLED;
 import frc.robot.Commands.Lights.RainbowLED;
 
 //Subsystem Imports
@@ -121,17 +124,16 @@ public class RobotContainer {
 
     /** Pivot Commands */
     //If "Y" pressed/held on operator controller rotatepivotground command used (moves intake to ground)
-    operator.y().whileTrue(new RotatePivotGround(infeed));
+    operator.y().whileTrue(new SequentialCommandGroup(new RotatePivotGround(infeed), new Intake(infeed)));
     //If "A" pressed/held on operator controller rotatepivotshooter command used (moves intake to shooter)
     operator.a().whileTrue(new RotatePivotShooter(infeed));
     //If "B" pressed/held on operator controller rotatepivotAir command used (moves intake to air)
     operator.b().whileTrue(new RotatePivotAir(infeed));
     operator.x().whileTrue(new RotatePivotSafe(infeed));
 
-    operator.povUp().onTrue(new AutoShoot(infeed, shooter));
-    operator.povDown().onTrue(new AmpShot(shooter));
-
-
+    operator.povUp().onTrue(new ParallelCommandGroup(new AutoShoot(infeed, shooter), new BlueLED(LED)));
+    operator.povDown().onTrue(new ParallelCommandGroup(new AmpShot(shooter), new BlueLED(LED)));
+ 
     driver.start().onTrue(new ShiftGear(drivebase));
 
     driver.back().onTrue(new RainbowLED(LED));
@@ -139,7 +141,7 @@ public class RobotContainer {
     driver.y().onTrue(new AllianceLED(LED));
 
 
-   hasNote.onTrue(Commands.parallel(new RotatePivotShooter(infeed), new StopAll(infeed, shooter)));
+   hasNote.onTrue(new SequentialCommandGroup(new RotatePivotAir(infeed), new StopAll(infeed, shooter), new GreenLED(LED)));
 
   }
 

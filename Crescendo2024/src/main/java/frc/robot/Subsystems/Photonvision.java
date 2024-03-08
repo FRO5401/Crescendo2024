@@ -121,13 +121,14 @@ public class Photonvision extends SubsystemBase{
 
   public PhotonTrackedTarget removeBadTargets(List<PhotonTrackedTarget> targetList){
     PhotonTrackedTarget target = null;
-  for (PhotonTrackedTarget m_target : targetList){
+      for (PhotonTrackedTarget m_target : targetList){
         if (m_target.getFiducialId() != 3 || m_target.getFiducialId() != 8){
           target = m_target;
           break;
         }
       
       }
+      
       return target;
 
   }
@@ -140,7 +141,7 @@ public class Photonvision extends SubsystemBase{
     var targets = result.getTargets();
     var target = removeBadTargets(targets);
     if (target != null){
-    return target.getYaw();
+      return target.getYaw();
     }
     return 0;
   }
