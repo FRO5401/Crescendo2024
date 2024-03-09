@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 //WPI imports
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Encoder;
 
@@ -35,6 +36,10 @@ public class Drivebase extends SubsystemBase {
   // Quad Encoders
   private Encoder rightEncoder;
   private Encoder leftEncoder;
+
+  // Stopped Encoders
+  boolean rightStopped;
+  boolean leftStopped;
 
   /** Creates a new Drivebase. */
   public Drivebase() {
@@ -77,9 +82,13 @@ public class Drivebase extends SubsystemBase {
     rightEncoder = new Encoder(0, 8, false, Encoder.EncodingType.k2X);
     leftEncoder = new Encoder(1, 9, true, Encoder.EncodingType.k2X);
 
-    // Gets the distance traveled
-    rightEncoder.getDistance();
-    leftEncoder.getDistance();
+    // Resets the encoder to read a distance of zero
+    rightEncoder.reset();
+    leftEncoder.reset();
+
+    // Configures the encoder to consider itself stopped when its rate is below 5
+    rightEncoder.setMinRate(5);
+    leftEncoder.setMinRate(5);
 
     // Gets when the encoder is stopped
     rightEncoder.getStopped();
@@ -93,10 +102,36 @@ public class Drivebase extends SubsystemBase {
   public void drive(double left, double right){
     allDrive.tankDrive(left, right);
   }
+  // Right Encoder Distance
+  public double getRightDistance(){
+    return rightEncoder.getDistance();
+  }
+  // Left Encoder Distance
+  public double getLeftDistance(){
+    return leftEncoder.getDistance();
+  }
+  public void stoppedRightDrive(){
+    if (rightEncoder.getStopped() == true){
+      rightStopped = true;
+    } else {
+      rightStopped = false;
+    }
+  }
+  public void stoppedLeftDrive(){
+    if (leftEncoder.getStopped() == true){
+      leftStopped = true;
+    } else {
+      leftStopped = false;
+    }
+  }
   
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
+     SmartDashboard.putNumber("Right Drive", getRightDistance());
+     SmartDashboard.putNumber("Left Drive", getLeftDistance());
+
+     SmartDashboard.getBoolean("Right Stopped", rightStopped);
+     SmartDashboard.getBoolean("Left Stopped", leftStopped);
   }
 }
