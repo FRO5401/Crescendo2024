@@ -11,7 +11,7 @@ public class Controls {
   /* The driver's controller */
   public static XboxController xbox_driver = new XboxController(Constants.ControlConstants.XBOX_CONTROLLER_DRIVER);
   public static XboxController xbox_operator = new XboxController(Constants.ControlConstants.XBOX_CONTROLLER_OPERATOR);
-  public static CommandXboxController driver = new CommandXboxController(0); // Creates a CommandXboxController on port 1.
+  public static CommandXboxController driver = new CommandXboxController(0); // Creates a CommandXboxController on port 0.
   public static CommandXboxController operator = new CommandXboxController(1); // Creates a CommandXboxController on port 1.
 
 }
