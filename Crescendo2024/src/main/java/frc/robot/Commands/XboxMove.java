@@ -64,7 +64,7 @@ public class XboxMove extends Command {
     reverse = Controls.xbox_driver.getLeftTriggerAxis();
     autoTargetSpeaker = Controls.xbox_driver.getAButton();
     autoTargetNote = Controls.xbox_driver.getBButton();
-    turn = Controls.xbox_driver.getLeftX() * 0.8;
+    turn = Controls.xbox_driver.getLeftX();
 
     // Braking
     /*** Precision ***/
@@ -95,21 +95,7 @@ public class XboxMove extends Command {
         right = Constants.DriveMotors.POWER_STOP;
       }
     } 
-    double angle;
-    // this is used for auto targeting onto the speaker, requires a distance and a desired angle, the angle is -6 because the camera is off to the side
-    if (autoTargetSpeaker){
-      if(backCamera.hasTarget()){
-        double distance = backCamera.getDistance();
-        angle = backCamera.getYaw();
-        drivebase.arcadeDrive(drivebase.calculateFoward(1, distance), drivebase.calculateTurn(-6, angle));
-      }
-    }
-    if (autoTargetNote){
-      if(frontCamera.hasTarget()){
-        angle = frontCamera.getYaw();
-        drivebase.arcadeDrive(0, angle);
-      }
-    }
+
 
     // Not pirouetting (Not turning in place).
     else {

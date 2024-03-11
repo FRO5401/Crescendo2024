@@ -154,9 +154,9 @@ public class ThreePieceAuto extends SequentialCommandGroup {
 
             drivebase::getWheelSpeeds,
 
-            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+            new PIDController(Constants.AutoConstants.kPDriveVel  , 0, 0),
 
-            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+            new PIDController(Constants.AutoConstants.kPDriveVel  , 0, 0),
 
             // RamseteCommand passes volts to the callback
 
@@ -196,9 +196,9 @@ public class ThreePieceAuto extends SequentialCommandGroup {
 
             drivebase::getWheelSpeeds,
 
-            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+            new PIDController(Constants.AutoConstants.kPDriveVel  , 0, 0),
 
-            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+            new PIDController(Constants.AutoConstants.kPDriveVel  , 0, 0),
 
             // RamseteCommand passes volts to the callback
 
@@ -228,9 +228,9 @@ public class ThreePieceAuto extends SequentialCommandGroup {
 
             drivebase::getWheelSpeeds,
 
-            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+            new PIDController(Constants.AutoConstants.kPDriveVel  , 0, 0),
 
-            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+            new PIDController(Constants.AutoConstants.kPDriveVel  , 0, 0),
 
             // RamseteCommand passes volts to the callback
 

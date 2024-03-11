@@ -36,6 +36,8 @@ import frc.robot.Commands.RotatePivotGround;
 import frc.robot.Commands.RotatePivotSafe;
 import frc.robot.Commands.RotatePivotShooter;
 import frc.robot.Commands.ShiftGear;
+import frc.robot.Commands.ShooterBack;
+import frc.robot.Commands.SpeakerShot;
 import frc.robot.Commands.StopAll;
 //Command Imports
 import frc.robot.Commands.XboxMove;
@@ -146,12 +148,13 @@ public class RobotContainer {
     operator.a().whileTrue(new RotatePivotShooter(infeed));
     //If "B" pressed/held on operator controller rotatepivotAir command used (moves intake to air)
     operator.b().whileTrue(new RotatePivotAir(infeed));
-    operator.x().whileTrue(new RotatePivotSafe(infeed));
+    operator.x().whileTrue(new ParallelCommandGroup(new ShooterBack(shooter), new Intake(infeed)));
     operator.povLeft().onTrue(new BackShooter(shooter));
 
     //Auto Shooter Methods.
     operator.povUp().onTrue(new ParallelCommandGroup(new AutoShoot(infeed, shooter), new BlueLED(LED)));
     operator.povDown().onTrue(new ParallelCommandGroup(new AutoAmpShot(shooter, infeed), new BlueLED(LED)));
+    operator.povLeft().onTrue(new SpeakerShot(shooter));
     
 
     driver.start().onTrue(new ShiftGear(drivebase));
@@ -166,7 +169,7 @@ public class RobotContainer {
 
 
     //Limit Switch t stop infeed
-    hasNote.onFalse(new SequentialCommandGroup(new ParallelCommandGroup(new StopAll(infeed, shooter), new GreenLED(LED)), new RotatePivotAir(infeed)) );
+    hasNote.onFalse(new SequentialCommandGroup(new ParallelCommandGroup(new RotatePivotShooter(infeed)), new StopAll(infeed, shooter), new GreenLED(LED)));
   }
 
   public void chooseAuto(){

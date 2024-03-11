@@ -95,7 +95,7 @@ public final class Constants {
         //Take in note speed
         public static final double INTAKE_SPEED = 0.4;
         //Remove note from infeed speed
-        public static final double EXPEL_SPEED = -5; // was 4.2 changed for hatboro
+        public static final double EXPEL_SPEED = -.5; // was 4.2 changed for hatboro
         //Move Pivot to floor speed
         public static final double PIVOT_TO_GROUND_SPEED = -0.35;
         //Move Pivot to shooter speed
@@ -121,11 +121,7 @@ public final class Constants {
             public static final double BACK_RPM = -750;
         }
     }
-        public static final double pivotP = 0;
-        public static final double pivotI = 0;
-        public static final double pivotD = 0;
 
-    
 
     public static class ClimberConstants {
         //IDs of climber CANSparkMax motors
@@ -156,15 +152,15 @@ public final class Constants {
     
     
     
-        public static final double kPDriveVel = 0.063841;
+        public static final double kPDriveVel = 0.064841;
 
         public static final double TRACK_WIDTH =Units.inchesToMeters(24.5); 
 
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(TRACK_WIDTH);
 
-        public static final double kMaxSpeedMetersPerSecond = 1.7;
+        public static final double kMaxSpeedMetersPerSecond = 1.3;
 
-        public static final double kMaxAccelerationMetersPerSecondSquared = 1;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1.1;
 
         public static final double kRamseteB = 27;
 

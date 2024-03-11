@@ -6,16 +6,16 @@ package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.Subsystems.Infeed;
 import frc.robot.Subsystems.Shooter;
 
-public class SpeakerShot extends Command {
-  Shooter shooter;
+public class ShooterBack extends Command {
+  private Shooter shooter;
   private boolean endCommand = false;
-
-  /** Creates a new SpeakerShot. */
-  public SpeakerShot(Shooter m_shooter) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  /** Creates a new ShooterBack. */
+  public ShooterBack(Shooter m_shooter) {
     shooter = m_shooter;
+    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter);
   }
 
@@ -26,12 +26,8 @@ public class SpeakerShot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setVelocity(Constants.ShooterConstants.SpeedConstants.SHOOTER_RPM);
-
-    if(shooter.getVelocity() > Constants.ShooterConstants.SpeedConstants.SHOOTER_RPM - 400){
-     endCommand = true;
-    }
-    
+    shooter.setVelocity(-Constants.ShooterConstants.SpeedConstants.AMP_RPM);
+    endCommand= true;
   }
 
   // Called once the command ends or is interrupted.

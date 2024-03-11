@@ -72,7 +72,7 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
       backToSpeaker = TrajectoryGenerator.generateTrajectory(
 
-      new Pose2d(1.1, 0, new Rotation2d(0)),
+      new Pose2d(1.3, 0, new Rotation2d(0)),
 
       List.of(new Translation2d(.6, 0)),
 
@@ -86,9 +86,9 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
       drivebase.getPose(),
 
-      List.of(new Translation2d(.25, flipped*-.4)),
+      List.of(new Translation2d(.25, flipped*-.45)),
 
-      new Pose2d(1.2, flipped*-1.3, new Rotation2d(0)),
+      new Pose2d(1.2, flipped*-1.35, new Rotation2d(0)),
 
       Constants.AutoConstants.config.setReversed(false));
 
@@ -96,9 +96,9 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
       drivebase.getPose(),
 
-      List.of(new Translation2d(.25, flipped*.3)),
+      List.of(new Translation2d(.25, flipped*.4)),
 
-      new Pose2d(1.2, flipped*1.3, new Rotation2d(0)),
+      new Pose2d(1.2, flipped*1.35, new Rotation2d(0)),
 
       Constants.AutoConstants.config.setReversed(false));
 
@@ -205,9 +205,9 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
             drivebase::getWheelSpeeds,
 
-            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+            new PIDController(Constants.AutoConstants.kPDriveVel  , 0, 0),
 
-            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+            new PIDController(Constants.AutoConstants.kPDriveVel  , 0, 0),
 
             // RamseteCommand passes volts to the callback
 
@@ -237,9 +237,9 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
             drivebase::getWheelSpeeds,
 
-            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+            new PIDController(Constants.AutoConstants.kPDriveVel  , 0, 0),
 
-            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+            new PIDController(Constants.AutoConstants.kPDriveVel  , 0, 0),
 
             // RamseteCommand passes volts to the callback
 
@@ -275,9 +275,9 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
             drivebase::getWheelSpeeds,
 
-            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+            new PIDController(Constants.AutoConstants.kPDriveVel  , 0, 0),
 
-            new PIDController(Constants.AutoConstants.kPDriveVel + 0.01, 0, 0),
+            new PIDController(Constants.AutoConstants.kPDriveVel  , 0, 0),
 
             // RamseteCommand passes volts to the callback
 

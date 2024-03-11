@@ -185,10 +185,10 @@ public class Drivebase extends SubsystemBase {
 
 
 
-    leftDrive1.setSmartCurrentLimit(45);
-    leftDrive2.setSmartCurrentLimit(45);
-    rightDrive1.setSmartCurrentLimit(45);
-    rightDrive2.setSmartCurrentLimit(45);
+    leftDrive1.setSmartCurrentLimit(35);
+    leftDrive2.setSmartCurrentLimit(35);
+    rightDrive1.setSmartCurrentLimit(35);
+    rightDrive2.setSmartCurrentLimit(35);
 
     //Current limit 
 
