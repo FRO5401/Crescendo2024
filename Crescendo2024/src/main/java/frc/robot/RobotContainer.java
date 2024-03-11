@@ -73,7 +73,7 @@ public class RobotContainer {
 
     /* Drivebase */
     private static final Drivebase drivebase = new Drivebase();
-    private final XboxMove xboxMove = new XboxMove(drivebase);
+
 
     /* Auto chooser 
      * TODO: Change to choose your own auto
@@ -89,11 +89,15 @@ public class RobotContainer {
     private final Climber rightClimber = new Climber(Constants.ClimberConstants.RIGHTCLIMBER_ID, true, "Right", 7);
     /* Camera */
     
-    private final Photonvision camera = new Photonvision("Back");
+    private final Photonvision backCamera = new Photonvision("Back");
+     private final Photonvision frontCamera = new Photonvision("Front");
+
 
     private final Trigger hasNote = new Trigger(infeed::getLimitSwitch);
 
     private final LEDSubsystem LED = new LEDSubsystem();
+
+    private final XboxMove xboxMove = new XboxMove(drivebase, backCamera, frontCamera);
 
 
  
@@ -151,6 +155,8 @@ public class RobotContainer {
     
 
     driver.start().onTrue(new ShiftGear(drivebase));
+
+    //AUTO TARGETING
 
     //LED COMMANDS
     driver.back().onTrue(new RainbowLED(LED));
