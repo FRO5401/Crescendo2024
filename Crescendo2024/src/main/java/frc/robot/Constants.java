@@ -170,7 +170,7 @@ public final class Constants {
 
         public static final double kRamseteZeta = 0.7;
 
-        public static final double CONVERSION_FACTOR = 17 ;
+        public static final double CONVERSION_FACTOR = 6 ;
 
         public static final DifferentialDriveVoltageConstraint autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(

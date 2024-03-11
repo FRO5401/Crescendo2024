@@ -13,12 +13,14 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 //Subsystem Imports
 import frc.robot.Subsystems.Drivebase;
 import frc.robot.Subsystems.Infeed;
 
 //Command Imports
 import frc.robot.Commands.AmpShot;
+import frc.robot.Commands.BackShooter;
 import frc.robot.Commands.ClimberMove;
 import frc.robot.Commands.Expel;
 import frc.robot.Commands.Intake;
@@ -27,6 +29,7 @@ import frc.robot.Commands.RotatePivotGround;
 import frc.robot.Commands.RotatePivotSafe;
 import frc.robot.Commands.RotatePivotShooter;
 import frc.robot.Commands.ShiftGear;
+import frc.robot.Commands.SpeakerShot;
 import frc.robot.Commands.StopAll;
 import frc.robot.Commands.XboxMove;
 import frc.robot.Commands.Auto.AutoShoot;
@@ -35,7 +38,7 @@ import frc.robot.Commands.Lights.AllianceLED;
 import frc.robot.Commands.Lights.BlueLED;
 import frc.robot.Commands.Lights.GreenLED;
 import frc.robot.Commands.Lights.RainbowLED;
-
+import frc.robot.Commands.Lights.YellowLED;
 //Subsystem Imports
 import frc.robot.Subsystems.Climber;
 import frc.robot.Subsystems.Drivebase;
@@ -116,8 +119,8 @@ public class RobotContainer {
 
     /** Intake Commands */
     //If "Right Trigger" pressed/held on operator controller expel command used (removes note from infeed)
-    operator.rightTrigger().whileTrue(new Expel(infeed));
-    //If "Left Trigger" pressed/held on operator controller intake command used (sucks note into infeed)
+    operator.rightTrigger().whileTrue(new ParallelCommandGroup(new Expel(infeed),new BlueLED(LED) ));
+    //If "Left Trigger" pressed/held on operator controller intake++++ command used (sucks note into infeed)
     operator.leftTrigger().whileTrue(new Intake(infeed));
     //If "Left Bumper" pressed/held on operator controller stop intake command used (stops infeed)
     operator.leftBumper().whileTrue(new StopAll(infeed, shooter));
@@ -129,20 +132,30 @@ public class RobotContainer {
     operator.a().whileTrue(new RotatePivotShooter(infeed));
     //If "B" pressed/held on operator controller rotatepivotAir command used (moves intake to air)
     operator.b().whileTrue(new RotatePivotAir(infeed));
-    operator.x().whileTrue(new RotatePivotSafe(infeed));
+    operator.x().whileTrue(new ParallelCommandGroup(new Intake(infeed), new BackShooter(shooter)));
 
     operator.povUp().onTrue(new ParallelCommandGroup(new AutoShoot(infeed, shooter), new BlueLED(LED)));
     operator.povDown().onTrue(new ParallelCommandGroup(new AmpShot(shooter), new BlueLED(LED)));
+    operator.povLeft().onTrue(new SpeakerShot(shooter));
  
     driver.start().onTrue(new ShiftGear(drivebase));
 
-    driver.back().onTrue(new RainbowLED(LED));
-    driver.x().onTrue(new BlueLED(LED));
-    driver.y().onTrue(new AllianceLED(LED));
+    /*UNCOMMENT WHEN TUNING USING SYSID
+     * driver.povDown().onTrue(new SequentialCommandGroup(new ShiftGear(drivebase),drivebase.sysIdDynamic(SysIdRoutine.Direction.kForward)));
+     * driver.povRight().onTrue(new SequentialCommandGroup(new ShiftGear(drivebase),drivebase.sysIdDynamic(SysIdRoutine.Direction.kReverse)));
+     * driver.povLeft().onTrue(new SequentialCommandGroup(new ShiftGear(drivebase),drivebase.sysIdQuasistatic(SysIdRoutine.Direction.kForward)));
+     * driver.povUp().onTrue(new SequentialCommandGroup(new ShiftGear(drivebase),drivebase.sysIdQuasistatic(SysIdRoutine.Direction.kReverse))); 
+     */
+
+    driver.povDown().onTrue(new RainbowLED(LED));
+    driver.povLeft().onTrue(new BlueLED(LED));
+    driver.povUp().onTrue(new YellowLED(LED));
+    driver.povDown().onTrue(Commands.runOnce(()-> LED.setLEDColor(0, 0, 0), LED));
 
 
-   hasNote.onTrue(new SequentialCommandGroup(new RotatePivotAir(infeed), new StopAll(infeed, shooter), new GreenLED(LED)));
-
+   hasNote.onTrue(new SequentialCommandGroup(new RotatePivotShooter(infeed), new StopAll(infeed, shooter), new GreenLED(LED)));
+   
+  
   }
 
   public Command getAutonomousCommand() {
