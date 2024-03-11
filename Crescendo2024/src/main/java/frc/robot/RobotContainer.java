@@ -4,6 +4,11 @@
 
 package frc.robot;
 
+import javax.swing.JList.DropLocation;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 //WPI Imports
@@ -54,7 +59,7 @@ public class RobotContainer {
 
     /* Drivebase */
     private static final Drivebase drivebase = new Drivebase();
-
+    private final XboxMove xboxMove = new XboxMove(drivebase);
 
     /* Auto chooser 
      * TODO: Change to choose your own auto

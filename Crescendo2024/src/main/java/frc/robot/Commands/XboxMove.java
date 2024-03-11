@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Controls;
 import frc.robot.Subsystems.Drivebase;
-import frc.robot.Subsystems.Photonvision;
 
 public class XboxMove extends Command {
   /*** Variables ***/
@@ -43,6 +42,7 @@ public class XboxMove extends Command {
 
 
   public XboxMove(Drivebase m_drivebase,Photonvision m_backCamera, Photonvision m_frontCamera) {
+  public XboxMove(Drivebase m_drivebase) {
     drivebase = m_drivebase;
     frontCamera = m_frontCamera;
     backCamera = m_backCamera;
