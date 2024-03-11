@@ -5,6 +5,7 @@
 package frc.robot;
 
 import javax.swing.JList.DropLocation;
+import javax.swing.JList.DropLocation;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -150,10 +151,6 @@ public class RobotContainer {
     
 
     driver.start().onTrue(new ShiftGear(drivebase));
-
-    //AUTO TARGETING
-    driver.a().whileTrue(new AutoTarget(camera, drivebase, .8, -6));
-
 
     //LED COMMANDS
     driver.back().onTrue(new RainbowLED(LED));
