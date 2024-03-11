@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Controls;
 import frc.robot.Subsystems.Drivebase;
-import frc.robot.Subsystems.Photonvision;
 
 public class XboxMove extends Command {
   /*** Variables ***/
@@ -20,12 +19,6 @@ public class XboxMove extends Command {
   private boolean rotate;
   private boolean brake;
   private boolean precision;
-  private boolean autoTargetSpeaker;
-  private boolean autoTargetNote;
-
-
-  private double distance;
-  private double angle;
 
 
   // Testing Buttons
@@ -38,16 +31,10 @@ public class XboxMove extends Command {
 
   Drivebase drivebase;
 
-  private Photonvision backCamera;
-  private Photonvision frontCamera;
-
-
-  public XboxMove(Drivebase m_drivebase,Photonvision m_backCamera, Photonvision m_frontCamera) {
+  public XboxMove(Drivebase m_drivebase) {
     drivebase = m_drivebase;
-    frontCamera = m_frontCamera;
-    backCamera = m_backCamera;
     sensitivity = Constants.Controls.DEFAULT_SENSITIVTY;
-    addRequirements(drivebase, frontCamera, backCamera);
+    addRequirements(drivebase);
   }
 
   // Called just before this Command runs the first time
@@ -65,8 +52,6 @@ public class XboxMove extends Command {
     rotate = Controls.xbox_driver.getLeftStickButton();
     throttle = Controls.xbox_driver.getRightTriggerAxis();
     reverse = Controls.xbox_driver.getLeftTriggerAxis();
-    autoTargetSpeaker = Controls.xbox_driver.getAButton();
-    autoTargetNote = Controls.xbox_driver.getBButton();
     turn = Controls.xbox_driver.getLeftX() * 0.8;
 
     // Braking
@@ -97,22 +82,7 @@ public class XboxMove extends Command {
         left = Constants.DriveMotors.POWER_STOP;
         right = Constants.DriveMotors.POWER_STOP;
       }
-    } 
-    // this is used for auto targeting onto the speaker, requires a distance and a desired angle, the angle is -6 because the camera is off to the side
-    if (autoTargetSpeaker){
-      if(backCamera.hasTarget()){
-        distance = backCamera.getDistance();
-        angle = backCamera.getYaw();
-        drivebase.arcadeDrive(drivebase.calculateFoward(1, distance), drivebase.calculateTurn(-6, angle));
-      }
     }
-    if (autoTargetNote){
-      if(frontCamera.hasTarget()){
-        angle = frontCamera.getYaw();
-        drivebase.arcadeDrive(0, angle);
-      }
-    }
-
     // Not pirouetting (Not turning in place).
     else {
       // Turning right

@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import javax.swing.JList.DropLocation;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -71,7 +72,7 @@ public class RobotContainer {
 
     /* Drivebase */
     private static final Drivebase drivebase = new Drivebase();
-
+    private final XboxMove xboxMove = new XboxMove(drivebase);
 
     /* Auto chooser 
      * TODO: Change to choose your own auto
@@ -87,15 +88,11 @@ public class RobotContainer {
     private final Climber rightClimber = new Climber(Constants.ClimberConstants.RIGHTCLIMBER_ID, true, "Right", 7);
     /* Camera */
     
-    private final static Photonvision backCamera = new Photonvision("Back");
-    private final static Photonvision frontCamera = new Photonvision("Front");
-
+    private final Photonvision camera = new Photonvision("Back");
 
     private final Trigger hasNote = new Trigger(infeed::getLimitSwitch);
 
     private final LEDSubsystem LED = new LEDSubsystem();
-
-    private final XboxMove xboxMove = new XboxMove(drivebase, backCamera, frontCamera);
 
 
  
@@ -153,6 +150,9 @@ public class RobotContainer {
     
 
     driver.start().onTrue(new ShiftGear(drivebase));
+
+    //AUTO TARGETING
+    driver.a().whileTrue(new AutoTarget(camera, drivebase, .8, -6));
 
 
     //LED COMMANDS
