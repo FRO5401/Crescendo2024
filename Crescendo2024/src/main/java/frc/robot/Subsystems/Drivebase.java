@@ -77,8 +77,8 @@ public class Drivebase extends SubsystemBase {
 
      
     // Intaizing encoders
-    rightEncoder = new Encoder(0, 8, false, Encoder.EncodingType.k4X);
-    leftEncoder = new Encoder(1, 9, true, Encoder.EncodingType.k4X);
+    rightEncoder = new Encoder(0, 8, false, Encoder.EncodingType.k2X);
+    leftEncoder = new Encoder(1, 9, false, Encoder.EncodingType.k2X);
 
     rightEncoder.setSamplesToAverage(5);
     leftEncoder.setSamplesToAverage(5);
@@ -89,7 +89,6 @@ public class Drivebase extends SubsystemBase {
     // Configures the encoder to consider itself stopped when its rate is below 5
     rightEncoder.setMinRate(10);
     leftEncoder.setMinRate(10);
-
 
     // Gets when the encoder is stopped
     rightEncoder.getStopped();
@@ -115,7 +114,6 @@ public class Drivebase extends SubsystemBase {
 
   // Left Encoder Distance
   public double getLeftDistance(){
-    leftEncoder.getDistance();
     return leftEncoder.getDistance();
   }
 
