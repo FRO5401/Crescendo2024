@@ -146,7 +146,11 @@ public class TwoPieceAuto extends SequentialCommandGroup {
 
           Commands.waitSeconds(.4),
 
-        new AutoShoot(infeed, shooter)
+        new AutoShoot(infeed, shooter),
+        
+        new WaitCommand(.4),
+
+        new StopAll(infeed, shooter)
           
     );
   }

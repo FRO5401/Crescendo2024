@@ -242,7 +242,11 @@ public class ThreePieceAuto extends SequentialCommandGroup {
 
             new WaitCommand(.1),
             
-            new AutoShoot(infeed, shooter)
+            new AutoShoot(infeed, shooter),
+
+            new WaitCommand(.2),
+
+            new StopAll(infeed, shooter)
           
     );
   }

@@ -48,6 +48,7 @@ import frc.robot.Commands.Auto.FourPieceAuto;
 import frc.robot.Commands.Auto.JustShoot;
 import frc.robot.Commands.Auto.OnePieceAuto;
 import frc.robot.Commands.Auto.SideAuto;
+import frc.robot.Commands.Auto.SideTwoPiece;
 import frc.robot.Commands.Auto.Test;
 import frc.robot.Commands.Auto.ThreePieceAuto;
 import frc.robot.Commands.Auto.ThreePieceFlipped;
@@ -162,10 +163,10 @@ public class RobotContainer {
     //AUTO TARGETING
 
     //LED COMMANDS
-    driver.back().onTrue(new RainbowLED(LED));
-    driver.x().onTrue(new BlueLED(LED));
-    driver.y().onTrue(new YellowLED(LED));
-    driver.b().onTrue(new PurpleLED(LED));
+    driver.povDown().onTrue(new RainbowLED(LED));
+    driver.povLeft().onTrue(new BlueLED(LED));
+    driver.povUp().onTrue(new YellowLED(LED));
+    driver.povRight().onTrue(new PurpleLED(LED));
 
 
     //Limit Switch t stop infeed
@@ -181,6 +182,7 @@ public class RobotContainer {
     chooser.addOption("Four Piece", new FourPieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("Flipped Three Piece", new ThreePieceFlipped(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("One Piece Side", new SideAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    chooser.addOption("TwoPieceSide", new SideTwoPiece(drivebase, infeed, shooter));
     chooser.addOption("Just Shoot (For Peddie)", new JustShoot(infeed, shooter).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
 
     

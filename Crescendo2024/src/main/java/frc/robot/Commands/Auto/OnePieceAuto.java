@@ -20,6 +20,7 @@ import frc.robot.Constants;
 import frc.robot.Commands.Intake;
 import frc.robot.Commands.RotatePivotAir;
 import frc.robot.Commands.RotatePivotGround;
+import frc.robot.Commands.StopAll;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Subsystems.Drivebase;
 import frc.robot.Subsystems.Infeed;
@@ -97,10 +98,9 @@ public class OnePieceAuto extends SequentialCommandGroup {
 
             drivebase::tankDriveVolts,
 
-            drivebase)
+            drivebase),
 
-
-
+            new StopAll(infeed, shooter)
     
     );
   }

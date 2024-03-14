@@ -185,10 +185,10 @@ public class Drivebase extends SubsystemBase {
 
 
 
-    leftDrive1.setSmartCurrentLimit(35);
-    leftDrive2.setSmartCurrentLimit(35);
-    rightDrive1.setSmartCurrentLimit(35);
-    rightDrive2.setSmartCurrentLimit(35);
+    leftDrive1.setSmartCurrentLimit(40);
+    leftDrive2.setSmartCurrentLimit(40);
+    rightDrive1.setSmartCurrentLimit(40);
+    rightDrive2.setSmartCurrentLimit(40);
 
     //Current limit 
 
@@ -413,6 +413,10 @@ public void setIdleModeCoast(){
 
     //displays gear shift state
     SmartDashboard.putBoolean("isHighGear", isHighGear);
+
+    SmartDashboard.putNumber("X Position", getPose().getX());
+    SmartDashboard.putNumber(("Y Position"), getPose().getY());
+    SmartDashboard.putNumber("Rotation", getPose().getRotation().getDegrees());
 
 
   }
