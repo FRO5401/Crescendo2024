@@ -4,28 +4,21 @@
 
 package frc.robot;
 
-import javax.swing.JList.DropLocation;
-import javax.swing.JList.DropLocation;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+
 //WPI Imports
-// WPI imports
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Commands.AmpShot;
 import frc.robot.Commands.BackShooter;
 import frc.robot.Commands.ClimberMove;
@@ -33,7 +26,6 @@ import frc.robot.Commands.Expel;
 import frc.robot.Commands.Intake;
 import frc.robot.Commands.RotatePivotAir;
 import frc.robot.Commands.RotatePivotGround;
-import frc.robot.Commands.RotatePivotSafe;
 import frc.robot.Commands.RotatePivotShooter;
 import frc.robot.Commands.ShiftGear;
 import frc.robot.Commands.ShooterBack;
@@ -43,17 +35,15 @@ import frc.robot.Commands.StopAll;
 import frc.robot.Commands.XboxMove;
 import frc.robot.Commands.Auto.AutoAmpShot;
 import frc.robot.Commands.Auto.AutoShoot;
-import frc.robot.Commands.Auto.AutoTarget;
 import frc.robot.Commands.Auto.FourPieceAuto;
 import frc.robot.Commands.Auto.JustShoot;
+import frc.robot.Commands.Auto.LimitSwitchCommand;
 import frc.robot.Commands.Auto.OnePieceAuto;
 import frc.robot.Commands.Auto.SideAuto;
 import frc.robot.Commands.Auto.SideTwoPiece;
-import frc.robot.Commands.Auto.Test;
 import frc.robot.Commands.Auto.ThreePieceAuto;
 import frc.robot.Commands.Auto.ThreePieceFlipped;
 import frc.robot.Commands.Auto.TwoPieceAuto;
-import frc.robot.Commands.Lights.AllianceLED;
 import frc.robot.Commands.Lights.BlueLED;
 import frc.robot.Commands.Lights.GreenLED;
 import frc.robot.Commands.Lights.PurpleLED;
@@ -150,11 +140,10 @@ public class RobotContainer {
     //If "B" pressed/held on operator controller rotatepivotAir command used (moves intake to air)
     operator.b().whileTrue(new RotatePivotAir(infeed));
     operator.x().whileTrue(new ParallelCommandGroup(new ShooterBack(shooter), new Intake(infeed)));
-    operator.povLeft().onTrue(new BackShooter(shooter));
 
     //Auto Shooter Methods.
-    operator.povUp().onTrue(new ParallelCommandGroup(new AutoShoot(infeed, shooter), new BlueLED(LED)));
-    operator.povDown().onTrue(new ParallelCommandGroup(new AutoAmpShot(shooter, infeed), new BlueLED(LED)));
+    operator.povUp().onTrue(new ParallelCommandGroup( new BlueLED(LED),new AutoShoot(infeed, shooter)));
+    operator.povDown().onTrue(new ParallelCommandGroup(new AmpShot(shooter), new BlueLED(LED)));
     operator.povLeft().onTrue(new SpeakerShot(shooter));
     
 
@@ -163,14 +152,22 @@ public class RobotContainer {
     //AUTO TARGETING
 
     //LED COMMANDS
+  
     driver.povDown().onTrue(new RainbowLED(LED));
     driver.povLeft().onTrue(new BlueLED(LED));
     driver.povUp().onTrue(new YellowLED(LED));
     driver.povRight().onTrue(new PurpleLED(LED));
 
 
-    //Limit Switch t stop infeed
-    hasNote.onFalse(new SequentialCommandGroup(new ParallelCommandGroup(new RotatePivotShooter(infeed)), new StopAll(infeed, shooter), new GreenLED(LED)));
+    //Limit Switch  stop infeed
+    hasNote.onFalse(new SequentialCommandGroup(new ParallelCommandGroup(new RotatePivotShooter(infeed)), new LimitSwitchCommand(infeed, shooter), new GreenLED(LED)));
+/* 
+    driver.povDown().onTrue(drivebase.sysIdDynamic(SysIdRoutine.Direction.kForward));
+    driver.povLeft().onTrue(drivebase.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+    driver.povUp().onTrue(drivebase.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+    driver.povRight().onTrue(drivebase.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+*/
+
   }
 
   public void chooseAuto(){
@@ -182,8 +179,8 @@ public class RobotContainer {
     chooser.addOption("Four Piece", new FourPieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("Flipped Three Piece", new ThreePieceFlipped(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("One Piece Side", new SideAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
-    chooser.addOption("TwoPieceSide", new SideTwoPiece(drivebase, infeed, shooter));
-    chooser.addOption("Just Shoot (For Peddie)", new JustShoot(infeed, shooter).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    chooser.addOption("TwoPieceSide", new SideTwoPiece(drivebase, infeed, shooter).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    chooser.addOption("Peddie Edition", new JustShoot(infeed, shooter).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
 
     
 

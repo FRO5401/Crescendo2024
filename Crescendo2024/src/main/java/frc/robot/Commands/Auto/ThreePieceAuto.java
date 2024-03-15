@@ -26,6 +26,7 @@ import frc.robot.Commands.Intake;
 import frc.robot.Commands.RotatePivotGround;
 import frc.robot.Commands.RotatePivotSafe;
 import frc.robot.Commands.RotatePivotShooter;
+import frc.robot.Commands.ShiftGear;
 import frc.robot.Commands.StopAll;
 import frc.robot.Subsystems.Drivebase;
 import frc.robot.Subsystems.Infeed;
@@ -92,6 +93,7 @@ public class ThreePieceAuto extends SequentialCommandGroup {
     addRequirements(drivebase,infeed,shooter);
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new ShiftGear(drivebase),
 
       new AutoShoot(infeed, shooter),
 

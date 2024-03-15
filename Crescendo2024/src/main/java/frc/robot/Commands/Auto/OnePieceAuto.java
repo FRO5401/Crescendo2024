@@ -20,6 +20,7 @@ import frc.robot.Constants;
 import frc.robot.Commands.Intake;
 import frc.robot.Commands.RotatePivotAir;
 import frc.robot.Commands.RotatePivotGround;
+import frc.robot.Commands.ShiftGear;
 import frc.robot.Commands.StopAll;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Subsystems.Drivebase;
@@ -66,6 +67,8 @@ public class OnePieceAuto extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new ShiftGear(drivebase),
+      
       new AutoShoot(infeed, shooter),
 
       new RotatePivotAir(infeed),

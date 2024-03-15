@@ -5,11 +5,14 @@
 package frc.robot.Commands.Lights;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Subsystems.LEDSubsystem;
 
 
 public class GreenLED extends Command {
   LEDSubsystem LED;
+  private boolean endCommand = false;
+
 
   /** Creates a new BlueLED. */
   public GreenLED(LEDSubsystem m_LED) {
@@ -25,8 +28,10 @@ public class GreenLED extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    LED.setLEDColor(0, 255, 0);
+    LED.setLEDColor(0, 200, 0);
     LED.setData();
+    Commands.waitSeconds(.1);
+    endCommand = true;
   }
 
   // Called once the command ends or is interrupted.
@@ -36,6 +41,6 @@ public class GreenLED extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return endCommand;
   }
 }

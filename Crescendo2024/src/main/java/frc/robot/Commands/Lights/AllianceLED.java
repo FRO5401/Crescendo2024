@@ -7,10 +7,12 @@ package frc.robot.Commands.Lights;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Subsystems.LEDSubsystem;
 
 public class AllianceLED extends Command {
   LEDSubsystem LED;
+  private boolean endCommand = false;
   int r, g, b = 0;
   /** Creates a new AllianceLED. */
   public AllianceLED(LEDSubsystem m_LED) {
@@ -24,9 +26,9 @@ public class AllianceLED extends Command {
   @Override
   public void initialize() {
     if (DriverStation.getAlliance().get() == Alliance.Blue){
-      b = 255;
+      b = 200;
     } else {
-      r = 255;
+      r = 200;
     }
   }
 
@@ -35,6 +37,8 @@ public class AllianceLED extends Command {
   public void execute() {
     LED.setLEDColor(r, g, b);
     LED.setData();
+    Commands.waitSeconds(.1);
+    endCommand = true;
   }
 
   // Called once the command ends or is interrupted.
@@ -44,6 +48,6 @@ public class AllianceLED extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return endCommand;
   }
 }

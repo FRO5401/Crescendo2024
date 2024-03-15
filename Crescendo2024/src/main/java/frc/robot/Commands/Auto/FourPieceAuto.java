@@ -25,7 +25,6 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Commands.Expel;
 import frc.robot.Commands.Intake;
 import frc.robot.Commands.RotatePivotGround;
-import frc.robot.Commands.RotatePivotSafe;
 import frc.robot.Commands.RotatePivotShooter;
 import frc.robot.Commands.SpeakerShot;
 import frc.robot.Commands.StopAll;
@@ -106,9 +105,10 @@ public class FourPieceAuto extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
 
+
       new AutoShoot(infeed, shooter),
 
-      new WaitCommand(.3),
+      new WaitCommand(.35),
 
       new StopAll(infeed, shooter),
 

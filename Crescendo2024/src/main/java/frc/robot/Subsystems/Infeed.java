@@ -45,6 +45,7 @@ public class Infeed extends SubsystemBase {
 
   //Creates Encoders
   private RelativeEncoder pivotEncoder;
+  private RelativeEncoder intakeEncoder;
 
   //Creates PIDController
   private SparkPIDController pivotPID;
@@ -63,6 +64,7 @@ public class Infeed extends SubsystemBase {
 
     //Gets Encoders for Pivot Motor
     pivotEncoder = pivotMotor.getEncoder();
+    intakeEncoder = intakeMotor1.getEncoder();
 
     //Start position of Pivot Motor
     pivotEncoder.setPosition(0);
@@ -93,7 +95,7 @@ public class Infeed extends SubsystemBase {
   }
   //Gets Velocity of pivotMotor
   public double getVelocity(){
-    return pivotEncoder.getVelocity();
+    return intakeEncoder.getVelocity();
   }  
   //Sets point of pivot motor
   public void setPoint(double position){
@@ -157,6 +159,8 @@ public class Infeed extends SubsystemBase {
     SmartDashboard.putNumber("pivotMotor Encoder Value", getPosition());
     
     SmartDashboard.putBoolean("Has Note", getLimitSwitchReverse());
+
+    SmartDashboard.putNumber(("Infeed Speed"), getVelocity());
 
   }
 }

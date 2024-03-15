@@ -2,22 +2,25 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Commands.Lights;
+package frc.robot.Commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.Subsystems.LEDSubsystem;
+import frc.robot.Subsystems.Infeed;
+import frc.robot.Subsystems.Shooter;
 
+public class LimitSwitchCommand extends Command {
+  Infeed infeed;
+  Shooter shooter;
+  boolean endCommand = false;
 
-public class YellowLED extends Command {
-  LEDSubsystem LED;
-  private boolean endCommand = false;
-
-  /** Creates a new BlueLED. */
-  public YellowLED(LEDSubsystem m_LED) {
-    LED=m_LED;
+  /** Creates a new Pivot. */
+  public LimitSwitchCommand(Infeed m_stoppivot, Shooter m_shooter) {
+    //Makes local variable equal to global variable
+    infeed = m_stoppivot;
+    shooter = m_shooter;
+    
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(LED);
+    addRequirements(infeed, shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -27,15 +30,18 @@ public class YellowLED extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    LED.setLEDColor(200, 200, 0);
-    LED.setData();
-    Commands.waitSeconds(.1);
+    if(!(infeed.getVelocity() < 0)){
+    infeed.stopIntake();
+    shooter.stop();
     endCommand = true;
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    
+  }
 
   // Returns true when the command should end.
   @Override

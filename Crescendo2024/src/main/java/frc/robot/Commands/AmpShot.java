@@ -28,7 +28,7 @@ public class AmpShot extends Command {
   public void execute() {
     shooter.setVelocity(Constants.ShooterConstants.SpeedConstants.AMP_RPM);
 
-    if(shooter.getVelocity() > Constants.ShooterConstants.SpeedConstants.AMP_RPM && shooter.getVelocity() < Constants.ShooterConstants.SpeedConstants.AMP_RPM + 50){
+    if(shooter.getVelocity() > Constants.ShooterConstants.SpeedConstants.AMP_RPM){
       endCommand = true;
      }
   }

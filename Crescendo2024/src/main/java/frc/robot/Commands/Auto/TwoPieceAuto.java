@@ -27,6 +27,7 @@ import frc.robot.Commands.RotatePivotAir;
 import frc.robot.Commands.RotatePivotGround;
 import frc.robot.Commands.RotatePivotSafe;
 import frc.robot.Commands.RotatePivotShooter;
+import frc.robot.Commands.ShiftGear;
 import frc.robot.Commands.StopAll;
 import frc.robot.Subsystems.Drivebase;
 import frc.robot.Subsystems.Infeed;
@@ -73,6 +74,8 @@ public class TwoPieceAuto extends SequentialCommandGroup {
     addRequirements(drivebase,infeed,shooter);
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new ShiftGear(drivebase),
+
       new SequentialCommandGroup(new AutoShoot(infeed, shooter), new WaitCommand(.45)),
 
       new StopAll(infeed, shooter),

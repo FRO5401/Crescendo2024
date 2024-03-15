@@ -95,7 +95,7 @@ public final class Constants {
         //Take in note speed
         public static final double INTAKE_SPEED = 0.4;
         //Remove note from infeed speed
-        public static final double EXPEL_SPEED = -.5; // was 4.2 changed for hatboro
+        public static final double EXPEL_SPEED = -.8; // was 4.2 changed for hatboro
         //Move Pivot to floor speed
         public static final double PIVOT_TO_GROUND_SPEED = -0.35;
         //Move Pivot to shooter speed
@@ -116,7 +116,7 @@ public final class Constants {
 
         public final class SpeedConstants{
             public static final double SHOOTER_RPM = 5500;
-            public static final double AMP_RPM = 1675;
+            public static final double AMP_RPM = 1700;
             public static final double TRAP_RPM = 4000;
             public static final double BACK_RPM = -750;
         }

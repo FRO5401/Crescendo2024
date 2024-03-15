@@ -10,6 +10,8 @@ import frc.robot.Subsystems.LEDSubsystem;
 
 public class BlueLED extends Command {
   LEDSubsystem LED;
+  private boolean endCommand = false;
+
 
   /** Creates a new BlueLED. */
   public BlueLED(LEDSubsystem m_LED) {
@@ -25,8 +27,8 @@ public class BlueLED extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    LED.setLEDColor(0, 0, 225);
-    LED.setData();
+    LED.setLEDColor(0, 0, 200);
+    endCommand = true;
   }
 
   // Called once the command ends or is interrupted.
@@ -36,6 +38,6 @@ public class BlueLED extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return endCommand;
   }
 }
