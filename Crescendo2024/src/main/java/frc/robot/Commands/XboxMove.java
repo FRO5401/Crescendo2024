@@ -33,10 +33,15 @@ public class XboxMove extends Command {
   double right;
   double sensitivity;
 
+  private double distance;
+  private double angle;
+
   Drivebase drivebase;
 
   private Photonvision backCamera;
   private Photonvision frontCamera;
+
+  
 
 
   public XboxMove(Drivebase m_drivebase,Photonvision m_backCamera, Photonvision m_frontCamera) {
@@ -81,6 +86,15 @@ public class XboxMove extends Command {
       left = Constants.DriveMotors.POWER_STOP;
       right = Constants.DriveMotors.POWER_STOP;
     }
+
+    if (autoTargetSpeaker){
+      if(backCamera.hasTarget()){
+        distance = backCamera.getDistance();
+        angle = backCamera.getYaw();
+        drivebase.arcadeDrive(drivebase.calculateFoward(1, distance), drivebase.calculateTurn(-6, angle));
+      }
+    }
+
     // Pirouetting (Turn in place).
     if (rotate) {
       // If the joystick is pushed passed the threshold.

@@ -4,9 +4,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
@@ -78,7 +80,7 @@ public class RobotContainer {
     /*Shooter */
     private final Shooter shooter = new Shooter();
     /*Climbers */
-    private final Climber leftClimber = new Climber(Constants.ClimberConstants.LEFTCLIMBER_ID, false, "Left", 8);
+    private final static Climber leftClimber = new Climber(Constants.ClimberConstants.LEFTCLIMBER_ID, false, "Left", 8);
     private final Climber rightClimber = new Climber(Constants.ClimberConstants.RIGHTCLIMBER_ID, true, "Right", 7);
     /* Camera */
     
@@ -191,6 +193,13 @@ public class RobotContainer {
 
     Shuffleboard.getTab("Autonomous").add(chooser);
 
+  }
+
+  public static void endgameRumble(){
+    if (DriverStationJNI.getMatchTime() <= 20 && leftClimber.getLimitSwitch()){
+      Controls.xbox_driver.setRumble(RumbleType.kBothRumble, 1);
+      Controls.xbox_operator.setRumble(RumbleType.kBothRumble, 1);
+    }
   }
 
   public Command getAutonomousCommand() {
