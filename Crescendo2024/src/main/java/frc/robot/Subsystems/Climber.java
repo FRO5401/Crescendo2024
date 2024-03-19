@@ -29,7 +29,7 @@ public class Climber extends SubsystemBase {
     private String climberName;
 
   //Limit switch
-    private static DigitalInput limitSwitch;
+    private DigitalInput limitSwitch;
 
   public Climber(int motor_ID, boolean isInverted, String climberName, int limitSwitchID) {
     this.climberName = climberName;

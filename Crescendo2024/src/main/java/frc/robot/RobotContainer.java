@@ -8,10 +8,11 @@ import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //WPI Imports
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -37,6 +38,7 @@ import frc.robot.Commands.StopAll;
 import frc.robot.Commands.XboxMove;
 import frc.robot.Commands.Auto.AutoAmpShot;
 import frc.robot.Commands.Auto.AutoShoot;
+import frc.robot.Commands.Auto.DefensiveAuto;
 import frc.robot.Commands.Auto.FourPieceAuto;
 import frc.robot.Commands.Auto.JustShoot;
 import frc.robot.Commands.Auto.LimitSwitchCommand;
@@ -80,7 +82,7 @@ public class RobotContainer {
     /*Shooter */
     private final Shooter shooter = new Shooter();
     /*Climbers */
-    private final static Climber leftClimber = new Climber(Constants.ClimberConstants.LEFTCLIMBER_ID, false, "Left", 8);
+    private final Climber leftClimber = new Climber(Constants.ClimberConstants.LEFTCLIMBER_ID, false, "Left", 8);
     private final Climber rightClimber = new Climber(Constants.ClimberConstants.RIGHTCLIMBER_ID, true, "Right", 7);
     /* Camera */
     
@@ -183,6 +185,8 @@ public class RobotContainer {
     chooser.addOption("One Piece Side", new SideAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("TwoPieceSide", new SideTwoPiece(drivebase, infeed, shooter).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("Peddie Edition", new JustShoot(infeed, shooter).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    chooser.addOption("DefensiveAuto", new DefensiveAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+
 
     
 
@@ -196,10 +200,15 @@ public class RobotContainer {
   }
 
   public static void endgameRumble(){
-    if (DriverStationJNI.getMatchTime() <= 20 && leftClimber.getLimitSwitch()){
+    if (DriverStation.isEnabled()){
+    if (DriverStationJNI.getMatchTime() <= 20 && DriverStationJNI.getMatchTime() >= 1 ){
       Controls.xbox_driver.setRumble(RumbleType.kBothRumble, 1);
       Controls.xbox_operator.setRumble(RumbleType.kBothRumble, 1);
+    }else {
+      Controls.xbox_driver.setRumble(RumbleType.kBothRumble, 0);
+      Controls.xbox_operator.setRumble(RumbleType.kBothRumble, 0);
     }
+  }
   }
 
   public Command getAutonomousCommand() {
