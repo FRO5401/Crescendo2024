@@ -4,6 +4,7 @@
 
 package frc.robot.Subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 //REV imports
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -13,8 +14,9 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.Encoder;
-
+import edu.wpi.first.wpilibj.SPI;
 //File imports
 import frc.robot.Constants;
 
@@ -37,14 +39,28 @@ public class Drivebase extends SubsystemBase {
   private Encoder rightEncoder;
   private Encoder leftEncoder;
 
+  //Gyro
+  private AHRS navxGyro;
+  private DifferentialDriveOdometry odometry;
+
   /** Creates a new Drivebase. */
   public Drivebase() {
-    // Initalizing class variables
+    /** Initalizing class variables */
+    // Initalizing Drive Motors
     leftDrive1 = new CANSparkMax(Constants.DriveMotors.LEFT_DRIVE1_ID, MotorType.kBrushed);
     leftDrive2 = new CANSparkMax(Constants.DriveMotors.LEFT_DRIVE2_ID, MotorType.kBrushed);
 
     rightDrive1 = new CANSparkMax(Constants.DriveMotors.RIGHT_DRIVE1_ID, MotorType.kBrushed);
-    rightDrive2 = new CANSparkMax(Constants.DriveMotors.RIGHT_DRIVE2_ID, MotorType.kBrushed);    
+    rightDrive2 = new CANSparkMax(Constants.DriveMotors.RIGHT_DRIVE2_ID, MotorType.kBrushed);
+
+    // Initalizing encoders
+    rightEncoder = new Encoder(0, 8, false, Encoder.EncodingType.k2X);
+    leftEncoder = new Encoder(1, 9, false, Encoder.EncodingType.k2X);  
+    
+    // Initalizing Gyro
+    navxGyro = new AHRS(SPI.Port.kMXP);
+
+    /* Drive Motor things */
 
     // Sets the drive motor params to factory default on every boot
     leftDrive1.restoreFactoryDefaults();
@@ -59,6 +75,7 @@ public class Drivebase extends SubsystemBase {
     rightDrive1.setIdleMode(IdleMode.kBrake);
     rightDrive2.setIdleMode(IdleMode.kBrake);
   
+    // motors follow each other
     leftDrive2.follow(leftDrive1);
     rightDrive2.follow(rightDrive1);
     
@@ -75,17 +92,18 @@ public class Drivebase extends SubsystemBase {
     // To handle errors from WPI 2024
     allDrive.setExpiration(0.1);
 
-     
-    // Intaizing encoders
-    rightEncoder = new Encoder(0, 8, false, Encoder.EncodingType.k2X);
-    leftEncoder = new Encoder(1, 9, false, Encoder.EncodingType.k2X);
+    /* Gyro things */
+    //
+    odometry = new DifferentialDriveOdometry(navxGyro.getRotation2d(), null, null);
 
+    /* Encoder things */
+    //
     rightEncoder.setSamplesToAverage(5);
     leftEncoder.setSamplesToAverage(5);
 
     rightEncoder.setDistancePerPulse(4.0/256.0);
     leftEncoder.setDistancePerPulse(4.0/256.0);
-
+    
     // Configures the encoder to consider itself stopped when its rate is below 5
     rightEncoder.setMinRate(10);
     leftEncoder.setMinRate(10);
@@ -93,9 +111,6 @@ public class Drivebase extends SubsystemBase {
     // Gets when the encoder is stopped
     rightEncoder.getStopped();
     leftEncoder.getStopped();
-    
-    rightEncoder.getDistance();
-    leftEncoder.getDistance();
 
   }
 
@@ -106,7 +121,6 @@ public class Drivebase extends SubsystemBase {
   public void drive(double left, double right){
     allDrive.tankDrive(left, right);
   }
-  
   // Right Encoder Distance
   public double getRightDistance(){
     return rightEncoder.getDistance();
@@ -120,7 +134,7 @@ public class Drivebase extends SubsystemBase {
   
   @Override
   public void periodic() {
-
+    odometry.update(navxGyro.getRotation2d(), getLeftDistance(), getRightDistance());
     // This method will be called once per scheduler run
      SmartDashboard.putNumber("Right Drive", getRightDistance());
      SmartDashboard.putNumber("Left Drive", getLeftDistance());
