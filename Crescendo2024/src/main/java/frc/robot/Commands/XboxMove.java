@@ -1,5 +1,6 @@
 package frc.robot.Commands;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 //WPI Imports
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -41,6 +42,7 @@ public class XboxMove extends Command {
   private Photonvision backCamera;
   private Photonvision frontCamera;
 
+
   
 
 
@@ -69,7 +71,7 @@ public class XboxMove extends Command {
     reverse = Controls.xbox_driver.getLeftTriggerAxis();
     autoTargetSpeaker = Controls.xbox_driver.getAButton();
     autoTargetNote = Controls.xbox_driver.getBButton();
-    turn = Controls.xbox_driver.getLeftX();
+    turn = Controls.xbox_driver.getLeftX() * .8;
 
     // Braking
     /*** Precision ***/
@@ -100,8 +102,8 @@ public class XboxMove extends Command {
       // If the joystick is pushed passed the threshold.
       if (Math.abs(turn) > Constants.Controls.AXIS_THRESHOLD) {
         // Sets it to spin the desired direction.
-        left = Constants.Controls.SPIN_SENSITIVITY * turn;
-        right = Constants.Controls.SPIN_SENSITIVITY * (turn * Constants.DriveMotors.INVERSE_DIRECTION);
+        left = turn;
+        right = (turn * Constants.DriveMotors.INVERSE_DIRECTION);
       }
       // If its not past the threshold stop spinning
       else if (Math.abs(turn) < Constants.Controls.AXIS_THRESHOLD) {
@@ -134,7 +136,8 @@ public class XboxMove extends Command {
     }
 
     // After speed manipulation, send to drivebase.
-    drivebase.drive(left, right);
+
+    drivebase.drive((left), (right));
   }
 
   @Override

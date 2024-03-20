@@ -152,7 +152,7 @@ public final class Constants {
     
     
     
-        public static final double kPDriveVel = 0.064841;
+        public static final double kPDriveVel = 0.065841;
 
         public static final double TRACK_WIDTH =Units.inchesToMeters(24.5); 
 
