@@ -66,7 +66,7 @@ public class DefensiveAuto extends SequentialCommandGroup {
 
         // End 3 meters straight ahead of where we started, facing forward
 
-        new Pose2d(8, flipped*-0.2, new Rotation2d(0)),
+        new Pose2d(8, flipped*-0.3, new Rotation2d(0)),
 
             // Pass config
 
@@ -94,15 +94,33 @@ public class DefensiveAuto extends SequentialCommandGroup {
 
         // Start at the origin facing the +X direction
 
-        new Pose2d(8.5, flipped*1, new Rotation2d(Units.degreesToRadians(90))),
+        new Pose2d(8.5, flipped*1.5, new Rotation2d(0)),
 
         // Pass through these two interior waypoints, making an 's' curve path
 
-        List.of(new Translation2d(8.5,  flipped*0.5)),
+        List.of(new Translation2d(8.5,  flipped*2)),
 
         // End 3 meters straight ahead of where we started, facing forward
 
+        new Pose2d(8.5, flipped*2.5, new Rotation2d(Units.degreesToRadians(90))),
+
+            // Pass config
+
+        Constants.AutoConstants.config);
+
+        Trajectory rotateNote1 = TrajectoryGenerator.generateTrajectory(
+
+        // Start at the origin facing the +X direction
+
         new Pose2d(8.5, flipped*1, new Rotation2d(Units.degreesToRadians(80))),
+
+        // Pass through these two interior waypoints, making an 's' curve path
+
+        List.of(new Translation2d(8.5, flipped*1.25)),
+
+        // End 3 meters straight ahead of where we started, facing forward
+
+        new Pose2d(8.5, flipped*1.5, new Rotation2d(0)),
 
             // Pass config
 
@@ -149,7 +167,7 @@ public class DefensiveAuto extends SequentialCommandGroup {
 
             new WaitCommand(.5),
             
-            new AutoShoot(infeed, shooter),
+            new AutoAmpShot(shooter, infeed),
 
             new WaitCommand(.2),
 
@@ -190,15 +208,45 @@ public class DefensiveAuto extends SequentialCommandGroup {
 
             new RotatePivotShooter(infeed),
 
-            new WaitCommand(.4),
+            new RamseteCommand(
+
+            rotateNote1,
+
+            drivebase::getPose,
+
+            new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
+
+            new SimpleMotorFeedforward(
+
+                Constants.AutoConstants.ksVolts,
+
+                Constants.AutoConstants.kvVoltSecondsPerMeter,
+
+                Constants.AutoConstants.kaVoltSecondsSquaredPerMeter),
+
+            Constants.AutoConstants.kDriveKinematics,
+
+            drivebase::getWheelSpeeds,
+
+            new PIDController(Constants.AutoConstants.kPDriveVel, 0, 0),
+
+            new PIDController(Constants.AutoConstants.kPDriveVel, 0, 0),
+
+            // RamseteCommand passes volts to the callback
+
+            drivebase::tankDriveVolts,
+
+            drivebase),
+
+            new WaitCommand(.1),
 
             new AutoAmpShot(shooter, infeed),
 
-            new WaitCommand(.2),
-
+            new WaitCommand(.4),
+            
             new RotatePivotGround(infeed),
 
-             new ParallelCommandGroup(new RamseteCommand(
+            new ParallelCommandGroup(new RamseteCommand(
 
             removeNote2,
 
@@ -230,11 +278,10 @@ public class DefensiveAuto extends SequentialCommandGroup {
 
             new StopAll(infeed, shooter),
 
-            new RotatePivotShooter(infeed),
+            new RotatePivotShooter(infeed)
 
-            new WaitCommand(.4),
-
-            new AutoAmpShot(shooter, infeed)
+ 
+ 
     );
 
   }

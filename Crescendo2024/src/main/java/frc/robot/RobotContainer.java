@@ -36,6 +36,7 @@ import frc.robot.Commands.SpeakerShot;
 import frc.robot.Commands.StopAll;
 //Command Imports
 import frc.robot.Commands.XboxMove;
+import frc.robot.Commands.Auto.AutoAlign;
 import frc.robot.Commands.Auto.AutoAmpShot;
 import frc.robot.Commands.Auto.AutoShoot;
 import frc.robot.Commands.Auto.DefensiveAuto;
@@ -87,14 +88,16 @@ public class RobotContainer {
     /* Camera */
     
     private final Photonvision backCamera = new Photonvision("Back");
-     private final Photonvision frontCamera = new Photonvision("Front");
+     private final Photonvision frontCamera = new Photonvision("HD_USB_Camera");
 
 
     private final Trigger hasNote = new Trigger(infeed::getLimitSwitch);
 
+    private final AutoAlign autoAlign = new AutoAlign(drivebase, backCamera);
+
     private final LEDSubsystem LED = new LEDSubsystem();
 
-    private final XboxMove xboxMove = new XboxMove(drivebase, backCamera, frontCamera);
+    private final XboxMove xboxMove = new XboxMove(drivebase);
 
 
  
@@ -165,6 +168,7 @@ public class RobotContainer {
 
     //Limit Switch  stop infeed
     hasNote.onFalse(new SequentialCommandGroup(new ParallelCommandGroup(new RotatePivotShooter(infeed)), new LimitSwitchCommand(infeed, shooter), new GreenLED(LED)));
+    driver.a().whileTrue(autoAlign);
 /* 
     driver.povDown().onTrue(drivebase.sysIdDynamic(SysIdRoutine.Direction.kForward));
     driver.povLeft().onTrue(drivebase.sysIdDynamic(SysIdRoutine.Direction.kReverse));
@@ -186,6 +190,7 @@ public class RobotContainer {
     chooser.addOption("TwoPieceSide", new SideTwoPiece(drivebase, infeed, shooter).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("Peddie Edition", new JustShoot(infeed, shooter).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("DefensiveAuto", new DefensiveAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    
 
 
     

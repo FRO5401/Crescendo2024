@@ -146,6 +146,10 @@ public class Photonvision extends SubsystemBase{
   }
 
   public void shuffleBoardTabs(){
+    if (camera.getLatestResult().hasTargets()){
+    SmartDashboard.putNumber("Distance to Target " + camera.getName() ,getDistance());
+    SmartDashboard.putNumber("Rotation to Target"+ camera.getName()  ,getYaw());
+    }
   }
 
 

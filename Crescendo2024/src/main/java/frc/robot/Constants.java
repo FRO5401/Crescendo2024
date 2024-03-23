@@ -49,10 +49,10 @@ public final class Constants {
         public static final int CURRENT_LIMIT = 30;
     
         // PID Constants
-        public static final double KP = .8;
+        public static final double KP = 2;
         public static final double KI = 0.5;
-        public static final double KD = .125; 
-        public static final double IZONE = .4;
+        public static final double KD = 0; 
+        public static final double IZONE = .25;
     
         // Sensitivity Constants
         public static final double PERCISION_SENSITIVITY = 0.4;
@@ -66,7 +66,7 @@ public final class Constants {
     
         // Straight Direction
         public static final double STRAIGHT_DIRECTION = 1.0;
-        public static final double ANGULAR_KP = 0.015;
+        public static final double ANGULAR_KP = 0.02;
         public static final double ANGULAR_KI = 0;
         public static final double ANGULAR_KD = 0; 
     }
@@ -116,7 +116,7 @@ public final class Constants {
 
         public final class SpeedConstants{
             public static final double SHOOTER_RPM = 5500;
-            public static final double AMP_RPM = 1700;
+            public static final double AMP_RPM = 1850;
             public static final double TRAP_RPM = 4000;
             public static final double BACK_RPM = -750;
         }
@@ -152,7 +152,7 @@ public final class Constants {
     
     
     
-        public static final double kPDriveVel = 0.065841;
+        public static final double kPDriveVel = 0.066541;
 
         public static final double TRACK_WIDTH =Units.inchesToMeters(24.5); 
 
@@ -162,7 +162,7 @@ public final class Constants {
 
         public static final double kMaxAccelerationMetersPerSecondSquared = 1.1;
 
-        public static final double kRamseteB = 26;
+        public static final double kRamseteB = 26.5;
 
         public static final double kRamseteZeta = 0.7;
 
