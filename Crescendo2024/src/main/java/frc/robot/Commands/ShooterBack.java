@@ -26,7 +26,7 @@ public class ShooterBack extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setVelocity(-Constants.ShooterConstants.SpeedConstants.AMP_RPM);
+    shooter.setVelocity(Constants.ShooterConstants.SpeedConstants.BACK_RPM);
     endCommand= true;
   }
 

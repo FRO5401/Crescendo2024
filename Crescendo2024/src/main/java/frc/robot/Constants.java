@@ -83,19 +83,26 @@ public final class Constants {
         public static final double pivotD = 9.5;
         public static final double pivotILimit = .2;
 
+        public static final double kF = 0;
+        public static final double kP = 0;
+        public static final double kI = 0;
+        public static final double kD = 0;
+
         //set pointa
         public static final double IN_POSITION = -.1;
         public static final double SAFE_POSITION = -2;
 
         public static final double OUT_POSITION = -14.3;
-        public static final double AIR_POSITION = -6.5;
+        public static final double AIR_POSITION = -7.1;
 
         /* Infeed speed constants */
 
         //Take in note speed
         public static final double INTAKE_SPEED = 0.4;
         //Remove note from infeed speed
-        public static final double EXPEL_SPEED = -.8; // was 4.2 changed for hatboro
+        public static final double EXPEL_SPEED = -.8; //was 4.2 changed for hatboro
+        //Remove note to shoot into Amp
+        public static final double AMP_SPEED = -0.55;
         //Move Pivot to floor speed
         public static final double PIVOT_TO_GROUND_SPEED = -0.35;
         //Move Pivot to shooter speed
@@ -115,10 +122,10 @@ public final class Constants {
         public static final double kD = .00000;
 
         public final class SpeedConstants{
-            public static final double SHOOTER_RPM = 5500;
-            public static final double AMP_RPM = 1700;
-            public static final double TRAP_RPM = 4000;
-            public static final double BACK_RPM = -750;
+            public static final double SHOOTER_RPM = 5500; //was 5500
+            public static final double SLOWFEED_RPM = 600; // 1700 // Was amp_rpm
+            public static final double TRAP_RPM = 5000;
+            public static final double BACK_RPM = -500; //was -750
         }
     }
 

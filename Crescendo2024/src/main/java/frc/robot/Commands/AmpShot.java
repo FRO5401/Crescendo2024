@@ -6,17 +6,17 @@ package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.Subsystems.Shooter;
+import frc.robot.Subsystems.Infeed;
 
 public class AmpShot extends Command {
-  private Shooter shooter;
+  private Infeed infeed;
   private boolean endCommand = false;
 
   /** Creates a new SpeakerShot. */
-  public AmpShot(Shooter m_shooter) {
+  public AmpShot(Infeed m_infeed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    shooter = m_shooter;
-    addRequirements(shooter);
+    infeed = m_infeed;
+    addRequirements(infeed);
   }
 
   // Called when the command is initially scheduled.
@@ -26,11 +26,15 @@ public class AmpShot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setVelocity(Constants.ShooterConstants.SpeedConstants.AMP_RPM);
+    infeed.Amp();
+    endCommand = true;
+    /* 
+    infeed.setVelocity(Constants.InfeedConstants.AMP_SPEED);
 
-    if(shooter.getVelocity() > Constants.ShooterConstants.SpeedConstants.AMP_RPM){
+    if(infeed.getVelocity() > Constants.InfeedConstants.AMP_SPEED){
       endCommand = true;
      }
+     */
   }
 
   // Called once the command ends or is interrupted.

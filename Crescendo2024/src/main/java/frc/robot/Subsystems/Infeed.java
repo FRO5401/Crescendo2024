@@ -2,21 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-  /*Finished
-  1. Create a new subsystem called "Infeed"
-  2. Create 3 CANSparkMax objects, 2 for the intake wheels and 1 for the pivoting
-  5. Create a method called intake() that causes the intake wheels to spin in a positive direction
-  6. Create a method called expel() that causes the intake wheels to spin in a negative direction
-  7. Create a method called rotate that causes the pivot motor to spin in either a positive 
-  or negative direction depending on the controller input 
- */
-
-  /* TODO
-  3. Create 2 DigitalInput objects that track the state of the frame rail & shooter limit switches. 
-  4. When either switch is true, do not let the motors continue in either a higher 
-  position (Shooter switch true) or a lower position (Framerail switch true).
-  */
-
 package frc.robot.Subsystems;
 
 //WPI Imports
@@ -49,6 +34,7 @@ public class Infeed extends SubsystemBase {
 
   //Creates PIDController
   private SparkPIDController pivotPID;
+  private SparkPIDController intakePID;
 
   //Limit Switch
   DigitalInput limitSwitch;
@@ -61,6 +47,7 @@ public class Infeed extends SubsystemBase {
 
     //Defines PID controller
     pivotPID = pivotMotor.getPIDController();
+    intakePID = intakeMotor1.getPIDController();
 
     //Gets Encoders for Pivot Motor
     pivotEncoder = pivotMotor.getEncoder();
@@ -73,6 +60,7 @@ public class Infeed extends SubsystemBase {
     pivotMotor.restoreFactoryDefaults();
     intakeMotor1.restoreFactoryDefaults();
 
+    //Current limit for pivot
     pivotMotor.setSmartCurrentLimit(50);
 
     //Sets idle mode for when motors aren't being directly used
@@ -84,6 +72,12 @@ public class Infeed extends SubsystemBase {
     pivotPID.setI(Constants.InfeedConstants.pivotI);
     pivotPID.setD(Constants.InfeedConstants.pivotD);
     pivotPID.setIZone(Constants.InfeedConstants.pivotILimit);
+
+    //Creates PID for Intake
+    intakePID.setFF(Constants.InfeedConstants.kF);
+    intakePID.setP(Constants.InfeedConstants.kP);
+    intakePID.setI(Constants.InfeedConstants.kI);
+    intakePID.setD(Constants.InfeedConstants.kD);
 
     //Create limit switch
     limitSwitch = new DigitalInput(9);
@@ -150,6 +144,16 @@ public class Infeed extends SubsystemBase {
 
     public boolean getLimitSwitchReverse(){
     return !limitSwitch.get();
+  }
+  public void Amp(){
+    intakeMotor1.set(Constants.InfeedConstants.AMP_SPEED);
+  }
+  
+  public void setVelocity(double velocity){
+    .setReference(velocity, ControlType.kVelocity);
+  }
+  public double getVelocity(){
+    return encoder.getVelocity();
   }
 
   @Override
