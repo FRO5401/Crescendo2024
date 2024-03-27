@@ -95,7 +95,7 @@ public class FourPieceAuto extends SequentialCommandGroup {
 
       drivebase.getPose(),
 
-      List.of(new Translation2d(.25, flipped*.4)),
+      List.of(new Translation2d(.25, flipped*.45)),
 
       new Pose2d(1.2, flipped*1.35, new Rotation2d(0)),
 

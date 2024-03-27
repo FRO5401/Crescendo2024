@@ -102,7 +102,7 @@ public class DefensiveAuto extends SequentialCommandGroup {
 
         // End 3 meters straight ahead of where we started, facing forward
 
-        new Pose2d(8.5, flipped*2.5, new Rotation2d(Units.degreesToRadians(90))),
+        new Pose2d(8.5, flipped*3, new Rotation2d(Units.degreesToRadians(90))),
 
             // Pass config
 
@@ -128,6 +128,8 @@ public class DefensiveAuto extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new AutoShoot(infeed, shooter),
+
       new RotatePivotGround(infeed),
 
 

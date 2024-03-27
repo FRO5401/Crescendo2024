@@ -88,7 +88,7 @@ public final class Constants {
         public static final double SAFE_POSITION = -2;
 
         public static final double OUT_POSITION = -14.3;
-        public static final double AIR_POSITION = -6.5;
+        public static final double AIR_POSITION = -8; //was -6.5
 
         /* Infeed speed constants */
 
@@ -152,7 +152,7 @@ public final class Constants {
     
     
     
-        public static final double kPDriveVel = 0.066541;
+        public static final double kPDriveVel = 0.067041;
 
         public static final double TRACK_WIDTH =Units.inchesToMeters(24.5); 
 

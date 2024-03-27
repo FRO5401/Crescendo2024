@@ -156,7 +156,7 @@ public class Infeed extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     //Creates SmartDashBoard pivotMotor Encoder Value
-    SmartDashboard.putNumber("pivotMotor Encoder Value", getPosition());
+    SmartDashboard.putNumber("pivot ", getPosition());
     
     SmartDashboard.putBoolean("Has Note", getLimitSwitchReverse());
 
