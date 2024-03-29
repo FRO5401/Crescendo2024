@@ -9,7 +9,7 @@ import frc.robot.Constants;
 import frc.robot.Subsystems.Shooter;
 
 public class SpeakerShot extends Command {
-  Shooter shooter;
+  private Shooter shooter;
   private boolean endCommand = false;
 
   /** Creates a new SpeakerShot. */

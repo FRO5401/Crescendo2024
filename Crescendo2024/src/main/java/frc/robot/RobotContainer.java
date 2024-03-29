@@ -37,7 +37,7 @@ import frc.robot.Commands.StopAll;
 //Command Imports
 import frc.robot.Commands.XboxMove;
 import frc.robot.Commands.Auto.AutoAlign;
-import frc.robot.Commands.Auto.AutoAmpShot;
+import frc.robot.Commands.Auto.AutoDefenseShot;
 import frc.robot.Commands.Auto.AutoShoot;
 import frc.robot.Commands.Auto.DefensiveAuto;
 import frc.robot.Commands.Auto.FourPieceAuto;
@@ -149,8 +149,8 @@ public class RobotContainer {
     operator.x().whileTrue(new ParallelCommandGroup(new ShooterBack(shooter), new Intake(infeed)));
 
     //Auto Shooter Methods.
-    operator.povUp().onTrue(new ParallelCommandGroup( new BlueLED(LED),new AutoShoot(infeed, shooter)));
-    operator.povDown().onTrue(new ParallelCommandGroup(new AmpShot(shooter), new BlueLED(LED)));
+    operator.povUp().onTrue(new ParallelCommandGroup(new AutoShoot(infeed, shooter), new BlueLED(LED)));
+    operator.povDown().onTrue(new ParallelCommandGroup(new AmpShot(infeed), new BlueLED(LED)));
     operator.povLeft().onTrue(new SpeakerShot(shooter));
     
 
@@ -169,7 +169,7 @@ public class RobotContainer {
     //Limit Switch  stop infeed
     hasNote.onFalse(new SequentialCommandGroup(new ParallelCommandGroup(new RotatePivotShooter(infeed)), new LimitSwitchCommand(infeed, shooter), new GreenLED(LED)));
     driver.a().whileTrue(autoAlign);
-/* 
+/*  
     driver.povDown().onTrue(drivebase.sysIdDynamic(SysIdRoutine.Direction.kForward));
     driver.povLeft().onTrue(drivebase.sysIdDynamic(SysIdRoutine.Direction.kReverse));
     driver.povUp().onTrue(drivebase.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));

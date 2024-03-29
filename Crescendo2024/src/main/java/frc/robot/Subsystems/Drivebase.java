@@ -51,7 +51,7 @@ public class Drivebase extends SubsystemBase {
   */
 
   //NAVX Gyro
-    private  AHRS navxGyro;
+  private  AHRS navxGyro;
 
   //Odomentry
   private  Odometry odometry;

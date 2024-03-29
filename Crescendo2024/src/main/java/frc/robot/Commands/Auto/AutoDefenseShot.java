@@ -6,7 +6,7 @@ package frc.robot.Commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.Commands.AmpShot;
+import frc.robot.Commands.DefensiveShot;
 import frc.robot.Commands.Expel;
 import frc.robot.Subsystems.Infeed;
 import frc.robot.Subsystems.Shooter;
@@ -14,17 +14,17 @@ import frc.robot.Subsystems.Shooter;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoAmpShot extends SequentialCommandGroup {
+public class AutoDefenseShot extends SequentialCommandGroup {
   private Shooter shooter;
   private Infeed infeed;
   /** Creates a new AutoAmpShot. */
-  public AutoAmpShot(Shooter m_shooter, Infeed m_infeed) {
+  public AutoDefenseShot(Shooter m_shooter, Infeed m_infeed) {
     infeed = m_infeed;
     shooter = m_shooter;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AmpShot(shooter),
+      new DefensiveShot(shooter),
 
       new WaitCommand(0.3),
       

@@ -49,9 +49,10 @@ public class Infeed extends SubsystemBase {
 
   //Creates PIDController
   private SparkPIDController pivotPID;
+  private SparkPIDController intakePID;
 
   //Limit Switch
-  DigitalInput limitSwitch;
+  private DigitalInput limitSwitch;
 
   /** Creates a new Infeed. */
   public Infeed() {
@@ -61,6 +62,7 @@ public class Infeed extends SubsystemBase {
 
     //Defines PID controller
     pivotPID = pivotMotor.getPIDController();
+    intakePID = intakeMotor1.getPIDController();
 
     //Gets Encoders for Pivot Motor
     pivotEncoder = pivotMotor.getEncoder();
@@ -85,6 +87,12 @@ public class Infeed extends SubsystemBase {
     pivotPID.setD(Constants.InfeedConstants.pivotD);
     pivotPID.setIZone(Constants.InfeedConstants.pivotILimit);
 
+    //Creates PID for Intake
+    intakePID.setFF(Constants.InfeedConstants.kF);
+    intakePID.setP(Constants.InfeedConstants.kP);
+    intakePID.setI(Constants.InfeedConstants.kI);
+    intakePID.setD(Constants.InfeedConstants.kD);
+
     //Create limit switch
     limitSwitch = new DigitalInput(9);
     
@@ -93,10 +101,6 @@ public class Infeed extends SubsystemBase {
   public double getPosition(){
     return pivotEncoder.getPosition();
   }
-  //Gets Velocity of pivotMotor
-  public double getVelocity(){
-    return intakeEncoder.getVelocity();
-  }  
   //Sets point of pivot motor
   public void setPoint(double position){
     pivotPID.setReference(position, ControlType.kPosition);
@@ -150,6 +154,13 @@ public class Infeed extends SubsystemBase {
 
     public boolean getLimitSwitchReverse(){
     return !limitSwitch.get();
+  }
+
+  public void setVelocity(double velocity){
+    intakePID.setReference(velocity, ControlType.kVelocity);
+  }
+  public double getVelocity(){
+    return intakeEncoder.getVelocity();
   }
 
   @Override
