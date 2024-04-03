@@ -65,7 +65,7 @@ public class XboxMove extends Command {
     rotate = Controls.xbox_driver.getLeftStickButton();
     throttle = Controls.xbox_driver.getRightTriggerAxis();
     reverse = Controls.xbox_driver.getLeftTriggerAxis();
-    turn = Controls.xbox_driver.getLeftX() * .8;
+    turn = Controls.xbox_driver.getLeftX() * .7;
 
     // Braking
     /*** Precision ***/

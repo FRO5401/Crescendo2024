@@ -99,7 +99,7 @@ public final class Constants {
         /*  Infeed speed constants  */
         //Remove note to shoot into Amp
         public static final double AMP_SPEED = -0.55;
-        public static final double AMP_RPM = 3300; //TODO needs to be tuned to the right rpm
+        public static final double AMP_RPM = 2100; //TODO needs to be tuned to the right rpm
         //Take in note speed
         public static final double INTAKE_SPEED = 0.4;
         //Remove note from infeed speed

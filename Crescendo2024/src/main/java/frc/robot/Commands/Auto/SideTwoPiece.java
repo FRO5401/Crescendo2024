@@ -85,7 +85,6 @@ public class SideTwoPiece extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
 
-      new ShiftGear(drivebase),
 
       new ParallelCommandGroup(new RamseteCommand(
 

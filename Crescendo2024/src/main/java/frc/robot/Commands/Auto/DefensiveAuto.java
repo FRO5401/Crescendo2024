@@ -169,7 +169,7 @@ public class DefensiveAuto extends SequentialCommandGroup {
 
             new WaitCommand(.5),
             
-            new AutoAmpShot(shooter, infeed),
+            new AutoDefenseShot(shooter, infeed),
 
             new WaitCommand(.2),
 
@@ -242,7 +242,7 @@ public class DefensiveAuto extends SequentialCommandGroup {
 
             new WaitCommand(.1),
 
-            new AutoAmpShot(shooter, infeed),
+            new AutoDefenseShot(shooter, infeed),
 
             new WaitCommand(.4),
             

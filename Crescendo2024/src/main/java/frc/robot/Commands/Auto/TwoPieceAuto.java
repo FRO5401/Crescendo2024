@@ -74,7 +74,6 @@ public class TwoPieceAuto extends SequentialCommandGroup {
     addRequirements(drivebase,infeed,shooter);
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ShiftGear(drivebase),
 
       new SequentialCommandGroup(new AutoShoot(infeed, shooter), new WaitCommand(.45)),
 

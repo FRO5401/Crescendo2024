@@ -33,6 +33,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 //WPI imports
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -55,6 +56,7 @@ public class Drivebase extends SubsystemBase {
 
   //Odomentry
   private  Odometry odometry;
+  private Odometry fieldOdometry;
 
   // Left-Side Drive Motors
   private  CANSparkMax leftDrive1;
@@ -83,8 +85,8 @@ public class Drivebase extends SubsystemBase {
   private  PIDController turnWPIDController;
   private  PIDController forwardWPIDController;
 
-
-
+  //  For visualizing robot position during match
+  private Field2d field2d;
 
   //solenoid 
 
@@ -135,6 +137,9 @@ public class Drivebase extends SubsystemBase {
   /** Creates a new Drivebase. */
   public Drivebase() {
 
+    //  Creating Field
+    field2d = new Field2d();
+
     // Initalizing class variables
     leftDrive1 = new CANSparkMax(Constants.DriveMotors.LEFT_DRIVE1_ID, MotorType.kBrushless);
     leftDrive2 = new CANSparkMax(Constants.DriveMotors.LEFT_DRIVE2_ID, MotorType.kBrushless);
@@ -145,8 +150,6 @@ public class Drivebase extends SubsystemBase {
     leftDrive2.setIdleMode(IdleMode.kBrake);
     rightDrive1.setIdleMode(IdleMode.kBrake);
     rightDrive2.setIdleMode(IdleMode.kBrake);
-
-
 
     //Initalizing PID controller
     leftPIDController = leftDrive1.getPIDController();
@@ -169,8 +172,6 @@ public class Drivebase extends SubsystemBase {
     rightEncoder1.setVelocityConversionFactor(Constants.AutoConstants.CONVERSION_FACTOR/ 60);
     rightEncoder2.setVelocityConversionFactor(Constants.AutoConstants.CONVERSION_FACTOR/60);
 
-
-
     //Set Encoder Value
     leftEncoder1.setPosition(0);
     leftEncoder2.setPosition(0);
@@ -183,14 +184,11 @@ public class Drivebase extends SubsystemBase {
     rightDrive1.restoreFactoryDefaults();
     rightDrive2.restoreFactoryDefaults();
 
-
-
+    //  Current limit 
     leftDrive1.setSmartCurrentLimit(40);
     leftDrive2.setSmartCurrentLimit(40);
     rightDrive1.setSmartCurrentLimit(40);
     rightDrive2.setSmartCurrentLimit(40);
-
-    //Current limit 
 
     // Having drive motor 2 [Left & Right] follow the actions of drive motor 1
     leftDrive2.follow(leftDrive1);
@@ -234,10 +232,9 @@ public class Drivebase extends SubsystemBase {
     navxGyro.reset();
 
 
-     odometry = new DifferentialDriveOdometry(navxGyro.getRotation2d(), getLeftPosition(),
+    odometry = new DifferentialDriveOdometry(navxGyro.getRotation2d(), getLeftPosition(),
         getRightPostion());
-
-
+    fieldOdometry = new DifferentialDriveOdometry(navxGyro.getRotation2d(), getLeftPosition(), getRightPostion());
   }
   /**
    * @param left left motor speed
@@ -310,6 +307,11 @@ public class Drivebase extends SubsystemBase {
     return odometry.getPoseMeters();
 
   }
+  public Pose2d getfieldPose() {
+
+    return fieldOdometry.getPoseMeters();
+
+  }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
 
@@ -323,10 +325,23 @@ public class Drivebase extends SubsystemBase {
 
   }
 
+  public  DifferentialDriveWheelPositions getFieldWheelPositions() {
+
+    return new DifferentialDriveWheelPositions(getLeftPosition(), getRightPostion());
+
+  }
+
 
   public void resetOdometry(Pose2d pose) {
 
     odometry.resetPosition(
+
+        navxGyro.getRotation2d(), getWheelPositions(), pose);
+
+  }
+    public void resetfieldOdometry(Pose2d pose) {
+
+    fieldOdometry.resetPosition(
 
         navxGyro.getRotation2d(), getWheelPositions(), pose);
 
@@ -388,6 +403,9 @@ public Command sysIdDynamic(SysIdRoutine.Direction direction) {
 public void updateOdometry(){
   odometry.update(navxGyro.getRotation2d(), getWheelPositions());
 }
+public void updateFieldOdometry(){
+  fieldOdometry.update(navxGyro.getRotation2d(), getWheelPositions());
+}
 
 public void setIdleModeBreak(){
     leftDrive1.setIdleMode(IdleMode.kBrake);
@@ -411,13 +429,19 @@ public void setIdleModeCoast(){
 
     odometry.update(navxGyro.getRotation2d(), getWheelPositions());
 
+    fieldOdometry.update(navxGyro.getRotation2d(), getWheelPositions());
+
+    field2d.setRobotPose(getfieldPose());
+
+    SmartDashboard.putData("Field", field2d);
+
+
     //displays gear shift state
     SmartDashboard.putBoolean("isHighGear", isHighGear);
 
     SmartDashboard.putNumber("X Position", getPose().getX());
     SmartDashboard.putNumber(("Y Position"), getPose().getY());
     SmartDashboard.putNumber("Rotation", getPose().getRotation().getDegrees());
-
 
   }
 }

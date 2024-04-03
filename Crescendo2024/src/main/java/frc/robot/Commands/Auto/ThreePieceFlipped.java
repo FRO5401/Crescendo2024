@@ -93,7 +93,6 @@ public class ThreePieceFlipped extends SequentialCommandGroup {
     addRequirements(drivebase,infeed,shooter);
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ShiftGear(drivebase),
 
       new AutoShoot(infeed, shooter),
 

@@ -21,8 +21,14 @@ package frc.robot.Subsystems;
 
 //WPI Imports
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 //Rev Imports
 import com.revrobotics.CANSparkMax;
@@ -53,6 +59,8 @@ public class Infeed extends SubsystemBase {
 
   //Limit Switch
   private DigitalInput limitSwitch;
+
+  private GenericEntry testing;
 
   /** Creates a new Infeed. */
   public Infeed() {
@@ -168,10 +176,9 @@ public class Infeed extends SubsystemBase {
     // This method will be called once per scheduler run
     //Creates SmartDashBoard pivotMotor Encoder Value
     SmartDashboard.putNumber("pivot ", getPosition());
-    
     SmartDashboard.putBoolean("Has Note", getLimitSwitchReverse());
-
     SmartDashboard.putNumber(("Infeed Speed"), getVelocity());
+
 
   }
 }
