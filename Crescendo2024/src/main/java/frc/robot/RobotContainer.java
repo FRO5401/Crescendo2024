@@ -183,11 +183,10 @@ public class RobotContainer {
 
     chooser.addOption("One Piece", new OnePieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("Two Piece", new TwoPieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
-    chooser.addOption("Three Piece", new ThreePieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    chooser.addOption("Three Piece Amp", new ThreePieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    chooser.addOption("Three Piece Source", new ThreePieceFlipped(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("Four Piece", new FourPieceAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
-    chooser.addOption("Flipped Three Piece", new ThreePieceFlipped(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
-    chooser.addOption("One Piece Side", new SideAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
-    chooser.addOption("TwoPieceSide", new SideTwoPiece(drivebase, infeed, shooter).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+    chooser.addOption("Two Piece Side", new SideTwoPiece(drivebase, infeed, shooter).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("Peddie Edition", new JustShoot(infeed, shooter).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("DefensiveAuto", new DefensiveAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     
@@ -206,7 +205,7 @@ public class RobotContainer {
 
   public static void endgameRumble(){
     if (DriverStation.isEnabled()){
-    if (DriverStationJNI.getMatchTime() <= 20 && DriverStationJNI.getMatchTime() >= 1 ){
+    if (DriverStationJNI.getMatchTime() <= 25 && DriverStationJNI.getMatchTime() >= 1 ){
       Controls.xbox_driver.setRumble(RumbleType.kBothRumble, 1);
       Controls.xbox_operator.setRumble(RumbleType.kBothRumble, 1);
     }else {

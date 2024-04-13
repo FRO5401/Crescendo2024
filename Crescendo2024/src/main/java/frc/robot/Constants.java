@@ -83,7 +83,7 @@ public final class Constants {
         public static final double pivotD = 9.5;
         public static final double pivotILimit = .2;
 
-        //TODO Tune infeed PID
+        //TODO Tune infeed speed PID
         public static final double kF = 0.00017;
         public static final double kP = 0.00015;
         public static final double kI = 0;
@@ -94,12 +94,13 @@ public final class Constants {
         public static final double SAFE_POSITION = -2;
 
         public static final double OUT_POSITION = -14.3;
-        public static final double AIR_POSITION = -7.1; //Up -6.5 Faing out -8
+        public static final double AIR_POSITION = -7.17
+        ; //Up -6.5 Faing out -8
 
         /*  Infeed speed constants  */
         //Remove note to shoot into Amp
         public static final double AMP_SPEED = -0.55;
-        public static final double AMP_RPM = 2100; //TODO needs to be tuned to the right rpm
+        public static final double AMP_RPM = -4480; //TODO needs to be tuned to the right rpm
         //Take in note speed
         public static final double INTAKE_SPEED = 0.4;
         //Remove note from infeed speed

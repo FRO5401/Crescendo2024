@@ -27,9 +27,6 @@ public class AmpShot extends Command {
   public void execute() {
     infeed.setVelocity(Constants.InfeedConstants.AMP_RPM);
 
-    if (infeed.getVelocity() < Constants.InfeedConstants.AMP_RPM){
-      endCommand = true;
-    }
   }
   // Called once the command ends or is interrupted.
 

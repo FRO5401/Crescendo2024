@@ -58,7 +58,7 @@ public class SideTwoPiece extends SequentialCommandGroup {
 
       List.of(new Translation2d(1, -0.1)),
 
-      new Pose2d(1, -.65, new Rotation2d(Units.degreesToRadians(32))),
+      new Pose2d(1, -.65, new Rotation2d(Units.degreesToRadians(40))),
 
       Constants.AutoConstants.config.setReversed(true));
 

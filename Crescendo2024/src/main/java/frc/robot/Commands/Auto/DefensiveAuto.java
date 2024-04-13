@@ -53,18 +53,16 @@ public class DefensiveAuto extends SequentialCommandGroup {
     } else {
       flipped = 1;
     }
+    
 
     Trajectory leaveStart = TrajectoryGenerator.generateTrajectory(
 
-        // Start at the origin facing the +X direction
 
         new Pose2d(0, 0, new Rotation2d(0)),
 
-        // Pass through these two interior waypoints, making an 's' curve path
 
         List.of(new Translation2d(2.5, flipped*-0.5)),
 
-        // End 3 meters straight ahead of where we started, facing forward
 
         new Pose2d(8, flipped*-0.3, new Rotation2d(0)),
 
@@ -74,15 +72,12 @@ public class DefensiveAuto extends SequentialCommandGroup {
 
         Trajectory removeNote1 = TrajectoryGenerator.generateTrajectory(
 
-        // Start at the origin facing the +X direction
 
         new Pose2d(8, flipped*-0.2, new Rotation2d(Units.degreesToRadians(90))),
 
-        // Pass through these two interior waypoints, making an 's' curve path
 
         List.of(new Translation2d(8.25,  flipped*0)),
 
-        // End 3 meters straight ahead of where we started, facing forward
 
         new Pose2d(8.5, flipped*1, new Rotation2d(Units.degreesToRadians(90))),
 
@@ -92,15 +87,12 @@ public class DefensiveAuto extends SequentialCommandGroup {
 
         Trajectory removeNote2 = TrajectoryGenerator.generateTrajectory(
 
-        // Start at the origin facing the +X direction
 
         new Pose2d(8.5, flipped*1.5, new Rotation2d(0)),
 
-        // Pass through these two interior waypoints, making an 's' curve path
 
         List.of(new Translation2d(8.5,  flipped*2)),
 
-        // End 3 meters straight ahead of where we started, facing forward
 
         new Pose2d(8.5, flipped*3, new Rotation2d(Units.degreesToRadians(90))),
 
