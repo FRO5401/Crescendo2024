@@ -58,7 +58,6 @@ public class Drivebase extends SubsystemBase {
 
   //Odomentry
   private  Odometry odometry;
-  private Odometry fieldOdometry;
 
   // Left-Side Drive Motors
   private  CANSparkMax leftDrive1;
@@ -236,7 +235,6 @@ public class Drivebase extends SubsystemBase {
 
     odometry = new DifferentialDriveOdometry(navxGyro.getRotation2d(), getLeftPosition(),
         getRightPostion());
-    fieldOdometry = new DifferentialDriveOdometry(navxGyro.getRotation2d(), getLeftPosition(), getRightPostion());
   }
   /**
    * @param left left motor speed
@@ -309,11 +307,7 @@ public class Drivebase extends SubsystemBase {
     return odometry.getPoseMeters();
 
   }
-  public Pose2d getfieldPose() {
-
-    return fieldOdometry.getPoseMeters();
-
-  }
+  
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
 
@@ -341,14 +335,7 @@ public class Drivebase extends SubsystemBase {
         navxGyro.getRotation2d(), getWheelPositions(), pose);
 
   }
-    public void resetfieldOdometry(Pose2d pose) {
-
-    fieldOdometry.resetPosition(
-
-        navxGyro.getRotation2d(), getWheelPositions(), pose);
-
-  }
-
+   
   public  void tankDriveVolts(double leftVolts, double rightVolts) {
 
     leftDrive1.setVoltage(leftVolts);
@@ -405,9 +392,7 @@ public Command sysIdDynamic(SysIdRoutine.Direction direction) {
 public void updateOdometry(){
   odometry.update(navxGyro.getRotation2d(), getWheelPositions());
 }
-public void updateFieldOdometry(){
-  fieldOdometry.update(navxGyro.getRotation2d(), getWheelPositions());
-}
+
 
 public void setIdleModeBreak(){
     leftDrive1.setIdleMode(IdleMode.kBrake);
@@ -431,10 +416,6 @@ public void setIdleModeCoast(){
 
     odometry.update(navxGyro.getRotation2d(), getWheelPositions());
     
-
-    fieldOdometry.update(navxGyro.getRotation2d(), getWheelPositions());
-
-    field2d.setRobotPose(getfieldPose());
 
     SmartDashboard.putData("Field", field2d);
 

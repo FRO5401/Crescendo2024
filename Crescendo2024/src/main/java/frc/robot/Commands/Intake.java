@@ -35,8 +35,9 @@ public class Intake extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (intake.getLimitSwitch()){
-      intake.intake();
+    intake.intake();
+    if (intake.getLimitSwitchReverse()){
+      
       endCommand = true;
     } 
   }

@@ -54,6 +54,8 @@ import frc.robot.Commands.Lights.GreenLED;
 import frc.robot.Commands.Lights.PurpleLED;
 import frc.robot.Commands.Lights.RainbowLED;
 import frc.robot.Commands.Lights.YellowLED;
+import frc.robot.Commands.LearnAuto.PickupShoot;
+import frc.robot.Commands.LearnAuto.PickupShoot;
 //Subsystem Imports
 import frc.robot.Subsystems.Climber;
 import frc.robot.Subsystems.Drivebase;
@@ -189,7 +191,7 @@ public class RobotContainer {
     chooser.addOption("Two Piece Side", new SideTwoPiece(drivebase, infeed, shooter).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("Peddie Edition", new JustShoot(infeed, shooter).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
     chooser.addOption("DefensiveAuto", new DefensiveAuto(infeed, shooter, drivebase).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
-    
+    chooser.addOption("Learning Auto, this wont work", new PickupShoot(infeed, shooter).withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
 
 
     
