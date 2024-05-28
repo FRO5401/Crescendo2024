@@ -2,21 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-  /*Finished
-  1. Create a new subsystem called "Infeed"
-  2. Create 3 CANSparkMax objects, 2 for the intake wheels and 1 for the pivoting
-  5. Create a method called intake() that causes the intake wheels to spin in a positive direction
-  6. Create a method called expel() that causes the intake wheels to spin in a negative direction
-  7. Create a method called rotate that causes the pivot motor to spin in either a positive 
-  or negative direction depending on the controller input 
- */
-
-  /* TODO
-  3. Create 2 DigitalInput objects that track the state of the frame rail & shooter limit switches. 
-  4. When either switch is true, do not let the motors continue in either a higher 
-  position (Shooter switch true) or a lower position (Framerail switch true).
-  */
-
 package frc.robot.Subsystems;
 
 //WPI Imports
@@ -29,6 +14,16 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+
+//  Shuffle Board Imports
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.ComplexWidget;
+import edu.wpi.first.wpilibj.shuffleboard.LayoutType;
+import edu.wpi.first.wpilibj.shuffleboard.SendableCameraWrapper;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
+import edu.wpi.first.wpilibj.shuffleboard.SuppliedValueWidget;
 
 //Rev Imports
 import com.revrobotics.CANSparkMax;
@@ -103,7 +98,7 @@ public class Infeed extends SubsystemBase {
 
     //Create limit switch
     limitSwitch = new DigitalInput(9);
-    
+
   }
   //Gets position of pivotMotor
   public double getPosition(){
@@ -178,7 +173,6 @@ public class Infeed extends SubsystemBase {
     SmartDashboard.putNumber("pivot ", getPosition());
     SmartDashboard.putBoolean("Has Note", getLimitSwitchReverse());
     SmartDashboard.putNumber(("Infeed Speed"), getVelocity());
-
 
   }
 }

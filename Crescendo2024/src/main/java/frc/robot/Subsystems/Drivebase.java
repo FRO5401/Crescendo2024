@@ -33,6 +33,8 @@ import edu.wpi.first.wpilibj.Solenoid;
 //WPI imports
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -428,13 +430,13 @@ public void setIdleModeCoast(){
     // This method will be called once per scheduler run
 
     odometry.update(navxGyro.getRotation2d(), getWheelPositions());
+    
 
     fieldOdometry.update(navxGyro.getRotation2d(), getWheelPositions());
 
     field2d.setRobotPose(getfieldPose());
 
     SmartDashboard.putData("Field", field2d);
-
 
     //displays gear shift state
     SmartDashboard.putBoolean("isHighGear", isHighGear);
